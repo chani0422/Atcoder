@@ -6,31 +6,7 @@
 //累積和問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n; cin >> n;
-    vc<ll> A(n),pref(2*n+1);
-    ll sum = 0;
-    rep(i,0,n) {
-        cin >> A[i];
-        sum += A[i];
-    }
-    rep(i,0,2*n) pref[i+1] = pref[i] + A[i%n];
-
-    ll ten = sum/10;
-
-    if(sum%10 != 0) {
-        cout << "No" << endl;
-        return 0;
-    }
-
-    rep(l,0,n) {
-        ll target = pref[l] +ten;
-        ll a = *lower_bound(nall(pref),target);
-        if(a == target) {
-            yn(1);
-            return 0;
-        }
-    }
-    yn(0);
+    cout << 111 << endl;
     return 0;
 }
 //解答コードここまで
