@@ -1,0 +1,12 @@
+# build outputs
+a.out
+*.out
+*.exe
+*.o
+*.obj
+
+# editor / cache
+.vscode/
+.idea/
+.DS_Store
+ac-library/
