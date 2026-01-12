@@ -8,7 +8,8 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    cout << 2222 << endl;
+    cout << "\n";
     return 0;
 }
  //解答コードここまで
