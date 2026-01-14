@@ -7,18 +7,32 @@
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
     ll n,q; cin >> n >> q;
-    set<ll> A;
-    rep(i,0,n) {
-        ll a; cin >> a;
-        A.insert(a);
-    }
+    cout << endl;
+    vc<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    sort(nall(A));
+    vc<ll> C(n);
+    rep(i,0,n) C[i] = A[i]-1-i;
+    
+
     rep(i,0,q) {
         ll x,y; cin >> x >> y;
-        ll X = *upper_bound(nall(A),x);
-        // ll B[]
-        if(X == 0) {cout << -1; return 0;}
-
+        ll a = lower_bound(nall(A),x) -A.begin();
+        ll leftX = x-1-a;
+        ll target = leftX + y;
+        ll index = lower_bound(nall(C),target) - C.begin();
+        outendl(a,leftX,target,index);
+        
+        if(index == 0) {
+            cout << target << "\n";
+        }else {
+            ll diff = target - C[index-1];
+            outendl(diff);
+            cout << A[index-1] + diff << "\n";
+        }
     }
+    // For(A);
+    // For(C);
     return 0;
 }
 //解答コードここまで

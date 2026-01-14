@@ -1,4 +1,3 @@
-
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
@@ -8,7 +7,42 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    Graph G(n);
+    vector<ll> two(n);
+    vector<ll> visited(n,false);
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        two[a]++;two[b]++;
+        G[a].pb(b);
+        G[b].pb(a);
+    }
 
+    for(auto x : two) {
+        if(x != 2) {
+            cout << "No\n";
+            return 0;
+        }
+    }
+
+    queue<ll> q;
+    q.push(0);
+    visited[0] = true;
+
+    ll cnt = 1;
+    while(!q.empty()) {
+        int v = q.front();
+        q.pop();
+        for(auto u : G[v]) {
+            if(visited[u] == true) continue;
+            cnt++;
+            visited[u] = true;
+            q.push(u);
+        }
+    }
+    if(cnt != n) cout << "No\n";
+    else cout << "Yes\n";
     return 0;
 }
  //解答コードここまで

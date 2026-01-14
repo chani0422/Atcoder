@@ -6,9 +6,71 @@
 //解答コードここから
 //E問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios::sync_with_stdio(false); cin.tie(nullptr);
 
+    int h, w; cin >> h >> w;
+    int sx,sy,gx,gy;
+
+    vector<vector<char>> g(h,vector<char>(w));
+    vvc<pair<int,int>> alpha(150);
+    vc<bool> visited(150,false);
+
+    rep(i,0,h) {
+        rep(j,0,w) {
+            char c; cin >> c;
+            g[i][j] = c;
+            if('a' <= g[i][j] && g[i][j] <= 'z') {
+                alpha[g[i][j]].pb({i,j});
+            }
+            if(g[i][j] == 'S') {
+                sx = i;
+                sy = j;
+            }else if(g[i][j] == 'G') {
+                gx = i;
+                gy = j;
+            }
+        }
+    }
+
+    //上下左右移動用
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+
+    vector<vector<ll>> dist(h, vector<ll>(w, -1));
+    vector<vector<pair<int,int>>> parent(h, vector<pair<int,int>>(w, {-1,-1}));
+    queue<pair<int,int>> q;
+
+    dist[sx][sy] = 0;
+    q.push({sx, sy});
+
+    while(!q.empty()){
+        auto [x, y] = q.front();
+        q.pop();
+        if(('a' <= g[x][y] && g[x][y] <= 'z') && (visited[g[x][y]] == false)) {
+            visited[g[x][y]] = true;
+            for(auto xx : alpha[g[x][y]]) {
+                if(dist[xx.fi][xx.se] != -1) continue;
+                dist[xx.fi][xx.se] = dist[x][y] + 1;
+                q.push({xx.fi,xx.se});
+            }
+        }
+        rep(dir,0,4){
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+            if(g[nx][ny] == '#') continue; // 壁
+            if(dist[nx][ny] != -1) continue; // 既訪問
+
+            dist[nx][ny] = dist[x][y] + 1;
+            q.push({nx, ny});
+        }
+    }
+    //到達できなかったら-1を出力
+    cout << dist[gx][gy] << endl;
+    // For2(dist);
+
+   //From chanini library
     return 0;
 }
  //解答コードここまで
@@ -42,7 +104,7 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<ll>>;
+using Graph= vector<vector<char>>;
 using Grid = vector<vector<ll>>;
 
 

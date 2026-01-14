@@ -24,6 +24,17 @@ int main() {
 
     vector<string> g(h);
     rep(i,0,h) cin >> g[i];
+    // rep(i,0,h) {
+    //     rep(j,0,w) {
+    //         if(g[i][j] == 'S') {
+    //             sx = i;
+    //             sy = j;
+    //         }else if(g[i][j] == 'G') {
+    //             gx = i;
+    //             gy = j;
+    //         }
+    //     }
+    // }
 
     //上下左右移動用
     const int dx[4] = {1, 0, -1, 0};
