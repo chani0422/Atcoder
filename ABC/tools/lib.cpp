@@ -27,7 +27,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======

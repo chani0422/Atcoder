@@ -8,7 +8,35 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    Graph G(n);
+    rep(i,0,m) {
+        ll u,v; cin >> u >> v;
+        u--;v--;
+        G[u].pb(v);
+        G[v].pb(u);
+    }
+    vector<bool> visited(n,false);
+    ll cnt = 0;
+    rep(i,0,n) {
+        if(visited[i]) continue;
+        cnt++;
 
+        stack<ll> st;
+        st.push(i);
+        visited[i] = true;
+
+        while(!st.empty()) {
+            int v = st.top();
+            st.pop();
+            for(auto u : G[v]) {
+                if(visited[u]) continue;
+                visited[u] = true;
+                st.push(u);
+            }
+        }
+    }
+    cout << cnt << endl;
     return 0;
 }
  //解答コードここまで

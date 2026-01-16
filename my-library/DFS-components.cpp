@@ -34,14 +34,15 @@ int main() {
     ll n,m; cin >> n >> m;
     bool ok = false;
     Graph G(n);
-    vector<bool> visited(n,true);
+    vector<bool> visited(n,false);
     ll ans = 0;
     vector<ll> A(m),B(m);
     rep(i,0,m) {
-        cin >> A[i] >> B[i];
-        A[i]--;B[i]--;
-        G[A[i]].push_back(B[i]);
-        G[B[i]].push_back(A[i]);
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        G[a].push_back(b);
+        G[b].push_back(a);
+        A[i] = a; B[i] = b;
     }
 
         stack<int> st;

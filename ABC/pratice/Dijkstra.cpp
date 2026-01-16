@@ -2,41 +2,51 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
-//C問題
+//F問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n; cin >> n;
-    unordered_map<ll,vector<ll>> G;
-    unordered_map<ll,bool> visited;
-    rep(i,0,n) {
-        ll a,b; cin >> a >> b;
-        a--;b--;
-        G[a].push_back(b);
-        G[b].push_back(a);
+    ll n,m; cin >> n >> m;
+    Graph G(n);
+    vector<ll> dist(n,inf);
+    rep(i,0,m) {
+        ll u,v,c; cin >> u >> v >> c;
+        u--;v--;
+        G[u].pb({v,c});
     }
 
-        stack<ll> st;
-        st.push(0);
-        visited[0] = true;
-        ll ans = 1;
-        while(!st.empty()) {
-            ll v = st.top();
-            st.pop();
-            for(auto x : G[v]) {
-                if(visited[x]) continue;
-                visited[x] = true;
-                st.push(x);
-                chmax(ans,x+1);
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+    ll start_v = 0;
+    pq.push({0,start_v});
+    dist[start_v] = 0;
+
+    while(!pq.empty()) {
+        auto [d,v] = pq.top();
+        pq.pop();
+        if(d != dist[v]) continue;
+
+        for(auto [to,c] : G[v]) {
+            if(dist[to] > d + c) {
+            dist[to] = d + c;
+            pq.push({dist[to],to});
             }
         }
-        cout << ans << endl;
+    }
+
+    //出力
+    rep(i,0,n) {
+        if(dist[i] == inf) {
+            cout << -1 << endl;
+        }else {
+            cout << dist[i] << "\n";
+        }
+    }
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -65,7 +75,7 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<ll>>;
+using Graph= vector<vector<pair<ll,ll>>>;
 using Grid = vector<vector<ll>>;
 
 
@@ -124,5 +134,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif
