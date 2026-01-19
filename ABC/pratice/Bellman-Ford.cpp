@@ -1,4 +1,4 @@
-    
+
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
@@ -6,41 +6,50 @@
 //F問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    int n,m; cin >> n >> m;
-    
-    Graph G(n);
+    ll n,m; cin >> n >> m;
+
+    vector<ll> A(m),B(m),C(m);
+    vector<ll> dist(n,inf);
+
     rep(i,0,m) {
-        int a,b,c; cin >> a >> b >> c;
+        ll a,b,c; cin >> a >> b >> c;
         a--;b--;
-        G[a].pb({b,c});
-        G[b].pb({a,c});
+        A[i] = a;
+        B[i] = b;
+        C[i] = c;
     }
 
-    vector<ll> dist(n,inf);
-    priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>> pq;
-    
-    pq.push({0,0});
     dist[0] = 0;
-    // cout << 55 << endl;
 
-    while(!pq.empty()) {
-        auto [d,v] = pq.top();
-        pq.pop();
-        if(dist[v] != d) continue;
-        
-        for(auto [nv,c] : G[v]) {
-            if(dist[nv] > dist[v] + c) {
-                dist[nv] = dist[v] + c;
-                pq.push({dist[nv],nv});
+    rep(i,0,n-1) {
+        bool update = false;
+        rep(j,0,m) {
+            ll from = A[j],to = B[j],cost = C[j];
+            if(dist[from] == inf) continue;
+            if(dist[to] > dist[from] + cost) {
+                dist[to] = dist[from] + cost;
+                update = true;
             }
         }
+        if(!update) break;
+    }
+
+    bool neg = false;
+    rep(i,0,m) {
+        ll from = A[i],to = B[i],cost = C[i];
+        if(dist[from] == inf) continue;
+        if(dist[to] > dist[from] + cost) neg = true;
+    }
+
+    if(neg) {
+        cout << "NEGATIVE CYCLE\n";
+        return 0;
     }
 
     rep(i,0,n) {
-        if(dist[i] == inf) cout << -1 << "\n";
+        if(dist[i] == inf) cout << "INF\n";
         else cout << dist[i] << "\n";
     }
-
     return 0;
 }
 //解答コードここまで
@@ -75,8 +84,8 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<pair<int,ll>>>;
-using Grid = vector<vector<ll>>;
+using Graph= vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -103,6 +112,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====

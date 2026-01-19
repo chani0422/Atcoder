@@ -9,24 +9,24 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, m; cin >> n >> m;          // 頂点数n, 辺数m
-    int s, g; cin >> s >> g;          // 始点, 終点
-    --s; --g;                         // 0-index に直す
+    int n, m; cin >> n >> m;
+    int s, g; cin >> s >> g;
+    --s; --g;
 
     Graph G(n);
     rep(i,0,m){
         int u, v; cin >> u >> v;
         --u; --v;
         G[u].push_back(v);
-        G[v].push_back(u);          // 無向グラフなら両方（有向なら片方だけ）
-    }
+        G[v].push_back(u);
+        }
 
     vector<int> dist(n, -1);
-    vector<int> parent(n, -1);        // 経路復元用（親頂点）
+    vector<int> parent(n, -1);
     queue<int> q;
 
     dist[s] = 0;
-    parent[s] = -2;                   // 始点マーカー（別に無くてもOK）
+    parent[s] = -2;
     q.push(s);
 
     while(!q.empty()){

@@ -11,3 +11,4 @@ a.out
 .DS_Store
 ac-library/
 main
+.venv

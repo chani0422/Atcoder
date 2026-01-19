@@ -1,4 +1,4 @@
-    
+
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
@@ -6,41 +6,41 @@
 //F問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    int n,m; cin >> n >> m;
-    
+    ll n,m; cin >> n >> m;
     Graph G(n);
+    vector<ll> dist(n,inf);
     rep(i,0,m) {
-        int a,b,c; cin >> a >> b >> c;
-        a--;b--;
-        G[a].pb({b,c});
-        G[b].pb({a,c});
+        ll u,v,c; cin >> u >> v >> c;
+        u--;v--;
+        G[u].pb({v,c});
     }
 
-    vector<ll> dist(n,inf);
-    priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>> pq;
-    
-    pq.push({0,0});
-    dist[0] = 0;
-    // cout << 55 << endl;
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+    ll start_v = 0;
+    pq.push({0,start_v});
+    dist[start_v] = 0;
 
     while(!pq.empty()) {
         auto [d,v] = pq.top();
         pq.pop();
-        if(dist[v] != d) continue;
-        
-        for(auto [nv,c] : G[v]) {
-            if(dist[nv] > dist[v] + c) {
-                dist[nv] = dist[v] + c;
-                pq.push({dist[nv],nv});
+        if(d != dist[v]) continue;
+
+        for(auto [to,c] : G[v]) {
+            if(dist[to] > d + c) {
+            dist[to] = d + c;
+            pq.push({dist[to],to});
             }
         }
     }
 
+    //出力
     rep(i,0,n) {
-        if(dist[i] == inf) cout << -1 << "\n";
-        else cout << dist[i] << "\n";
+        if(dist[i] == inf) {
+            cout << -1 << endl;
+        }else {
+            cout << dist[i] << "\n";
+        }
     }
-
     return 0;
 }
 //解答コードここまで
@@ -75,7 +75,7 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<pair<int,ll>>>;
+using Graph= vector<vector<pair<ll,ll>>>;
 using Grid = vector<vector<ll>>;
 
 

@@ -9,6 +9,47 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n, m; cin >> n >> m;          // 頂点数n, 辺数m
+
+    Graph G(n);
+    rep(i,0,m){
+        int u, v; cin >> u >> v;
+        --u; --v;
+        G[u].push_back(v);
+        G[v].push_back(u);          // 無向グラフなら両方（有向なら片方だけ）
+    }
+    vector<int> dist(n, -1);
+    vector<int> parent(n, -1);        // 経路復元用（親頂点）
+    queue<int> q;
+
+    dist[0] = 0;
+    parent[0] = -2;                   // 始点マーカー（別に無くてもOK）
+    q.push(0);
+
+    while(!q.empty()){
+        int v = q.front();
+        q.pop();
+
+        for(int nv : G[v]){
+            if(dist[nv] != -1) continue; // 既訪問
+
+            dist[nv] = dist[v] + 1;
+            parent[nv] = v;
+            q.push(nv);
+        }
+    }
+
+    // 到達できなかったら -1
+    if(dist[n-1] == -1) {
+        cout << "No\n";
+        return 0;
+    }
+    cout << "Yes\n";
+    rep(i,1,parent.size()) {
+        cout << parent[i] + 1 << "\n";
+    }
+
+    //From chanini library
     return 0;
 }
  //解答コードここまで

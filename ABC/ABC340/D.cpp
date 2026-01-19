@@ -8,6 +8,37 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    Graph G(n);
+    vector<ll> dist(n,inf);
+
+    rep(i,0,n-1) {
+        ll a,b,x; cin >> a >> b >> x;
+        x--;
+        G[i].pb({b,x});
+        G[i].pb({a,i+1});
+    }
+
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+    //コスト,頂点
+    pq.push({0,0});
+    dist[0] = 0;
+
+    while(!pq.empty()) {
+        auto [c,v] = pq.top();
+        pq.pop();
+
+        if(c != dist[v]) continue;
+
+        for(auto [nc,nv] : G[v]) {
+            if(dist[nv] > c + nc) {
+                dist[nv] = dist[v] + nc;
+                pq.push({dist[nv],nv});
+            }
+        }
+    }
+
+    cout << dist[n-1] << endl;
 
     return 0;
 }
@@ -42,7 +73,7 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<ll>>;
+using Graph= vector<vector<pair<ll,ll>>>;
 using Grid = vector<vector<ll>>;
 
 

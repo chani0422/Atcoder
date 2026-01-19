@@ -6,8 +6,68 @@
 //解答コードここから
 //D問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+
+    int h, w; cin >> h >> w;
+    int sx, sy, gx, gy;
+    
+    vector<vector<ll>> dist(h, vector<ll>(w, -1));
+    vector<vector<char>> ans(h, vector<char>(w, '#'));
+    queue<pair<int,int>> q;
+    vector<string> G(h);
+    rep(i,0,h) cin >> G[i];
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(G[i][j] == 'E') {
+                dist[i][j] = 0;
+                q.push({i,j});
+                ans[i][j] = 'E';
+            }
+        }
+    }
+
+    //上下左右移動用
+    const int dx[4] = {-1, 1, 0, 0};
+    const int dy[4] = {0, 0, -1, 1};
+
+    while(!q.empty()){
+        auto [x, y] = q.front();
+        q.pop();
+
+        rep(dir,0,4){
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+            if(G[nx][ny] == '#') {
+                ans[nx][ny] = '#';
+                continue; 
+            }
+            if(G[nx][ny] == 'E') {
+                ans[nx][ny] = 'E';
+                continue; 
+            }
+            if(dist[nx][ny] != -1) continue; // 既訪問
+
+            // cout << nx << " " << ny << "\n";
+            dist[nx][ny] = dist[x][y] + 1;
+            q.push({nx, ny});
+
+            if(G[nx][ny] == '.') {
+            if(dir == 0) ans[nx][ny] = 'v';
+            if(dir == 1) ans[nx][ny] = '^';
+            if(dir == 2) ans[nx][ny] = '>';
+            if(dir == 3) ans[nx][ny] = '<';
+            }
+        }
+    }
+
+    rep(i,0,h) {
+        rep(j,0,w) {
+            cout << ans[i][j];
+        }
+        cout << "\n";
+    }
 
     return 0;
 }

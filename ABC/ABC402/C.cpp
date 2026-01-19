@@ -8,7 +8,28 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    vector<vector<ll>> C(n);
+    vector<ll> cnt(m);
+    rep(i,0,m) {
+        ll k; cin >> k;
+        cnt[i] = k;
+        rep(j,0,k) {
+            ll a; cin >> a;
+            a--;
+            C[a].pb(i);
+        }
+    }
+    ll ans = 0;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        a--;
+        for(auto &x : C[a]) {
+            cnt[x]--;
+            if(cnt[x] == 0) ans++;
+        }
+        cout << ans << "\n";
+    }
     return 0;
 }
  //解答コードここまで

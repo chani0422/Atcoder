@@ -8,6 +8,22 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    vector<ll> A(n);
+    ll sum = 0;
+    rep(i,0,k) {
+        A[i] = 1;
+        sum++;
+    }
+    A[k] = sum;
+
+    ll s = k+1;
+    rep(s,0,n) {
+        sum += A[s-1];
+        sum -= A[s-k-1];
+        A[s]  = sum; 
+    }
+    cout << A[n-1]%1000000000 << "\n";
 
     return 0;
 }
