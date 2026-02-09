@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    string s; cin >> s;
+    ll k; cin >> k;
+    vector<char> ch((int)s.size());
+    vector<string> ans;
+    rep(i,0,(int)s.size()) {
+        ch[i] = s[i];
+    }
+    sort(nall(ch));
+    do {
+        string t = "";
+        rep(i,0,int(ch.size())) {
+            t += ch[i];
+        }
+        ans.pb(t);
+    }while(next_permutation(nall(ch)));
 
+    sort(nall(ans));
+    cout << ans[k-1] << "\n";
     return 0;
 }
  //解答コードここまで

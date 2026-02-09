@@ -7,68 +7,7 @@
 //D問題
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-
-    int h, w; cin >> h >> w;
-
-    vector<string> g(h);
-    rep(i,0,h) cin >> g[i];
-
-    // 徒歩（cost 0）用：上下左右
-    const int dx[4] = {1, 0, -1, 0};
-    const int dy[4] = {0, 1, 0, -1};
-
-    const int INF = 1e9;
-    vector<vector<ll>> dist(h, vector<ll>(w, INF));
-    // vector<vector<pair<int,int>>> parent(h, vector<pair<int,int>>(w, {-1,-1}));
-
-    deque<pair<int,int>> dq;
-
-    dist[0][0] = 0;
-    dq.push_front({0,0});
-
-    while(!dq.empty()){
-        auto [x, y] = dq.front();
-        dq.pop_front();
-
-        ll cur = dist[x][y];
-
-        //cost 0
-        rep(dir,0,4){
-            int nx = x + dx[dir];
-            int ny = y + dy[dir];
-
-            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
-            if(g[nx][ny] == '#') continue;
-
-            if(dist[nx][ny] > cur) {
-                dist[nx][ny] = cur;
-                dq.push_front({nx, ny});
-                // parent[nx][ny] = {x, y};
-        }
-        }
-
-        //cost 1
-        rep(i,-2,3){
-            rep(j,-2,3){
-                if(abs(i) == abs(j)) continue;
-                int nx = x + i;
-                int ny = y + j;
-
-                if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue;
-                // if(g[nx][ny] == '#') continue;
-
-                if(dist[nx][ny] > cur + 1) {
-                dist[nx][ny] = cur + 1;
-                dq.push_back({nx, ny});
-                // parent[nx][ny] = {x, y};
-                }
-            }
-        }
-    }
-
-    if(dist[h-1][w-1] == INF) cout << -1 << "\n";
-    else cout << dist[h-1][w-1] << "\n";
-
+    
     return 0;
 }
  //解答コードここまで

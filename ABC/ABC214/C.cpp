@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> A(n),B(n);
+    rep(i,0,n) cin >> A[i];
+    rep(i,0,n) cin >> B[i];
+    auto C = B;
+    ll tmp = B[0];
+    ll i = 0;
+    while(i < n*2) {
+        C[(i+1)%n] = min(C[(i+1)%n],A[i%n]+C[i%n]);
+        i++;
+    }
+    For(C);
     return 0;
 }
  //解答コードここまで

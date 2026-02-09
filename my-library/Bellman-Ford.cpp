@@ -18,6 +18,10 @@ int main() {
         B[i] = b;
         C[i] = c;
     }
+    cout << "\n";
+    For(A);
+    For(B);
+    For(C);
 
     dist[0] = 0;
 

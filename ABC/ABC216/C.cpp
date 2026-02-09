@@ -8,7 +8,21 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    string s = "";
 
+    while(n > 0) {
+        if(n%2 == 0) {
+            n/=2;
+            s += "B";
+        }else {
+            n--;
+            s += "A";
+        }
+    }
+    reverse(nall(s));
+
+    cout << s << "\n";
     return 0;
 }
  //解答コードここまで

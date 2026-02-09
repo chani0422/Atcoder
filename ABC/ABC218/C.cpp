@@ -8,7 +8,62 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<vector<char>> s(n,vector<char>(n)),t(n,vector<char>(n));
+    rep(i,0,n)rep(j,0,n) cin >> s[i][j];
+    rep(i,0,n)rep(j,0,n) cin >> t[i][j];
 
+    vector<pair<ll,ll>> ps,pt;
+    rep(i,0,n)rep(j,0,n) {
+        if(s[i][j] == '#') ps.pb({i,j});
+    }
+    rep(i,0,n)rep(j,0,n) {
+        if(t[i][j] == '#') pt.pb({i,j});
+    }
+    
+    if(ps.size() != pt.size()) {
+        yn(0);
+        return 0;
+    }
+
+    auto normalize = [&](vector<pair<ll,ll>> v) {
+        ll min_i = inf, min_j = inf;
+        for(auto x : v) {
+            chmin(min_i,x.fi);
+            chmin(min_j,x.se);
+        }
+        for(auto &x : v) {
+            x.fi -= min_i;
+            x.se -= min_j;
+        }
+        sort(nall(v));
+        return v;
+    };
+
+    auto ns = normalize(ps);
+
+    rep(i,0,4) {
+        auto nt = normalize(pt);
+        if(nt == ns) {
+            cout << "Yes\n";
+            return 0;
+        }
+        vector<vector<char>> r(n,vector<char>(n));
+        rep(i,0,n) {
+            rep(j,0,n) {
+                r[n-1-j][i] = t[i][j];
+            }
+        }
+        t = r;
+        pt.clear();
+        rep(i,0,n) {
+            rep(i,0,n) {
+                if(t[i][j] == '#') pt.pb({i,j});
+            }
+        }
+    }
+
+    
     return 0;
 }
  //解答コードここまで
@@ -32,6 +87,7 @@ const long long inf = (1LL<<60);
 #define rall(a) (a).rbegin(),(a).rend()
 #define MIN(x) *min_element(nall(x))
 #define MAX(x) *max_element(nall(x))
+#define pll = pair<ll,ll>
 
 using ll = long long;
 using ld = long double;

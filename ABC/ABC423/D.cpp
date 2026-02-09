@@ -2,18 +2,17 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
 //D問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -43,7 +42,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -70,6 +69,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====
@@ -101,5 +132,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif

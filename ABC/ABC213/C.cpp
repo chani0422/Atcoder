@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll h,w,n; cin >> h >> w >> n;
+    vector<ll> A(n),B(n);
+    rep(i,0,n) cin >> A[i] >> B[i];
 
+    auto nA = A,nB = B;
+    sort(nall(nA));
+    nA.erase(unique(nall(nA)),nA.end());
+    sort(nall(nB));
+    nB.erase(unique(nall(nB)),nB.end());
+
+    For(nA);
+    For(nB);
+
+    rep(i,0,n) {
+        ll xres = lower_bound(nall(nA),A[i]) - nA.begin();
+        ll yres = lower_bound(nall(nB),B[i]) - nB.begin();
+        cout << xres+1 << " " << yres+1 << "\n";
+    }
     return 0;
 }
  //解答コードここまで

@@ -2,34 +2,62 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
-//C問題
+//E問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    ll n,m; cin >> n >> m;
-    vector<ll> A(n),B(m);
-    rep(i,0,n) cin >> A[i];
-    rep(i,0,m) cin >> B[i];
-    ll ans = inf;
-    ll t = min(n,m);
-    sort(nall(A));
-    sort(nall(B));
-    ll i = 0, j = 0;
-    while(i < n && j < m) {
-        chmin(ans,abs(A[i] - B[j]));
-        if(A[i] > B[j]) j++;
-        else i++;
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll T; cin >> T;
+    rep(i,0,T) {
+        ll n,c; cin >> n >> c;
+        vector<vector<char>> G(n,vector<char>(n));
+        vector<vector<bool>> visited(n,vector<bool>(n,false));
+        vector<vector<bool>> ok(n,vector<bool>(n,false));
+        rep(i,0,n)rep(j,0,n) cin >> G[i][j];
+        const int dy[3] = {-1,-1,-1};
+        const int dx[3] = {-1,0,1};
+        rep(i,0,n) {
+            rrep(j,n-1,0) {
+                if(G[j][i] == '#') break;
+                ok[j][i] = true;
+            }
+        }
+        queue<pair<ll,ll>> q;
+        q.push({n-1,c-1});
+
+        while(!q.empty()) {
+            auto [x,y] = q.front();
+            cout << x << ":" << y << endl;
+            q.pop();
+
+        rep(dir,0,3){
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if(nx < 0 || nx >= n || ny < 0 || ny >= n) continue; // 範囲外
+            if(visited[nx][ny] != false) continue; // 既訪問
+            if(G[nx][ny] == '#' && G[x][y] == false) continue;
+
+
+            visited[nx][ny] = true;
+            q.push({nx, ny});
+        }
+        }
+        For2(ok);
+        string s = "";
+        rep(i,0,n) {
+            if(ok[0][i] == true) {
+                s += "1";
+            }else s += "0";
+        }
+        cout << s << endl;
     }
-    cout << ans << "\n";
-    // For(A);
-    // For(B);
     return 0;
 }
- //解答コードここまで
+
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -59,7 +87,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -86,6 +114,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====
@@ -117,5 +177,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif

@@ -8,7 +8,11 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> p(n),ans(n);
+    rep(i,0,n) cin >> p[i];
+    rep(i,0,n) ans[p[i]-1] = i;
+    rep(i,0,n) cout << ans[i] + 1 << "\n";
     return 0;
 }
  //解答コードここまで
