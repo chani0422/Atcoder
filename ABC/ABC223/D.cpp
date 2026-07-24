@@ -8,6 +8,41 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    Graph G(n);
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        G[a].pb(b);
+    }
+
+    vector<ll> indegree(n);
+    rep(i,0,n) for(auto &to : G[i]) indegree[to]++;
+
+    priority_queue<ll,vector<ll>,greater<ll>> que;
+
+    rep(i,0,n) if(indegree[i]==0) que.push(i);
+
+    vector<ll> ans;
+    while(!que.empty()) {
+        ll from = que.top();
+        que.pop();
+        for(auto &to : G[from]) {
+            indegree[to]--;
+            if(indegree[to] == 0) que.push(to);
+        }
+        ans.pb(from);
+    }
+
+    if(ans.size() != n) {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    rep(i,0,n) {
+        cout << ans[i]+1 << " ";
+    }
+    cout << endl;
 
     return 0;
 }
@@ -18,6 +53,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -43,7 +79,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -70,6 +106,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====

@@ -6,7 +6,19 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll h,w,Q; cin >> h >> w >> Q;
+    while(Q--) {
+        ll q; cin >> q;
+        if(q == 1) {
+            ll r; cin >> r;
+            cout << w*r << endl;
+            h -= r;
+        }else {
+            ll c; cin >> c;
+            cout << h*c << endl;
+            w -= c;
+        }
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,6 +29,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

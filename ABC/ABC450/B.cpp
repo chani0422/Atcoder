@@ -6,7 +6,26 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    vector<vector<ll>> A(n,vector<ll>(n,inf));
+    rep(i,0,n) {
+        rep(j,i+1,n) {
+            ll a; cin >> a;
+            A[i][j] = a;
+        }
+    }
+
+    rep(a,0,n) {
+        rep(b,a+1,n) {
+            rep(c,b+1,n) {
+                if(A[a][c] > A[a][b] + A[b][c]) {
+                    cout << "Yes\n";
+                    return 0;
+                }
+            }
+        }
+    }
+    cout << "No\n";
     return 0;
 }
 //解答コードここまで
@@ -17,6 +36,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

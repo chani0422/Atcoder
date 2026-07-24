@@ -29,6 +29,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -54,7 +55,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -82,6 +83,7 @@ template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
 }
+
 // __int128_tでも入出力できるようにする
 // cout 用
 ostream& operator<<(ostream& os, lll x) {

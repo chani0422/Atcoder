@@ -2,6 +2,7 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
+//From chanini library
 //解答コードここから
 //問題
 vector<bool> visited;
@@ -51,6 +52,7 @@ int main() {
     return 0;
 }
 //解答コードここまで
+//From chanini library
 
 #else
 
@@ -58,6 +60,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

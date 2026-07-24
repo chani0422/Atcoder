@@ -1,72 +1,52 @@
 
-#ifdef INCLUDED_MAIN
+#if !__INCLUDE_LEVEL__
+#include __FILE__
+
 
 //解答コードここから
-//D問題
-signed main() {
-    ios::sync_with_stdio(false); cin.tie(nullptr);
+//問題
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
     ll h,w; cin >> h >> w;
-    Graphchar g(h+2,vector<char>(w+2,'#'));
-    Graphll dist(h+2,vector<ll>(w+2,-1));
-    map<char,bool> used;
-    map<char,vector<pair<ll,ll>>> mp;
-    int di[4] = {1,-1,0,0};
-    int dj[4] = {0,0,1,-1};
-    rep(i,1,h+1) {
-        rep(j,1,w+1) {
-            char c; cin >> c;
-            g[i][j] = c;
-            pair<ll,ll> p = {i,j};
-            if('a' <= c && c <= 'z') mp[c].pb(p);
-        }
-    }
-    ll ans = 0;
-    queue<pair<ll,ll>> q;
-    q.push({1,1});
-    dist[1][1] = 0;
+    vector<string> S(h);
+    rep(i,0,h) cin >> S[i];
 
-
-
-    while(!q.empty()) {
-        pair<ll,ll> v = q.front();
-        //cout << v.fi << " " << v.se << endl;
-        q.pop();
-        char c = g[v.fi][v.se];
-        t6
-        //if(g[v.fi][v.se] == '#') continue;
-        //cout << "char: " << c << endl;
-        if('a' <= g[v.fi][v.se] && g[v.fi][v.se] <= 'z'){
-            if(used[c] == false) {
-                used[c] = true;
-                for(auto p : mp[c]) {
-                    pair<ll,ll> v2 = {p.fi,p.se};
-                    if(dist[p.fi][p.se] == -1) {
-                        dist[p.fi][p.se] = dist[v.fi][v.se] + 1;
-                        q.push(v2);
-                    }
-                }
+    Graph dist(h,vector<ll>(w,-1));
+    ll sx,sy,gx,gy;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(S[i][j] == 's') {
+                sx = j;
+                sy = i;
+            }
+            if(S[i][j] == 'g') {
+                gx = j;
+                gy = i;
             }
         }
-        for(int iii = 0; iii < 4; iii++) {
-            ll ni = v.fi + di[iii], nj = v.se + dj[iii];
-            //cout << g[ni][nj] << dist[ni][nj] << endl;
-            if(g[ni][nj] == '#' || dist[ni][nj] != -1) continue;
-            //cout << "next: " << ni << " " << nj << endl;
-            dist[ni][nj] = dist[v.fi][v.se] + 1;
-            pair<ll,ll> p2 = {ni,nj};
-            q.push(p2);
-    }
-//     cout << q.size() << endl;
-//         rep(i,0,h+2) {
-//     rep(j,0,w+2) {
-//         cout << dist[i][j];
-//     }
-//     cout << endl;
-// }
     }
 
-    if(dist[h][w] == -1) cout << -1 << endl;
-    else cout << dist[h][w] << endl;
+    queue<pair<ll,ll>> que;
+    que.emplace(sy,sx);
+    dist[sy][sx] = 0;
+
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+    while(!que.empty()) {
+        auto [y,x] = que.front();
+        que.pop();
+        rep(i,0,4) {
+            ll ny = y + dy[i];
+            ll nx = x + dx[i];
+            if(nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+            if(S[ny][nx] == '#' || dist[ny][nx] != -1) continue;
+            que.emplace(ny,nx);
+            dist[ny][nx] = dist[y][x] + 1;
+        }
+    }
+
+    if(dist[gy][gx] == -1) cout << "No\n";
+    else cout << "Yes\n";
     return 0;
 }
  //解答コードここまで
@@ -74,38 +54,122 @@ signed main() {
 #else
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
+#include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
-#define rep(i,a,b) for(int i=(a); i<(b); i++)
-#define rrep(i,a,b) for(int i=(a); i>=(b); i--)
-#define pb(x) push_back(x)
+const long long inf = (1LL<<60);
+
+#define rep(i,a,b) for(ll i=(a); i<(b); i++)
+#define rrep(i,a,b) for(ll i=(a); i>=(b); i--)
+#define pb push_back
 #define popb() pop_back()
 #define fi first
 #define se second
 #define yn(x) do { if(x) cout << "Yes\n"; else cout << "No\n"; } while(0)
-#define nall(a) a.begin(),a.end()
-#define rall(a) a.rbegin(),a.rend()
-#define For(x) for(auto a : (x)) cout << a << " ";
+#define nall(a) (a).begin(),(a).end()
+#define rall(a) (a).rbegin(),(a).rend()
+#define MIN(x) *min_element(nall(x))
+#define MAX(x) *max_element(nall(x))
 
 using ll = long long;
 using ld = long double;
 using ull = unsigned long long;
-using Graph = vector<vector<ll>>;
+using lll = __int128_t;
 
+template<class T> using vc   = vector<T>;
+template<class T> using vvc  = vector<vc<T>>;
+template<class T> using vvvc = vector<vvc<T>>;
+
+using Graph= vector<vector<ll>>;
+using Grid = vector<vector<char>>;
+
+
+//====== ここから入出力系 ======
 template<class A, class B>
 ostream& operator<<(ostream& os, const pair<A,B>& p) {
     return os << "(" << p.first << "," << p.second << ")";
 }
 
-template<class T>
-void For2(const T& a) {
+//引数を空白区切りで出力
+template<class T, class... Ts>
+void out(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << ' ' << b), ...);
+    cout << '\n';
+}
+//引数を1行づつ出力
+template<class T, class... Ts>
+void outendl(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << endl << b), ...); 
+    cout << '\n';
+}
+//引数を順に読み込む
+template <class... T>
+void input(T &...a) {
+	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
+}
+
+//===== ここから便利系 =====
+//ans = min(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmin(T& a, const T& b) {
+    if (b < a) { a = b; return true; }
+    return false;
+}
+//ans = max(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmax(T& a, const T& b) {
+    if (a < b) { a = b; return true; }
+    return false;
+}
+
+//===== ここからデバッグ系 =====
+template<class Array2D>
+void For2(const Array2D& a) {
     for (const auto& row : a) {
         for (const auto& v : row) cout << v << " ";
         cout << "\n";
     }
 }
-#define INCLUDED_MAIN
-#include __FILE__
+template <class Array1D>
+void For(const Array1D& x) {
+    for (const auto& a : x) cout << a << " ";
+    cout << '\n';
+}
 
 // === LIB_END ===
 #endif

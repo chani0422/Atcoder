@@ -8,7 +8,67 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll Q; cin >> Q;
+    queue<ll> q;
+    ll height[500005] = {};
+    rep(i,0,Q) {
+        ll w; cin >> w;
+        if(w == 1) {
+            q.emplace(i);
+            height[i+1] = height[i];
+        }else if(w == 2) {
+            ll t; cin >> t;
+            height[i+1] = height[i] + t;
+        }else {
+            ll H; cin >> H;
+            ll ans = 0;
+            height[i+1] = height[i];
+            while(!q.empty()) {
+                ll v = q.front();
+                ll h = height[i] - height[v];
+                if(h >= H) {
+                    q.pop();
+                    ans++;
+                }else break;
+                
+            }
+            cout << ans << endl;
+        }
+    }
 
+    // rep(i,0,Q) {
+    //     ll q; cin >> q;
+    //     if(q == 1) {
+    //         cur++;
+    //         que.emplace(cur);
+    //     }else if(q == 2) {
+    //         ll t; cin >> t;
+    //         T.emplace_back(t);
+    //         que2.emplace(cur);
+    //         cur = 0;
+    //     }else {
+    //         ll b = T.back(),h; cin >> h;
+    //         ll ans = 0;
+    //         ll kaisuu = que2.front();
+    //         que2.pop();
+    //         while(b >= h && !T.empty() && !que.empty() && kaisuu != 0) {
+    //             ll v = que.front();
+    //             b = T.back();
+    //             que.pop();
+    //             ans++;
+    //             v = que.front();
+    //             kaisuu--;
+                
+    //             while(v != 1 && que.empty()) {
+    //                 v = que.front();
+    //                 que.pop();
+    //                 ans++;
+    //                 if(!que.empty()) v = que.front();
+    //             }
+    //         }
+    //         cout << ans << endl;
+    //     }
+    // }
     return 0;
 }
  //解答コードここまで
@@ -18,6 +78,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -43,7 +104,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -70,6 +131,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====

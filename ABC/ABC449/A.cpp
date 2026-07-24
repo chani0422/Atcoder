@@ -6,7 +6,10 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ld d; cin >> d;
+    d /=2.0;
+    cout << fixed << setprecision(15);
+    cout << d*d*numbers::pi << endl;
     return 0;
 }
 //解答コードここまで
@@ -17,6 +20,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

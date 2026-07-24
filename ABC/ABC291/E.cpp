@@ -4,11 +4,96 @@
 
 
 //解答コードここから
+struct TopologicalResult {
+    vector<ll> order;
+    bool hasCycle;
+    bool unique;
+};
+//通常のトポロジカルソート
+TopologicalResult TopologicalSort(const vector<vector<ll>> &G) {
+    ll n = G.size();
+    vector<ll> indegree(n); //入次数を管理
+
+    for(ll from = 0; from < n; from++) {
+        for(auto to : G[from]) {
+            indegree[to]++;
+        }
+    }
+
+    //何にも依存していない頂点、つまり入次数０の頂点をキューに追加
+    queue<ll> que;
+    rep(i,0,n) {
+        if(indegree[i] == 0) que.push(i);
+    }
+
+    //トポロジカル順となる配列を作成
+    vector<ll> result;
+    bool unique = true;
+
+    while(!que.empty()) {
+        if(que.size() >= 2) unique = false;
+        ll from = que.front();
+        que.pop();
+        result.push_back(from);
+        for(auto to : G[from]) {
+            //次の頂点の入次数をデクリメントすることで入次数０の頂点を作りたい
+            indegree[to]--;
+            //入次数が０になったらそれより前の頂点をすべて処理できたのでキューに追加
+            if(indegree[to] == 0) que.push(to);
+        }
+    }
+
+    bool hasCycle = (result.size() != n);
+
+    //閉路検出
+    //閉路上の頂点及び閉路より後にある頂点は処理されないからresultの配列サイズが小さくなる。
+    if(hasCycle) {
+        unique = false;
+    }
+    return {result, hasCycle, unique};
+}
 //E問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<vector<ll>> G(n);
+    //ほんとにトポロジカルソート使える問題？？
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        a--;b--; //0/1-index確認
+        G[a].pb(b); //有向辺グラフ
+    }
 
+    TopologicalResult ans = TopologicalSort(G);
+    // TopologicalResult ans = LexicographicalTopologicalSort(G);
+
+    //閉路ありの場合
+    if(ans.hasCycle) { //今回はなくても良さそう、一応残す
+        cout << "No" << endl;
+        return 0;
+    }
+    
+    if(ans.unique) cout << "Yes" << endl;
+    else {
+        cout << "No" << endl;
+        return 0;
+    }
+
+    vector<ll> res(n);
+    //問題文に合わせて0/1-indexにする
+    rep(i,0,n) {
+        res[ans.order[i]] = i+1;
+    }
+    cout << endl;
+
+    for(auto &v : res) {
+        cout << v << " ";
+    }
+    cout << endl;
+
+    return 0;
+    //From chanini library
     return 0;
 }
  //解答コードここまで
@@ -18,6 +103,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -43,7 +129,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -70,6 +156,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====

@@ -6,7 +6,24 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,m; cin >> n >> m;
+    vector<ll> v(m);
+    bool flag1 = true,flag2 = true;
+    // iota(nall(v),0);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        a--;
+        v[a]++;
+    }
+
+    for(auto x : v) {
+        if(x == 0) flag2 = false;
+        if(x == 2) flag1 = false;
+    }
+
+    yn(flag1);
+    yn(flag2);
+
     return 0;
 }
 //解答コードここまで
@@ -17,6 +34,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

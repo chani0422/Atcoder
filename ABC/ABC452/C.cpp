@@ -6,7 +6,41 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    vector<ll> A(n),B(n);
+    rep(i,0,n) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        A[i] = a; B[i] = b;
+    }
+    ll m; cin >> m;
+    vector<string> S(m);
+    rep(i,0,m) cin >> S[i];
+
+    vector<vector<set<char>>> mp(11,vector<set<char>>(11)); //文字列の長さ、何文字目か、アルファ
+    for(auto &x : S) {
+        rep(i,0,x.size()) {
+            mp[x.size()-1][i].insert(x[i]);
+        }
+    }
+
+    rep(i,0,m) {
+        if(S[i].size() != n) {
+            cout << "No\n";
+            continue;
+        }
+        string s = S[i];
+        bool flag = true;
+        rep(j,0,n) {
+            char need = s[j];
+            if(mp[A[j]][B[j]].count(need) == 0) {
+                flag = false;
+                break;
+            }
+        }
+        yn(flag);
+    }
+
     return 0;
 }
 //解答コードここまで
@@ -17,6 +51,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

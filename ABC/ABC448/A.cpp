@@ -6,7 +6,14 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,x; cin >> n >> x;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        if(a < x) {
+            x = a;
+            cout << 1 << endl;
+        }else cout << 0 << endl;
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,6 +24,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

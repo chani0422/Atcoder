@@ -39,6 +39,9 @@ int main() {
     //上下左右移動用
     const int dx[4] = {1, 0, -1, 0};
     const int dy[4] = {0, 1, 0, -1};
+    const int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+    const int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
+
 
     vector<vector<ll>> dist(h, vector<ll>(w, -1));
     vector<vector<pair<int,int>>> parent(h, vector<pair<int,int>>(w, {-1,-1}));
@@ -86,6 +89,5 @@ int main() {
         }
     }
     */
-   //From chanini library
     return 0;
 }

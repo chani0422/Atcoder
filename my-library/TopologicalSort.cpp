@@ -1,0 +1,259 @@
+
+#if !__INCLUDE_LEVEL__
+#include __FILE__
+
+struct TopologicalResult {
+    vector<ll> order; //トポロジカル順に並んだ配列にアクセス
+    bool hasCycle; //閉路の有無
+    bool unique; //一意に決まるかどうか
+};
+
+//通常のトポロジカルソート
+TopologicalResult TopologicalSort(const vector<vector<ll>> &G) {
+    ll n = G.size();
+    vector<ll> indegree(n); //入次数を管理
+
+    for(ll from = 0; from < n; from++) {
+        for(auto to : G[from]) {
+            indegree[to]++;
+        }
+    }
+
+    //何にも依存していない頂点、つまり入次数０の頂点をキューに追加
+    queue<ll> que;
+    rep(i,0,n) {
+        if(indegree[i] == 0) que.push(i);
+    }
+
+    //トポロジカル順となる配列を作成
+    vector<ll> result;
+    bool unique = true;
+
+    while(!que.empty()) {
+        if(que.size() >= 2) unique = false;
+        ll from = que.front();
+        que.pop();
+        result.push_back(from);
+        for(auto to : G[from]) {
+            //次の頂点の入次数をデクリメントすることで入次数０の頂点を作りたい
+            indegree[to]--;
+            //入次数が０になったらそれより前の頂点をすべて処理できたのでキューに追加
+            if(indegree[to] == 0) que.push(to);
+        }
+    }
+
+    bool hasCycle = (result.size() != n);
+
+    //閉路検出
+    //閉路上の頂点及び閉路より後にある頂点は処理されないからresultの配列サイズが小さくなる。
+    if(hasCycle) {
+        unique = false;
+    }
+    return {result, hasCycle, unique};
+}
+
+//辞書順最小のトポロジカルソート
+TopologicalResult LexicographicalTopologicalSort(const vector<vector<ll>> &G) {
+    ll n = G.size();
+    vector<ll> indegree(n); //入次数を管理
+
+    for(ll from = 0; from < n; from++) {
+        for(auto to : G[from]) {
+            indegree[to]++;
+        }
+    }
+
+    //何にも依存していない頂点、つまり入次数０の頂点をキューに追加
+    priority_queue<ll, vector<ll>, greater<ll>> que;
+    rep(i,0,n) {
+        if(indegree[i] == 0) que.push(i);
+    }
+
+    //トポロジカル順となる配列を作成
+    vector<ll> result;
+    bool unique = true;
+
+    while(!que.empty()) {
+        if(que.size() >= 2) unique = false;
+        ll from = que.top();
+        que.pop();
+        result.push_back(from);
+        for(auto to : G[from]) {
+            //次の頂点の入次数をデクリメントすることで入次数０の頂点を作りたい
+            indegree[to]--;
+            //入次数が０になったらそれより前の頂点をすべて処理できたのでキューに追加
+            if(indegree[to] == 0) que.push(to);
+        }
+    }
+    
+    bool hasCycle = (result.size() != n);
+
+    //閉路検出
+    //閉路上の頂点及び閉路より後にある頂点は処理されないからresultの配列サイズが小さくなる。
+    if(hasCycle) {
+        unique = false;
+    }
+    return {result, hasCycle, unique};
+
+}
+
+//解答コードここから
+//問題
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<vector<ll>> G(n);
+    //ほんとにトポロジカルソート使える問題？？
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        a--;b--; //0/1-index確認
+        G[a].pb(b); //有向辺グラフ
+    }
+
+    TopologicalResult ans = TopologicalSort(G);
+    // TopologicalResult ans = LexicographicalTopologicalSort(G);
+
+    //閉路ありの場合
+    if(ans.hasCycle) {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    //問題文に合わせて0/1-indexにする
+    for(auto &v : ans.order) {
+        cout << v+1 << " ";
+    }
+    cout << endl;
+
+    if(ans.unique) cout << "Yes" << endl;
+    else cout << "No" << endl;
+
+    return 0;
+    //From chanini library
+}
+//解答コードここまで
+
+#else
+
+// === LIB_BEGIN ===
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+
+const long long inf = (1LL<<60);
+
+#define rep(i,a,b) for(ll i=(a); i<(b); i++)
+#define rrep(i,a,b) for(ll i=(a); i>=(b); i--)
+#define pb push_back
+#define popb() pop_back()
+#define fi first
+#define se second
+#define yn(x) do { if(x) cout << "Yes\n"; else cout << "No\n"; } while(0)
+#define nall(a) (a).begin(),(a).end()
+#define rall(a) (a).rbegin(),(a).rend()
+#define MIN(x) *min_element(nall(x))
+#define MAX(x) *max_element(nall(x))
+
+using ll = long long;
+using ld = long double;
+using ull = unsigned long long;
+using lll = __int128_t;
+
+template<class T> using vc   = vector<T>;
+template<class T> using vvc  = vector<vc<T>>;
+template<class T> using vvvc = vector<vvc<T>>;
+
+using Graph= vector<vector<ll>>;
+using Grid = vector<vector<char>>;
+
+
+//====== ここから入出力系 ======
+template<class A, class B>
+ostream& operator<<(ostream& os, const pair<A,B>& p) {
+    return os << "(" << p.first << "," << p.second << ")";
+}
+
+//引数を空白区切りで出力
+template<class T, class... Ts>
+void out(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << ' ' << b), ...);
+    cout << '\n';
+}
+//引数を1行づつ出力
+template<class T, class... Ts>
+void outendl(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << endl << b), ...); 
+    cout << '\n';
+}
+//引数を順に読み込む
+template <class... T>
+void input(T &...a) {
+	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
+}
+
+//===== ここから便利系 =====
+//result = min(result,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmin(T& a, const T& b) {
+    if (b < a) { a = b; return true; }
+    return false;
+}
+//result = max(result,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmax(T& a, const T& b) {
+    if (a < b) { a = b; return true; }
+    return false;
+}
+
+//===== ここからデバッグ系 =====
+template<class Array2D>
+void For2(const Array2D& a) {
+    for (const auto& row : a) {
+        for (const auto& v : row) cout << v << " ";
+        cout << "\n";
+    }
+}
+template <class Array1D>
+void For(const Array1D& x) {
+    for (const auto& a : x) cout << a << " ";
+    cout << '\n';
+}
+
+// === LIB_END ===
+
+#endif

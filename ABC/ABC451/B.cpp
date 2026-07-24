@@ -6,7 +6,18 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,m; cin >> n >> m;
+    vector<ll> now(m), later(m);
+    rep(i,0,n) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        now[a]++;
+        later[b]++;
+    }
+
+    rep(i,0,m) {
+        cout << later[i] - now[i] << endl;
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,6 +28,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

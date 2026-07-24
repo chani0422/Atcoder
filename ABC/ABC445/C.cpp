@@ -6,7 +6,15 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    rrep(i,n-2,0) {
+        if(A[i] == i+1) continue;
+        A[i] = A[A[i]-1];
+    }
+
+    For(A);
     return 0;
 }
 //解答コードここまで
@@ -17,6 +25,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

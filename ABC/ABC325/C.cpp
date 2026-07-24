@@ -8,7 +8,41 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll h,w; cin >> h >> w;
+    vector<vector<bool>> visit(h,vector<bool>(w,false));
+    vector<string> S(h);
+    rep(i,0,h) cin >> S[i];
 
+    const int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+    const int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
+    ll ans = 0;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(visit[i][j] == true) continue;
+            if(S[i][j] == '.') {
+                visit[i][j] = true;
+                continue;
+            }
+            queue<pair<ll,ll>> que;
+            visit[i][j] = true;
+            que.emplace(i,j);
+            ans++;
+            while(!que.empty()) {
+                auto [x,y] = que.front();
+                que.pop();
+                rep(k,0,8) {
+                    ll nx = x + dx[k];
+                    ll ny = y + dy[k];
+                    if(nx<0||nx>=h||ny<0||ny>=w) continue;
+                    if(S[nx][ny] == '.') continue;
+                    if(visit[nx][ny] == true) continue;
+                    que.emplace(nx,ny);
+                    visit[nx][ny] = true;
+                }
+            }
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで
@@ -18,6 +52,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -43,7 +78,7 @@ template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -70,6 +105,38 @@ void outendl(const T& a, const Ts&... b){
 template <class... T>
 void input(T &...a) {
 	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
 }
 
 //===== ここから便利系 =====

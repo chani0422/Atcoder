@@ -15,6 +15,7 @@ __BODY__
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 using namespace std;
+using namespace atcoder
 
 #define rep(i,a,b) for(int i=(a); i<(b); i++)
 #define rrep(i,a,b) for(int i=(a); i>=(b); i--)

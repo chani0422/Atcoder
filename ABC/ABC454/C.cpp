@@ -53,6 +53,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -65,20 +66,20 @@ const long long inf = (1LL<<60);
 #define yn(x) do { if(x) cout << "Yes\n"; else cout << "No\n"; } while(0)
 #define nall(a) (a).begin(),(a).end()
 #define rall(a) (a).rbegin(),(a).rend()
-#define For(x) for(auto a : (x)) cout << a << " ";
 #define MIN(x) *min_element(nall(x))
 #define MAX(x) *max_element(nall(x))
 
 using ll = long long;
 using ld = long double;
 using ull = unsigned long long;
+using lll = __int128_t;
 
 template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
 using Graph= vector<vector<ll>>;
-using Grid = vector<vector<ll>>;
+using Grid = vector<vector<char>>;
 
 
 //====== ここから入出力系 ======
@@ -107,6 +108,38 @@ void input(T &...a) {
 	(cin >> ... >> a);
 }
 
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
+}
+
 //===== ここから便利系 =====
 //ans = min(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
 template <class T>
@@ -122,12 +155,17 @@ bool chmax(T& a, const T& b) {
 }
 
 //===== ここからデバッグ系 =====
-template<class T>
-void For2(const T& a) {
+template<class Array2D>
+void For2(const Array2D& a) {
     for (const auto& row : a) {
         for (const auto& v : row) cout << v << " ";
         cout << "\n";
     }
+}
+template <class Array1D>
+void For(const Array1D& x) {
+    for (const auto& a : x) cout << a << " ";
+    cout << '\n';
 }
 
 // === LIB_END ===

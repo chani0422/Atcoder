@@ -6,7 +6,8 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    yn(s.size()%5 == 0);
     return 0;
 }
 //解答コードここまで
@@ -17,6 +18,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

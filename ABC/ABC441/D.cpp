@@ -65,6 +65,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
@@ -89,7 +90,7 @@ template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
 template<class T> using vvvc = vector<vvc<T>>;
 
-using Graph= vector<vector<pair<int,ll>>>;
+using Graph= vector<vector<ll>>;
 using Grid = vector<vector<char>>;
 
 

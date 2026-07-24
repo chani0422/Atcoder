@@ -6,7 +6,22 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll Q; cin >> Q;
+    priority_queue<ll,vector<ll>,greater<ll>> que;
+    rep(i,0,Q) {
+        ll q,h; cin >> q >> h;
+        if(q == 1) {
+            que.emplace(h);
+            cout << que.size() << endl;
+        }else {
+            while(!que.empty()){
+                ll v = que.top();
+                if(v <= h) que.pop();
+                else break;
+            }
+            cout << que.size() << endl;
+        }
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,6 +32,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

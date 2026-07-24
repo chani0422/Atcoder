@@ -6,7 +6,36 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll T; cin >> T;
+    while(T--) {
+        ll n,d; cin >> n >> d;
+        queue<pair<ll,ll>> q;
+        vector<ll> A(n),B(n);
+        rep(i,0,n) cin >> A[i];
+        rep(i,0,n) cin >> B[i];
+
+        ll sum = 0;
+        rep(i,0,n) {
+            q.emplace(A[i],i);
+            sum += A[i];
+            ll use = B[i];
+            while(!q.empty() && use > 0) {
+                auto &[u,v] = q.front();
+                ll erase = min(u,use);
+                u -= erase;
+                sum -= erase;
+                use -= erase;
+                if(u == 0) q.pop();
+            }
+            while(!q.empty()) {
+                auto &[u,v] = q.front();
+                if(abs(i-v) < d) break;
+                sum -= u;
+                q.pop();
+            }
+        }
+        cout << sum << endl;
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,6 +46,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
