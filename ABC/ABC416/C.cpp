@@ -4,10 +4,30 @@
 
 
 //解答コードここから
+vector<string> ans;
+vector<string> s;
+ll k;
+void dfs(ll cnt, string S) {
+    if(cnt == k) {
+        ans.pb(S);
+        return;
+    }
+    rep(i,0,ssize(s)) {
+        dfs(cnt+1,S+s[i]);
+    }
+}
 //C問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,x;
+    cin >> n >> k >> x;
+    s.resize(n);
+    rep(i,0,n) cin >> s[i];
+
+    dfs(0,"");
+    sort(nall(ans));
+    cout << ans[x-1] << endl;
 
     return 0;
 }

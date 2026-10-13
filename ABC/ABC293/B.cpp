@@ -8,7 +8,17 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<bool> A(n,true);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        if(A[i] == false) continue;
+        A[a-1] = false;
+    }
+    cout << count(nall(A),true) << endl;
+    rep(i,0,n) {
+        if(A[i]) cout << i+1 << endl;
+    }
     return 0;
 }
  //解答コードここまで

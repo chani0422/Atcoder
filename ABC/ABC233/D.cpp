@@ -2,18 +2,36 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
+//新しい学び
+/*
+そうか、Google Keepで書くよりここで色々書いたほうがコピペ一回で済むやん
+定数倍高速化ってこと！？
+右端のrを決めた時、それ以前の累積和にS_r-Kが何個あるかを数えればいい。
+区間スケジューリング
+*/
 //D問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    vector<ll> A(n);
+    map<ll,ll> mp;
+    ll sum = 0;
+    ll ans = 0;
+    mp[0] = 1;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        sum += a;
+        ans += mp[sum-k];
+        mp[sum]++;
+    }
+    cout << ans << endl;
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -38,6 +56,7 @@ using ll = long long;
 using ld = long double;
 using ull = unsigned long long;
 using lll = __int128_t;
+using mint = modint998244353;
 
 template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;
@@ -134,5 +153,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif

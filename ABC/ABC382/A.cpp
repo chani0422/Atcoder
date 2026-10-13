@@ -8,7 +8,15 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,d; cin >> n >> d;
+    string s; cin >> s;
+    ll ans = count(nall(s),'.');
+    ll cnt = 0;
+    rep(i,0,ssize(s)) {
+        if(s[i] == '@') {ans++;cnt++;}
+        if(d == cnt) break;
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

@@ -1,19 +1,162 @@
-
-#if !__INCLUDE_LEVEL__
+    #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
-//E問題
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+/* From chanini library*/
+//区間加算 → 区間和 + 区間最小値 + 区間最大値
 
+// S : セグ木が持つ値
+struct S {  
+    ll sum;   // 区間和
+    ll mn;    // 区間最小値
+    ll mx;    // 区間最大値
+    ll size;  // 区間の要素数
+};
+
+// F : 遅延させる更新 → +x
+using F = long long;
+
+// 2区間を結合
+S op(S a, S b) {
+    return {
+        a.sum + b.sum,
+        min(a.mn, b.mn),
+        max(a.mx, b.mx),
+        a.size + b.size
+    };
+}
+
+// S側の単位元
+S e() {
+    return {
+        0,      // sum
+        inf,    // mn
+        -inf,   // mx
+        0       // size
+    };
+}
+
+// 更新 f をデータ x に適用
+// 区間全体に +f
+S mapping(F f, S x) {
+
+    // 空区間なら何もしない
+    if(x.size == 0) return x;
+
+    return {
+        x.sum + f * x.size,
+        x.mn + f,
+        x.mx + f,
+        x.size
+    };
+}
+
+// 更新を合成
+// +g のあとに +f → +(f+g)
+ll composition(F f, F g) {return f + g;}
+
+// F側の単位元 +0
+ll id(){return 0;}
+
+/*
+    【使い方】
+    【できること】
+    ・区間加算
+    ・区間和
+    ・区間最小値
+    ・区間最大値
+    ・一点取得
+    ・一点変更
+
+
+   // [l,r) に +x
+    seg.apply(l, r, x);
+
+   // p に +x
+    seg.apply(p, x);
+
+   // [l,r) の情報取得
+    S res = seg.prod(l, r);
+   res.sum;   // 区間和
+   res.mn;    // 区間最小値
+   res.mx;    // 区間最大値
+   res.size;  // 区間サイズ
+
+   // 全区間の情報
+    S res = seg.all_prod();
+
+   // p 番目の情報
+    S res = seg.get(p);
+
+   // p 番目を x に変更
+    seg.set(p, {x, x, x, 1});
+*/
+
+
+//問題
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    //区間加算 → 区間和 + 区間最小値 + 区間最大値
+    vector<S> A(n);
+    rep(i,0,n) {
+        ll x; cin >> x;
+        A[i] = {x, x, x, 1};
+    }
+    
+    lazy_segtree<S,op,e,F,mapping,composition,id> seg(A);
+    
+    rep(i,0,m) {
+        ll b; cin >> b;
+        ll ball = seg.get(b).sum;
+        seg.set(b,S{0,0,0,1});
+        ll all = ball/n;
+        //周回する場合
+        if(all >= 1) seg.apply(0,n,all);
+        ll remain = ball%n;
+        if(remain <= 0) continue;
+        ll range = b+remain;
+        //b_iからいけるとこまで
+        seg.apply(b+1,min(n,range+1),1);
+        if(range/n == 0) continue;
+        seg.apply(0,range%n+1,1);
+        // rep(i,0,n) cout << seg.get(i).sum << " ";
+        cout << "\n";
+    }
+
+    rep(i,0,n) {
+        cout << seg.get(i).sum << " ";
+    }
+
+    // [l,r) に +x
+    // seg.apply(l, r, x);
+    
+    // p に +x
+    // seg.apply(p, x);
+    
+    // [l,r) の情報取得
+    // S res = seg.prod(l, r);
+    // res.sum;   // 区間和
+    // res.mn;    // 区間最小値
+    // res.mx;    // 区間最大値
+    // res.size;  // 区間サイズ
+    
+    // 全区間の情報
+    // S res = seg.all_prod();
+    
+    // p 番目の情報
+    // S res = seg.get(p);
+    
+    // p 番目を x に変更
+    // seg.set(p, {x, x, x, 1});
+    
+    
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -134,5 +277,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif

@@ -8,7 +8,36 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m,R; cin >> n >> m >> R;
+    vector<vector<ll>> dist(n,vector<ll>(n,inf));
+    vector<ll> visit(R);
+    rep(i,0,R) cin >> visit[i];
+    rep(i,0,n) dist[i][i] = 0;
+    rep(i,0,m) {
+        ll a,b,c; cin >> a >> b >> c;
+        a--;b--;
+        dist[a][b] = c;
+        dist[b][a] = c;
+    }
+    rep(k,0,n)rep(i,0,n)rep(j,0,n) chmin(dist[i][j],dist[i][k]+dist[k][j]);
 
+    if(R == 2) {
+        cout << dist[visit[0]-1][visit[1]-1] << "\n";
+        return 0;
+    }
+    ll ans = inf;
+    sort(nall(visit));
+    do {
+        ll sum = 0;
+        rep(i,0,R-1) {
+            ll from = visit[i]-1;
+            ll to = visit[i+1]-1;
+            if(dist[from][to] == inf) continue;
+            sum += dist[from][to];
+        }
+        chmin(ans,sum);
+    }while(next_permutation(nall(visit)));
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

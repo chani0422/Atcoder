@@ -6,7 +6,49 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll h,w; cin >> h >> w;
+    vc<string> G(h);
+    rep(i,0,h) cin >> G[i];
+
+    vvc<ll> dist(h,vc<ll>(w,-1));
+    queue<pair<ll,ll>> que;
+
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+    ll ans = 0;
+    bool no = false;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            no = false;
+            if(dist[i][j] != -1) continue;
+            if(G[i][j] == '#') continue;
+            if(i == 0 || i == h-1 || j == 0 || j == w-1) no = false;
+            que.push({i,j});
+            dist[i][j] = 0;
+
+            while(!que.empty()) {
+                auto [x,y] = que.front();
+                que.pop();
+                
+                rep(i,0,4) {
+                    ll nx = x + dx[i];
+                    ll ny = y + dy[i];
+                    
+                    if(nx < 0 || h <= nx || ny < 0 || w <= ny) {
+                        no = true;
+                        continue;
+                }
+                    if(G[nx][ny] == '#') continue;
+                    if(dist[nx][ny] == -1) {
+                        dist[nx][ny] = dist[x][y] + 1;
+                        que.push({nx,ny});
+                    }
+                }
+            }
+            if(!no) ans++;
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

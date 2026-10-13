@@ -8,7 +8,48 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll h,w,d; cin >> h >> w >> d;
+    vector<string> g(h);
+    rep(i,0,h) cin >> g[i];
+    //上下左右移動用
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+    // const int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+    // const int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
+    
+    vector<vector<ll>> dist(h, vector<ll>(w, -1));
+    queue<tuple<ll,ll,ll>> que;
+    
+    rep(i,0,h)rep(j,0,w) if(g[i][j] == 'H') {
+        que.push({i,j,0});
+        dist[i][j] = 0;
+    }
+    
+    while(!que.empty()){
+        auto [x, y,cnt] = que.front();
+        que.pop();
+        if(cnt == d) continue;
+    
+        rep(dir,0,4){
+            ll nx = x + dx[dir];
+            ll ny = y + dy[dir];
+    
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+            if(g[nx][ny] == '#') continue; // 壁
+            if(dist[nx][ny] != -1) continue; // 既訪問
+    
+            dist[nx][ny] = dist[x][y] + 1;
+            que.push({nx, ny,cnt+1});
+        }
+    }
+    ll ans = 0;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(dist[i][j] >= 0) ans++;
+        }
+    }
+    cout << ans << "\n";
+    
     return 0;
 }
  //解答コードここまで

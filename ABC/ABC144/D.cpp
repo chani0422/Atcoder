@@ -8,7 +8,11 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ld A,B,X; cin >> A >> B >> X;
+    ld V = A*A*B;
+    cout << fixed << setprecision(15);
+    cout << (V-X)/V*(0.9)*100 << "\n";
+    
     return 0;
 }
  //解答コードここまで

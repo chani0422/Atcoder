@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    vector<bool> num(11,true);
+    string s; cin >> s;
+    rep(i,0,9) {
+        ll a = s[i]-'0';
+        num[a] = false;
+    }
+    rep(i,0,10) {
+        if(num[i]) {
+            cout << i << endl;
+            return 0;
+        }
+    }
     return 0;
 }
  //解答コードここまで

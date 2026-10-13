@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll h,w; cin >> h >> w;
+    ll d; cin >> d;
+    vector<string> S(h);
+    rep(i,0,h) cin >> S[i];
+    
+    ll ans = 0;
+    rep(i1,0,h) {
+        rep(j1,0,w) {
+            if(S[i1][j1] == '#') continue;
+            rep(i2,0,h) {
+                rep(j2,0,w) {
+                    if(i1 == i2 && j1 == j2 || S[i2][j2] == '#') continue;
+                    ll cnt = 0;
+                    rep(i,0,h) {
+                        rep(j,0,w) {
+                            if((abs(i1-i)+abs(j1-j) > d && abs(i2-i)+abs(j2-j) > d )) continue;
+                            if(S[i][j] == '.') cnt++;
+                        }
+                    }
+                    chmax(ans,cnt);
+                }
+            }
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

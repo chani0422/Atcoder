@@ -2,18 +2,70 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
-//D問題
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
 
+/* From chanini library*/
+//区間加算・区間和
+
+// S : セグ木が持つ値 → 区間和
+struct S {
+    ll sum;
+    ll size;
+};
+// F : 遅延させる更新 → +x
+using F = long long;
+
+// 2区間を結合
+S op(S a,S b) {return {a.sum + b.sum,a.size+b.size};}
+
+// S側の単位元
+S e() {return {0,0};}
+
+// 更新 f をデータ x に適用
+// 区間全体に +f
+S mapping(F f,S x) {return {x.sum+x.size*f,x.size};}
+
+// 更新を合成
+// +g のあとに +f → +(f+g)
+F composition(F f, F g) {return f + g;}
+
+// F側の単位元 +0
+ll id(){return 0;}
+
+//問題
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    string SS,TT; cin >> SS >> TT;
+    vector<S> A(n);
+    rep(i,0,n) {
+        A[i] = {0,1};
+    }
+
+    lazy_segtree<S,op,e,F,mapping,composition,id> seg(A);
+
+    rep(i,0,m) {
+        ll l,r; cin >> l >> r;
+        seg.apply(l-1,r,1);
+    }
+    string s = "",t = "";
+    rep(i,0,n) {
+        S a = seg.get(i);
+        if(a.sum%2 == 0) {
+            s += SS[i];
+            t += TT[i];
+        }else {
+            s += TT[i];
+            t += SS[i];
+        }
+    }
+    cout << s << endl;
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -134,5 +186,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif

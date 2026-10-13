@@ -4,11 +4,149 @@
 
 
 //解答コードここから
+/* From chanini library*/
+//区間加算 → 区間和 + 区間最小値 + 区間最大値
+const ll mod = 998244353;
+// S : セグ木が持つ値
+struct S {
+    ll suma;   // 区間和
+    ll sumb;
+    ll sumab;
+    ll size;  // 区間の要素数
+};
+
+// F : 遅延させる更新 → +x
+struct F{
+    ll a;
+    ll b;
+};
+
+// 2区間を結合
+S op(S a, S b) {
+    return {
+        (a.suma + b.suma) % mod,
+        (a.sumb + b.sumb) % mod,
+        (a.sumab + b.sumab) % mod,
+        a.size + b.size
+    };
+}
+
+// S側の単位元
+S e() {
+    return {
+        0,      // sum
+        0,
+        0,
+        0       // size
+    };
+}
+
+// 更新 f をデータ x に適用
+// 区間全体に +f
+S mapping(F f, S x) {
+    S res;
+    res.sumab = (
+        x.sumab+
+        f.a*x.sumb%mod+
+        f.b*x.suma%mod+
+        f.a*f.b%mod*x.size%mod
+    )%mod;
+
+    // 空区間なら何もしない
+    if(x.size == 0) return x;
+
+    res.suma = (x.suma+f.a*x.size)%mod;
+    res.sumb = (x.sumb+f.b*x.size)%mod;
+    res.size = x.size;
+
+    return res;
+}
+
+// 更新を合成
+// +g のあとに +f → +(f+g)
+F composition(F f, F g) {
+    F res;
+    res.a = (f.a+g.a)%mod;
+    res.b = (f.b+g.b)%mod;
+    return res;
+}
+
+// F側の単位元 +0
+F id(){return {0,0};}
+
+/*
+    【使い方】
+    【できること】
+    ・区間加算
+    ・区間和
+    ・区間最小値
+    ・区間最大値
+    ・一点取得
+    ・一点変更
+
+
+   // [l,r) に +x
+    seg.apply(l, r, x);
+
+   // p に +x
+    seg.apply(p, x);
+
+   // [l,r) の情報取得
+    S res = seg.prod(l, r);
+   res.sum;   // 区間和
+   res.mn;    // 区間最小値
+   res.mx;    // 区間最大値
+   res.size;  // 区間サイズ
+
+   // 全区間の情報
+    S res = seg.all_prod();
+
+   // p 番目の情報
+    S res = seg.get(p);
+
+   // p 番目を x に変更
+    seg.set(p, {x, x, x, 1});
+*/
+
 //F問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,Q; cin >> n >> Q;
+    vector<ll> A(n),B(n);
+    rep(i,0,n) cin >> A[i];
+    rep(i,0,n) cin >> B[i];
+    //区間加算 → 区間和 + 区間最小値 + 区間最大値
+    vector<S> C(n);
+    rep(i,0,n) {
+        C[i] = {
+            A[i],
+            B[i],
+            (A[i]*B[i])%mod,
+            1
+        };
+    }
+    
+    lazy_segtree<S,op,e,F,mapping,composition,id> seg(C);
+    
+    
+    while(Q--) {
+        ll t; cin >> t;
+        ll l,r,x;
+        if(t == 1) {
+            cin >> l >> r >> x;
+            l--;
+            seg.apply(l,r,F{x,0});
+        }else if(t == 2) {
+            cin >> l >> r >> x;
+            l--;
+            seg.apply(l,r,F{0,x});
+        }else {
+            cin >> l >> r;
+            l--;
+            cout << seg.prod(l,r).sumab << "\n";
+        }
+    }
     return 0;
 }
  //解答コードここまで

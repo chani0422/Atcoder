@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    bool flag = false;
+    ll ans = 0;
+    while(true) {
+        for(auto x : A) if(x%2 == 1) flag = true;
+        if(!flag) {
+            for(auto &x : A) x/=2;
+            ans++;
+        }else break;
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

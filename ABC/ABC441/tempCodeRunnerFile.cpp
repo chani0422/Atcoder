@@ -8,25 +8,26 @@ int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
     ll n,m; cin >> n >> m;
     string s,t; cin >> s >> t;
-    ll ss = s.size(),tt = t.size();
-    rep(T,0,n) {
-        string u; cin >> u;
-        ll sz = u.size();
-        ll cntS = 0,cntT = 0;
-        rep(i,0,sz) {
-            rep(j,0,ss) if(u[i] == s[j]) {
-                cntS++;
-                break;
+    ll S = ssize(s),T = ssize(t);
+    ll Q; cin >> Q;
+    rep(T,0,Q) {
+        string w; cin >> w;
+        ll Ao = 0;
+        ll Ta = 0;
+        ll len = ssize(w);
+        rep(i,0,len) {
+            rep(j,0,S) {
+                if(s[j] == w[i]) Ao++;
             }
-            rep(j,0,tt) if(u[i] == t[j]) {
-                cntT++;
-                break;
-            }
-            cout << cntS << " " << cntT << endl;
         }
-        if(cntS > cntT) cout << "Takahashi\n";
-        else if(cntS < cntT) cout << "Aoki\n";
-        else cout << "Unknown \n";
+        rep(i,0,len) {
+            rep(j,0,T) {
+                if(t[j] == w[j]) Ta++;
+            }
+        }
+        if(Ao > Ta) cout << "Aoki\n";
+        else if(Ao < Ta) cout << "Takahashi\n";
+        else cout << "Unknown\n";
     }
     return 0;
 }
@@ -38,6 +39,7 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
+using namespace atcoder;
 
 const long long inf = (1LL<<60);
 

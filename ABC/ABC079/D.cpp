@@ -8,7 +8,12 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll H,W; cin >> H >> W;
+    vector<vector<ll>> dist(10,vector<ll>(10));
 
+    rep(i,0,10)rep(j,0,10) cin >> dist[i][j];
+    
+    
     return 0;
 }
  //解答コードここまで

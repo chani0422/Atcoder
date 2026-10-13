@@ -8,7 +8,20 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    auto dfs = [&](auto dfs,string s) {
+        if(ssize(s) == n) {
+            cout << s << "\n";
+            return;
+        }
+        for(char c = 'a';c <= 'c';c++) {
+            s.pb(c);
+            dfs(dfs,s);
+            s.popb();
+        }
+        return;
+    };
+    dfs(dfs,"");
     return 0;
 }
  //解答コードここまで

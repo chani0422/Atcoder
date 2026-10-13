@@ -18,6 +18,7 @@ int main() {
             cout << h*c << endl;
             w -= c;
         }
+        //a
     }
     return 0;
 }

@@ -6,7 +6,9 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    int n,m; std::cin >> n >> m;
+    if((n+1)/2 >= m) std::cout << "Yes\n";
+    else std::cout << "No\n";
     return 0;
 }
 //解答コードここまで

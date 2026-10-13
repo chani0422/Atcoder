@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<string> S(n);
+    rep(i,0,n) cin >> S[i];
+    vector<vector<char>> T(n,vector<char>(n));
+    rep(i,0,n)rep(j,0,n) cin >> T[i][j];
 
+    ll ans = inf;
+    rep(k,0,4) {
+        ll cnt = 0;
+        rep(i,0,n) {
+            rep(j,0,n) {
+                if(S[i][j] != T[i][j]) cnt++;
+            }
+        }
+        cnt += k;
+        chmin(ans,cnt);
+        vector<vector<char>> X(n,vector<char>(n));
+        rep(i,0,n) {
+            rep(j,0,n) {
+                X[i][j] = T[j][n-i-1];
+            }
+        }
+        T = X;
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

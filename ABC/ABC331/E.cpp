@@ -8,7 +8,35 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m,l;
+    cin >> n >> m >> l;
+    vector<pair<ll,ll>> A(n),B(m);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        A[i] = {a,i};
+    }
+    rep(i,0,m) {
+        ll a; cin >> a;
+        B[i] = {a,i};
+    }
+    set<pair<ll,ll>> NO;
+    rep(i,0,l) {
+        ll c,d; cin >> c >> d;
+        c--;d--;
+        NO.insert({c,d});
+    }
+    sort(rall(A));
+    sort(rall(B));
+    ll ans = 0;
+    rep(i,0,n) {
+        for(auto [cost,idx] : B) {
+            if(NO.count({A[i].se,idx})) continue;
+            chmax(ans,(A[i].fi+cost));
+            break;
+        }
+    }
 
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

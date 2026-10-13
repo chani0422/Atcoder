@@ -22,6 +22,7 @@ using ll = long long;
 using ld = long double;
 using ull = unsigned long long;
 using lll = __int128_t;
+using mint = modint998244353;
 
 template<class T> using vc   = vector<T>;
 template<class T> using vvc  = vector<vc<T>>;

@@ -8,7 +8,13 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    char c1,c2; cin >> c1 >> c2;
+    rep(i,0,n) {
+        char c; cin >> c;
+        if(c != c1) cout << c2;
+        else cout << c;
+    }
     return 0;
 }
  //解答コードここまで

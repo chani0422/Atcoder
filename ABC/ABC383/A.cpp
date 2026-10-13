@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    ll ans = 0;
+    ll pre = 0;
+    rep(i,0,n) {
+        ll t,v; cin >> t >> v;
+        t--;
+        ll tmp = ans - (t-pre);
+        chmax(tmp,0LL);
+        ans = tmp;
+        ans += v;
+        pre = t;
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

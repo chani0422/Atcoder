@@ -8,7 +8,44 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    vector<ll> B(n),W(m);
+    rep(i,0,n) cin >> B[i];
+    rep(i,0,m) cin >> W[i];
+    sort(rall(B));
+    sort(rall(W));
+    ll i = 0,j = 0;
+    ll ans = 0;
+    ll cntB = 0,cntW = 0;
+    while(i < n && j < m) {
+        if(ans+B[i] < ans) {
+            if(ans+B[i]+W[j] < ans) break;
+            if(cntB == cntW) {
+                ans += B[i] + W[i];
+                cntB++;cntW++;
+                i++;j++;
+            }else {
+                ans += W[j];
+                cntW++;
+                j++;
+            }
+        }else {
+            ans += B[i];
+            i++;
+            cntB++;
+        }
+    }
+    rep(ii,i,n) {
+        if(chmax(ans,ans+B[ii])) {
+            cntB++;
+            continue;
+        }
+    }
+    rep(jj,j,m) {
+        cntW++;
+        if(cntB >= cntW && chmax(ans,ans+W[jj])) continue;
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

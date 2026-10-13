@@ -8,7 +8,17 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    stack<char> st;
+    char c;
+    while(cin >> c) {
+        if(st.empty() || c == '(' || c == '[' || c == '<') {
+            st.push(c);
+            continue;
+        }
+        char left = st.top();
+        if((left=='('&&c==')')||(left=='['&&c==']')||(left=='<'&&c=='>')) st.pop();
+    }
+    yn(st.empty());
     return 0;
 }
  //解答コードここまで

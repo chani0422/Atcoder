@@ -1,0 +1,270 @@
+#if !__INCLUDE_LEVEL__
+#include __FILE__
+
+//解答コードここから
+//問題
+
+//帰省中で今pc使えないのでスマホでやってます
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    int h, w; cin >> h >> w;
+    vector<string> g(h);
+    rep(i,0,h) cin >> g[i];
+    int sx, sy, gx, gy;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(g[i][j] == 'S') {
+                sx = i;
+                sy = j;
+            }else if(g[i][j] == 'G') {
+                gx = i;
+                gy = j;
+            }
+        }
+    }
+
+
+    // 徒歩（cost 0）用：上下左右
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+
+    const int INF = 1e9;
+    vector<vector<ll>> dist(h, vector<ll>(w, INF));
+    // vector<vector<pair<int,int>>> parent(h, vector<pair<int,int>>(w, {-1,-1}));
+
+    deque<pair<int,int>> dq;
+
+    dist[sx][sy] = 0;
+    dq.push_front({sx, sy});
+
+    while(!dq.empty()){
+        auto [x, y] = dq.front();
+        dq.pop_front();
+
+        ll cur = dist[x][y];
+
+        //cost 0
+        rep(dir,0,4){
+            int nx = x + dx[dir];
+            int ny = y + dy[dir];
+
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; //範囲外
+            if(g[nx][ny] == 'B') continue; //既訪問
+
+            if(g[nx][ny] == 'O' || g[nx][ny] == 'G'){
+                if(dist[nx][ny] > cur){
+                dist[nx][ny] = cur;
+                dq.push_front({nx, ny});
+                }
+            }
+            if(g[nx][ny] == 'P'){
+                if(dist[nx][ny] > cur+1) {
+                dist[nx][ny] = cur+1;
+                dq.push_back({nx,ny});
+                }
+            }
+        }
+
+        //cost 1
+        // rep(i,-2,3){
+        //     rep(j,-2,3){
+        //         if(abs(i) == abs(j)) continue; //マンハッタン距離考慮用
+        //         int nx = x + i;
+        //         int ny = y + j;
+
+        //         if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; //範囲外
+        //         if(g[nx][ny] == '#') continue; //既訪問
+
+        //         if(dist[nx][ny] > cur + 1){
+        //             dist[nx][ny] = cur + 1;
+        //             dq.push_back({nx, ny});
+        //             // parent[nx][ny] = {x, y};
+        //         }
+        //     }
+        // }
+    }
+
+    if(dist[gx][gy] == INF) cout << -1 << "\n";
+    else cout << dist[gx][gy] << "\n";
+    // int h, w; cin >> h >> w;
+
+    // ll sx,sy,gx,gy;
+    // vector<string> g(h);
+    // rep(i,0,h) cin >> g[i];
+    // rep(i,0,h) {
+    //     rep(j,0,w) {
+    //         if(g[i][j] == 'S') {
+    //             sx = i;
+    //             sy = j;
+    //         }else if(g[i][j] == 'G') {
+    //             gx = i;
+    //             gy = j;
+    //         }
+    //     }
+    // }
+
+    // //上下左右移動用
+    // const int dx[4] = {1, 0, -1, 0};
+    // const int dy[4] = {0, 1, 0, -1};
+    // // const int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+    // // const int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
+
+
+    // vector<vector<ll>> dist(h, vector<ll>(w, -1));
+    // queue<pair<int,int>> q;
+
+    // dist[sx][sy] = 0;
+    // q.push({sx, sy});
+
+    // while(!q.empty()){
+    //     auto [x, y] = q.front();
+    //     q.pop();
+
+    //     rep(dir,0,4){
+    //         int nx = x + dx[dir];
+    //         int ny = y + dy[dir];
+
+    //         if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+    //         if(g[nx][ny] == 'B') continue; // 壁l
+    //         if(g[nx][ny] == 'P') {
+    //             if(dist[x][y] + 1 >= dist[nx][ny]) continue; // 既訪問
+    //             dist[nx][ny] = dist[x][y] + 1;
+    //             q.push({nx, ny});
+    //         }else if(g[nx][ny] == 'O' || g[nx][ny] == 'G') {
+    //             dist[nx][ny] = dist[x][y];
+    //             q.push({nx,ny});
+    //         }
+
+    //     }
+    // }
+    // //到達できなかったら-1を出力
+    // cout << dist[gx][gy] << endl;
+    return 0;
+}
+//解答コードここまで
+
+#else
+
+// === LIB_BEGIN ===
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+
+const long long inf = (1LL<<60);
+
+#define rep(i,a,b) for(ll i=(a); i<(b); i++)
+#define rrep(i,a,b) for(ll i=(a); i>=(b); i--)
+#define pb push_back
+#define popb() pop_back()
+#define fi first
+#define se second
+#define yn(x) do { if(x) cout << "Yes\n"; else cout << "No\n"; } while(0)
+#define nall(a) (a).begin(),(a).end()
+#define rall(a) (a).rbegin(),(a).rend()
+#define MIN(x) *min_element(nall(x))
+#define MAX(x) *max_element(nall(x))
+
+using ll = long long;
+using ld = long double;
+using ull = unsigned long long;
+using lll = __int128_t;
+
+template<class T> using vc   = vector<T>;
+template<class T> using vvc  = vector<vc<T>>;
+template<class T> using vvvc = vector<vvc<T>>;
+
+using Graph= vector<vector<ll>>;
+using Grid = vector<vector<char>>;
+
+
+//====== ここから入出力系 ======
+template<class A, class B>
+ostream& operator<<(ostream& os, const pair<A,B>& p) {
+    return os << "(" << p.first << "," << p.second << ")";
+}
+
+//引数を空白区切りで出力
+template<class T, class... Ts>
+void out(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << ' ' << b), ...);
+    cout << '\n';
+}
+//引数を1行づつ出力
+template<class T, class... Ts>
+void outendl(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << endl << b), ...);
+    cout << '\n';
+}
+//引数を順に読み込む
+template <class... T>
+void input(T &...a) {
+    (cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
+}
+
+//===== ここから便利系 =====
+//ans = min(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmin(T& a, const T& b) {
+    if (b < a) { a = b; return true; }
+    return false;
+}
+//ans = max(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmax(T& a, const T& b) {
+    if (a < b) { a = b; return true; }
+    return false;
+}
+
+//===== ここからデバッグ系 =====
+template<class Array2D>
+void For2(const Array2D& a) {
+    for (const auto& row : a) {
+        for (const auto& v : row) cout << v << " ";
+        cout << "\n";
+    }
+}
+template <class Array1D>
+void For(const Array1D& x) {
+    for (const auto& a : x) cout << a << " ";
+    cout << '\n';
+}
+
+// === LIB_END ===
+
+#endif
+

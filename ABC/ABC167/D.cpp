@@ -8,7 +8,69 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,k; cin >> n >> k;
+    ll K = k;
+    vector<ll> A(n);
+    scc_graph SCC(n);
+    Graph G(n);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        a--;
+        A[i] = a;
+        G[i].pb(a);
+        SCC.add_edge(i,a);
+    }
+    auto SCCGraph = SCC.scc();
+    set<ll> on_cycle;
+    vector<ll> pre;
+    ll cur = 0;
+    rep(i,0,n) {
+        pre.pb(cur);
+        cur = A[cur];
+    }
+    vector<ll> cnt(n,0);
+    cur = 0;
+    rep(i,0,n*2) {
+        cnt[cur]++;
+        cur = A[cur];
+    }
+    ll start = -1;
+    ll startID = -1;
+    rep(i,0,ssize(pre)) {
+        if(cnt[pre[i]] >= 2) {
+            start = pre[i];
+            startID = i;
+            break;
+        }
+    }
+    ll can = -1;
+    K -= startID;
+    if(K < 0) {
+        ll next = 0;
+        rep(i,0,k) {
+            next = A[next];
+        }
+        cout << next+1 << "\n";
+        return 0;
+    }
+    k -= startID;
+    bool finish = false;
+    for(auto group : SCCGraph) {
+        for(auto v : group) {
+            if(start == v) {
+                can = k%group.size();
+                finish = true;
+                break;
+            }
+        }
+        if(finish) break;
+    }
+    cur = start;
+    rep(i,0,can) {
+        cur = A[cur];
+        if(cur == start) break;
+    }
+    cout << cur+1 << "\n";
     return 0;
 }
  //解答コードここまで

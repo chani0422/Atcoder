@@ -8,7 +8,57 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    if(n%2 == 0) {
+    priority_queue<ll,vector<ll>,greater<ll>> pq1;
+    priority_queue<ll,vector<ll>> pq2;
+    ll sum1 = 0, sum2 = 0;
+    rep(i,0,n+n/2) {
+        ll a; cin >> a;
+        pq1.emplace(a);
+        sum1 += a;
+    }
+    rep(i,0,n+n/2) {
+        ll a; cin >> a;
+        pq2.emplace(a);
+        sum2 += a;
+    }
+    ll k = n/2;
+    while(k != 0 && !pq1.empty() && !pq2.empty()) {
+        ll mn = pq1.top();
+        ll mx = pq2.top();
+        k--;
+        sum1 -= mn;
+        sum2 -= mx;
+    }
 
+    cout << sum1 - sum2 << "\n";
+    return 0;
+    }else {
+    priority_queue<ll,vector<ll>,greater<ll>> pq1;
+    priority_queue<ll,vector<ll>> pq2;
+    ll sum1 = 0, sum2 = 0;
+    rep(i,0,n+n/2) {
+        ll a; cin >> a;
+        pq1.emplace(a);
+        sum1 += a;
+    }
+    rep(i,0,n+n/2) {
+        ll a; cin >> a;
+        pq2.emplace(a);
+        sum2 += a;
+    }
+    ll k = n/2;
+    while(k != 0 && !pq1.empty() && !pq2.empty()) {
+        ll mn = pq1.top();
+        ll mx = pq2.top();
+        k--;
+        sum1 -= mn;
+        sum2 -= mx;
+    }
+    
+    cout << sum1 - sum2 << "\n";
+    }
     return 0;
 }
  //解答コードここまで

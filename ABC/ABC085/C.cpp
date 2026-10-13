@@ -8,7 +8,21 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,y; cin >> n >> y;
+    ll sum = 0;
+    rep(i,0,n+1) {
+        sum = 0;
+        ll base = i*10000;
+        rep(j,0,n+1) {
+            sum = base+j*5000;
+            if(sum > y) break;
+            if(sum+(n-i-j)*1000 == y) {
+                cout << i << " " << j << " " << n-i-j << "\n";
+                return 0;
+            }
+        }
+    }
+    rep(i,0,3) cout << -1 << " ";
     return 0;
 }
  //解答コードここまで

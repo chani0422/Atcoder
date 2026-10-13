@@ -7,7 +7,13 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    
+    map<ll,ll> mp;
+    ll a,b,c,d; input(a,b,c,d);
+    mp[a]++;
+    mp[b]++;
+    mp[c]++;
+    mp[d]++;
+    yn(ssize(mp) == 2);
     return 0;
 }
  //解答コードここまで

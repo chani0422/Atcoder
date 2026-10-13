@@ -1,6 +1,137 @@
+
+#if !__INCLUDE_LEVEL__
+#include __FILE__
+
+//解答コードここから
+/* From chanini library*/
+//区間加算 → 区間和 + 区間最小値 + 区間最大値
+
+// S : セグ木が持つ値
+struct S {
+    ll sum;   // 区間和
+    ll mn;    // 区間最小値
+    ll mx;    // 区間最大値
+    ll size;  // 区間の要素数
+};
+
+// F : 遅延させる更新 → +x
+using F = long long;
+
+// 2区間を結合
+S op(S a, S b) {
+    return {
+        a.sum + b.sum,
+        min(a.mn, b.mn),
+        max(a.mx, b.mx),
+        a.size + b.size
+    };
+}
+
+// S側の単位元
+S e() {
+    return {
+        0,      // sum
+        inf,    // mn
+        -inf,   // mx
+        0       // size
+    };
+}
+
+// 更新 f をデータ x に適用
+// 区間全体に +f
+S mapping(F f, S x) {
+
+    // 空区間なら何もしない
+    if(x.size == 0) return x;
+
+    return {
+        x.sum + f * x.size,
+        x.mn + f,
+        x.mx + f,
+        x.size
+    };
+}
+
+// 更新を合成
+// +g のあとに +f → +(f+g)
+ll composition(F f, F g) {return f + g;}
+
+// F側の単位元 +0
+ll id(){return 0;}
+
+/*
+    【使い方】
+    【できること】
+    ・区間加算
+    ・区間和
+    ・区間最小値
+    ・区間最大値
+    ・一点取得
+    ・一点変更
+
+
+   // [l,r) に +x
+    seg.apply(l, r, x);
+
+   // p に +x
+    seg.apply(p, x);
+
+   // [l,r) の情報取得
+    S res = seg.prod(l, r);
+   res.sum;   // 区間和
+   res.mn;    // 区間最小値
+   res.mx;    // 区間最大値
+   res.size;  // 区間サイズ
+
+   // 全区間の情報
+    S res = seg.all_prod();
+
+   // p 番目の情報
+    S res = seg.get(p);
+
+   // p 番目を x に変更
+    seg.set(p, {x, x, x, 1});
+*/
+
+//問題
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,m,k; cin >> n >> m >> k;
+    //区間加算 → 区間和 + 区間最小値 + 区間最大値
+    vector<S> A(k);
+    rep(i,0,k) {
+        ll x = 0;
+        A[i] = {x, x, x, 1};
+    }
+
+    lazy_segtree<S,op,e,F,mapping,composition,id> seg(A);
+    rep(i,0,n) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        seg.apply(a,b+1);
+    }
+
+    rep(i,0,m) {
+        ll pos,l,r; cin >> pos >> l >> r;
+        pos--;l--;r--;
+        cout << seg.prod()
+    }
+    
+    
+    return 0;
+}
+//解答コードここまで
+
+#else
+
+// === LIB_BEGIN ===
 #include <bits/stdc++.h>
+#include <atcoder/all>
 using namespace std;
+using namespace atcoder;
+
 const long long inf = (1LL<<60);
+
 #define rep(i,a,b) for(ll i=(a); i<(b); i++)
 #define rrep(i,a,b) for(ll i=(a); i>=(b); i--)
 #define pb push_back
@@ -25,6 +156,32 @@ template<class T> using vvvc = vector<vvc<T>>;
 using Graph= vector<vector<ll>>;
 using Grid = vector<vector<char>>;
 
+
+//====== ここから入出力系 ======
+template<class A, class B>
+ostream& operator<<(ostream& os, const pair<A,B>& p) {
+    return os << "(" << p.first << "," << p.second << ")";
+}
+
+//引数を空白区切りで出力
+template<class T, class... Ts>
+void out(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << ' ' << b), ...);
+    cout << '\n';
+}
+//引数を1行づつ出力
+template<class T, class... Ts>
+void outendl(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << endl << b), ...); 
+    cout << '\n';
+}
+//引数を順に読み込む
+template <class... T>
+void input(T &...a) {
+	(cin >> ... >> a);
+}
 
 // __int128_tでも入出力できるようにする
 // cout 用
@@ -86,19 +243,6 @@ void For(const Array1D& x) {
     cout << '\n';
 }
 
+// === LIB_END ===
 
-int main() {
-    ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n; cin >> n;
-    string s; cin >> s;
-    deque<ll> dq;
-    dq.emplace_back(n);
-    rrep(i,n-1,0) {
-        if(s[i] == 'L') dq.emplace_back(i);
-        else if(s[i] == 'R') dq.emplace_front(i);
-    }
-    for(auto &x : dq) {
-        cout << x << endl;
-    }
-    return 0;
-}
+#endif

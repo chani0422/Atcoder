@@ -8,7 +8,28 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll a,b,c,d,e;
+    cin >> a >> b >> c >> d >> e;
+    vector<string> A = {"A","B","C","D","E"};
+    vector<ll> score = {a,b,c,d,e};
+    vector<pair<ll,string>> res(6);
+    for(ll bit = (1LL<<5);bit >= 0;bit--) {
+        pair<ll,string> ans = {0,""};
+        rep(i,0,5) {
+            if(bit & (1LL<<i)) {
+                ans.se += A[i];
+                ans.fi += score[i];
+            }
+        }
+        res.pb(ans);
+    }
+    sort(nall(res),[](const auto &a, const auto &b) {
+        if(a.fi != b.fi) return a.fi > b.fi;
+        else return a.se < b.se;
+    });
+    for(auto [point,str] : res) {
+        cout << str << "\n";
+    }
     return 0;
 }
  //解答コードここまで

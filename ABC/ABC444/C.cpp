@@ -6,7 +6,45 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    deque<ll> dq(n);
+    rep(i,0,n) cin >> dq[i];
+    sort(nall(dq));
+    deque<ll> A = dq;
+    ll L = A.back();
+    A.pop_back();
+    while(!A.empty()) {
+        ll a = A.back();
+        if(a == L) A.pop_back();
+        else break;
+    }
+    bool ok = (A.size()%2 == 0);
+    vector<ll> ans;
+    while(A.size() >= 2) {
+        ll lo = A.front();
+        ll hi = A.back();
+        A.pop_back();
+        A.pop_front();
+        if(lo + hi != L) ok = false;
+    }
+    if(ok) ans.pb(L);
+    deque<ll> B = dq;
+    if(B.size()%2 == 0){
+        L = B.front()+B.back();
+        B.pop_back();
+        B.pop_front();
+        ok = true;
+        while(B.size() >= 2) {
+            ll lo = B.front();
+            ll hi = B.back();
+            B.pop_back();
+            B.pop_front();
+            if(lo+hi != L) ok = false;
+        }
+        if(ok) ans.pb(L);
+    }
+    sort(nall(ans));
+    For(ans);
     return 0;
 }
 //解答コードここまで

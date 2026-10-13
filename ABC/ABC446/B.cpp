@@ -6,7 +6,22 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,m; cin >> n >> m;
+    vector<bool> visited(m,false);
+    rep(i,0,n) {
+        ll l; cin >> l;
+        bool ok = true;
+        rep(j,0,l) {
+            ll a; cin >> a;
+            a--;
+            if(!ok) continue;
+            if(visited[a] == true) continue;
+            visited[a] = true;
+            cout << a+1 << endl;
+            ok = false;
+        }
+        if(ok) cout << 0 << endl;
+    }
     return 0;
 }
 //解答コードここまで

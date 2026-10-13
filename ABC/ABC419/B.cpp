@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll Q; cin >> Q;
+    priority_queue<ll,vector<ll>,greater<ll>> pq;
+    rep(i,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll x; cin >> x;
+            pq.push(x);
+        }else {
+            ll v = pq.top();
+            pq.pop();
+            cout << v << endl;
+        }
+    }
     return 0;
 }
  //解答コードここまで

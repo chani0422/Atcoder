@@ -8,7 +8,16 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    map<char,ll> mp;
+    rep(i,0,ssize(s)) {
+        mp[s[i]]++;
+    }
+    pair<char,ll> mx = {'A',0LL};
+    for(auto [c,cnt] : mp) {
+        if(chmax(mx.se,cnt)) mx.fi = c;
+    }
+    cout << mx.fi << endl;
     return 0;
 }
  //解答コードここまで

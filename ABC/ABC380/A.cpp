@@ -8,7 +8,9 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string n; cin >> n;
+    sort(nall(n));
+    yn(n == "122333");
     return 0;
 }
  //解答コードここまで

@@ -6,7 +6,37 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s,t; cin >> s >> t;
+    auto split = [](const string &x) {
+        string core;
+        vector<ll> aCnt;
+        ll cnt = 0;
+        for(char c : x) {
+            if(c == 'A') {
+                cnt++;
+            }else {
+                aCnt.pb(cnt);
+                cnt = 0;
+                core += c;
+            }
+        }
+        aCnt.pb(cnt);
+        return (make_pair(core,aCnt));
+    };
+
+    auto [coreS,aS] = split(s);
+    auto [coreT,aT] = split(t);
+
+    if(coreS != coreT) {
+        cout << -1 << "\n";
+        return 0;
+    }
+
+    ll ans = 0;
+    rep(i,0,ssize(aS)) {
+        ans += abs(aS[i]-aT[i]);
+    }
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

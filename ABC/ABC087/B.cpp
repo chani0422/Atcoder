@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll a,b,c;
+    cin >> a >> b >> c;
+    ll X; cin >> X;
+    ll ans = 0;
+    rep(i,0,a+1) {
+        rep(j,0,b+1) {
+            rep(k,0,c+1) {
+                if(500*i+100*j+50*k == X) ans++;
+            }
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

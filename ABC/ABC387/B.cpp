@@ -8,7 +8,14 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll x; cin >> x;
+    ll ans = 0;
+    rep(i,1,10) {
+        rep(j,1,10) {
+            if(i*j != x) ans += i*j;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

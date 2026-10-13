@@ -8,7 +8,8 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    a
     return 0;
 }
  //解答コードここまで

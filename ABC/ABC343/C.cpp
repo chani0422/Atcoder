@@ -8,6 +8,20 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+
+    ll ans = -1;
+    for(ll i = 0; i*i*i <= n; i++) {
+            ll cur = i*i*i;
+            string s = to_string(cur);
+            string t = s;
+            reverse(nall(s));
+            if(t == s) {
+                ans = cur;
+            }
+        }
+
+    cout << ans << endl;
 
     return 0;
 }

@@ -8,7 +8,21 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    priority_queue<ll> pq;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        pq.emplace(a);
+    }
+    bool which = true;
+    ll A = 0, B = 0;
+    while(!pq.empty()) {
+        if(which) A += pq.top();
+        else B += pq.top();
+        pq.pop();
+        which = !which;
+    }
+    cout << A-B << "\n";
     return 0;
 }
  //解答コードここまで

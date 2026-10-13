@@ -6,7 +6,23 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    map<ll,ll> mp;
+    ll mx = -1;
+    char c;
+    rep(i,0,ssize(s)) {
+        mp[s[i]]++;
+    }
+    for(auto [alpha,cnt] : mp) {
+        if(chmax(mx,cnt)) {
+            c = alpha;
+        }
+    }
+    string ans = "";
+    rep(i,0,ssize(s)) {
+        if(mp[s[i]] != mx) ans += s[i];
+    }
+    cout << ans << endl;
     return 0;
 }
 //解答コードここまで

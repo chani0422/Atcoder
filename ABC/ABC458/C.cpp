@@ -6,7 +6,15 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    vector<ll> A;
+    ll ans = 0;
+    rep(i,0,ssize(s)) {
+        if(s[i] == 'C') {
+            ans += min(i+1,ssize(s)-i);
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

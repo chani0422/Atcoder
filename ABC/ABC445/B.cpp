@@ -6,7 +6,21 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    vector<string> S(n);
+    ll m = -1;
+    rep(i,0,n) {
+        cin >> S[i];
+        chmax(m,(ll)ssize(S[i]));
+    }
+    rep(i,0,n) {
+        ll REP = (m-ssize(S[i]))/2;
+        string t = "";
+        rep(i,0,REP) t += ".";
+        t += S[i];
+        rep(i,0,REP) t += ".";
+        cout << t << endl;
+    }
     return 0;
 }
 //解答コードここまで

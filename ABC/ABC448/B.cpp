@@ -6,7 +6,24 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,m; cin >> n >> m;
+    vector<ll> C(m);
+    rep(i,0,m) cin >> C[i];
+    ll ans = 0;
+    rep(i,0,n) {
+        ll a,b; cin >> a >> b;
+        a--;
+        if(C[a] - b >= 0) {
+            C[a] -= b;
+            ans += b;
+            // cout << b << " ";
+            // For(C);
+        }else {
+            ans += C[a];
+            C[a] = 0;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
 //解答コードここまで

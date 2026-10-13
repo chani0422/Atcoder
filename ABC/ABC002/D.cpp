@@ -8,7 +8,63 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    dsu uf(n);
+    vector<ll> deg(n);
+    Graph G(n);
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        uf.merge(a,b);
+        deg[a]++;
+        deg[b]++;
+        G[a].pb(b);
+        G[b].pb(a);
+    }
+    auto groups = uf.groups();
+    vector<vector<ll>> deg_on_vertex(groups.size());
 
+    ll ans = 1;
+    ll id = 0;
+    for(auto vec : groups) {
+        for(auto v : vec) {
+            deg_on_vertex[id].pb(deg[v]);
+        }
+        id++;
+    }
+    for(auto vec : deg_on_vertex) {
+        sort(nall(vec));
+    }
+    //閉路だけにする
+    for(auto vec : deg_on_vertex) {
+        queue<ll> que;
+        for(auto v : vec) {
+            if(deg[v] == 1) que.push(v);
+        }
+        while(!que.empty()) {
+            ll from = que.front();
+            que.pop();
+            for(auto to : G[from]) {
+                deg[to]--;
+                if(deg[to] == 1) que.push(to);
+            }
+        }
+    }
+    ll MX = 1;
+    for(auto vec : groups) {
+        ll cnt = 0;
+        ll mx = -inf;
+        for(auto v : vec) {
+            if(deg[v] >= 2) MX++;
+            chmax(MX,deg[v]);
+        }
+        for(auto v : vec) {
+            if(deg[v] == mx) cnt++;
+        }
+
+        chmax(ans,cnt);
+    }
+    cout << MX << "\n";
     return 0;
 }
  //解答コードここまで

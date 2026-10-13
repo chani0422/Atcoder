@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    ll r; cin >> r;
+    rep(i,0,n) {
+        ll d,a; cin >> d >> a;
+        if(d == 1 && 1600 <= r && r < 2800) {
+            r += a;
+        }
+        if(d == 2 && 1200 <= r && r < 2400) {
+            r += a;
+        }
+    }
+    cout << r << endl;
     return 0;
 }
  //解答コードここまで

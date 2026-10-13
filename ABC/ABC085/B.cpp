@@ -8,7 +8,13 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    set<ll> A;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        A.insert(a);
+    }
+    cout << A.size() << endl;
     return 0;
 }
  //解答コードここまで

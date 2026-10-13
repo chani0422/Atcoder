@@ -1,0 +1,12 @@
+比較結果
+対象: 0001.txt～0099.txt（99件）
+解答の実時間上限: 2秒（起動時間を含む手元での測定）
+targeted: 全員帰巣 99/99、残存あり 0件、実行・採点エラー 0件、最大実時間 1.7779秒
+targeted_v2: 全員帰巣 99/99、残存あり 0件、実行・採点エラー 0件、最大実時間 1.8851秒
+操作数の比較対象: 両版とも全員帰巣した 99/99件
+合計操作数: targeted=29493, targeted_v2=29384
+合計操作数の削減率: 0.37%
+改善 39件 / 同点 59件 / 悪化 1件
+削減率は手元の操作数比較であり、順位表の相対スコアではありません。
+CSV: /home/chanini/projects/kyopro/AHC/comparison_results/20261001_122258_877099/comparison.csv
+詳細ログと出力: /home/chanini/projects/kyopro/AHC/comparison_results/20261001_122258_877099/cases

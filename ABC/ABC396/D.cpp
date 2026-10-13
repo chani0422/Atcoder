@@ -8,7 +8,33 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    vv<pair<ll,ll>> G(n);
+    rep(i,0,m) {
+        ll a,b,c; cin >> a >> b >> c;
+        a--;b--;
+        G[a].pb({b,c});
+        G[b].pb({a,c});
+    }
+    ll ans = inf;
+    vector<ll> visited(n,0);
+    auto dfs = [&](auto dfs,ll XOR, ll from) {
+        if(from == n-1) {
+            chmin(ans,XOR);
+            visited[from] = false;
+            return;
+        }
+        visited[from] = true;
+        for(auto [to,cost] : G[from]) {
+            if(visited[to] == 0) {
+                visited[to] = true;
+                dfs(dfs,XOR^cost,to);
+            }
+        }
+        visited[from] = false;
+    };
+    dfs(dfs,0,0);
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで
@@ -39,9 +65,9 @@ using ld = long double;
 using ull = unsigned long long;
 using lll = __int128_t;
 
-template<class T> using vc   = vector<T>;
-template<class T> using vvc  = vector<vc<T>>;
-template<class T> using vvvc = vector<vvc<T>>;
+template<class T> using v   = vector<T>;
+template<class T> using vv  = vector<v<T>>;
+template<class T> using vvv = vector<vv<T>>;
 
 using Graph= vector<vector<ll>>;
 using Grid = vector<vector<char>>;

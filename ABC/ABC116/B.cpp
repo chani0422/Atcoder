@@ -4,11 +4,30 @@
 
 
 //解答コードここから
+ll f(ll a) {
+    ll ans = a;
+    if(a%2== 0) {
+        ans /= 2;
+    }else ans = 3*a+1;
+    return ans;
+}
 //B問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll m; cin >> m;
+    map<ll,ll> mp;
+    mp[m]++;
+    ll i = 0;
+    rep(i,2,1001000) {
+        ll Ai = f(m);
+        m = Ai;
+        mp[Ai]++;
+        if(mp[Ai] == 2) {
+            cout << i << endl;
+            return 0;
+        }
+    }
     return 0;
 }
  //解答コードここまで

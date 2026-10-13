@@ -8,7 +8,14 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    ll l = 0, r = 0;
+    ll cnt = 0;
+    while(r < ssize(s)) {
+        if(s[r] == '|') {
+            
+        }
+    }
     return 0;
 }
  //解答コードここまで

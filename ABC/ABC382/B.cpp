@@ -8,7 +8,13 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,k; cin >> n >> k;
+    string s; cin >> s;
+    rrep(i,n-1,0) {
+        if(k == 0) break;
+        if(s[i] == '@') {s[i] = '.';k--;}
+    }
+    cout << s << endl;
     return 0;
 }
  //解答コードここまで

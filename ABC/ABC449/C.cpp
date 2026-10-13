@@ -6,7 +6,17 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,l,r; cin >> n >> l >> r;
+    r++;
+    string s; cin >> s;
+    ll ans = 0;
+    vector<ll> cnt(26);
+    rep(i,0,n) {
+        if(i >= l) cnt[s[i-l]-'a']++;
+        if(i >= r) cnt[s[i-r]-'a']--;
+        ans += cnt[s[i]-'a'];
+    }
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

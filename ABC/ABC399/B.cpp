@@ -8,7 +8,14 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    ll i = 1;
+    ll cur = 1;
+    while(cur != n) {
+        cur *= i;
+        i++;
+    }
+    cout << i-1 << endl;
     return 0;
 }
  //解答コードここまで

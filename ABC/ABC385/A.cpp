@@ -8,7 +8,10 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll a,b,c; cin >> a >> b >> c;
+    vector<ll> A = {a,b,c};
+    sort(nall(A));
+    yn(A[0] == A[1] && A[1] == A[2] || A[0]+A[1] == A[2]);
     return 0;
 }
  //解答コードここまで

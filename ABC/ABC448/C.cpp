@@ -6,7 +6,31 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,Q; cin >> n >> Q;
+    multiset<ll> st;
+    vector<ll> A(n);
+    rep(i,0,n) {
+        cin >> A[i];
+        st.insert(A[i]);
+    }
+    multiset<ll> tmp;
+    while(Q--) {
+        ll k; cin >> k;
+        rep(i,0,k) {
+            ll b; cin >> b;
+            b--;
+            tmp.insert(A[b]);
+            auto it = st.lower_bound(A[b]);
+            st.erase(it);
+        }
+        cout << *st.begin() << "\n";
+        ll next;
+        while(!tmp.empty()) {
+            auto it = tmp.begin();
+            st.insert(*it);
+            tmp.erase(tmp.begin());
+        }
+    }
     return 0;
 }
 //解答コードここまで

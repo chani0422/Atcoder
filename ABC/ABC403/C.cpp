@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    map<ll,set<ll>> mp;
+    ll n,m,Q; cin >> n >> m >> Q;
+    vector<bool> all(n,false);
+    rep(i,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll x,y; cin >> x >> y;
+            if(all[x-1] == false) mp[x].insert(y);
+        }else if(t == 2) {
+            ll x; cin >> x;
+            all[x-1] = true;
+            mp[x].clear();
+        }else {
+            ll x,y; cin >> x >> y;
+            if(all[x-1]) {cout << "Yes\n";continue;}
+            yn(*mp[x].lower_bound(y) == y);
+        }
+    }
     return 0;
 }
  //解答コードここまで

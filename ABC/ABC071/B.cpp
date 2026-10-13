@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    vector<bool> A(26,true);
+    string s; cin >> s;
+    rep(i,0,ssize(s)) {
+        A[s[i]-97] = false;
+    }
+    rep(i,0,26) {
+        if(A[i]) {
+            cout << char(i+97) << endl;
+            return 0;
+        }
+    }
+    cout << "None\n";
     return 0;
 }
  //解答コードここまで

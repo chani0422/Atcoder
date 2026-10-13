@@ -6,7 +6,8 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    yn(count(nall(s),s[0]) == ssize(s));
     return 0;
 }
 //解答コードここまで

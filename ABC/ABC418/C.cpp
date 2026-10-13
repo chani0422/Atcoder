@@ -8,7 +8,26 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,Q; cin >> n >> Q;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    sort(nall(A));
+    vector<ll> pref(n+1,0);
+    rep(i,0,n) {
+        pref[i+1] = pref[i]+ A[i];
+    }
+    while(Q--) {
+        ll b; cin >> b;
+        auto it = lower_bound(nall(A),b);
+        if(it == A.end()) {
+            cout << -1 << "\n";
+            continue;
+        }
+        auto idx = it-A.begin();
+        // cout << idx << "\n";
+        ll choose = pref[idx]+ (n-idx)*(b-1)+1;
+        cout << choose << "\n";
+    }
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    string s; cin >> s;
+    ll cnt = 1;
+    if(s[n/2] != '/') {
+        cout << "No\n";
+        return 0;
+    }
+    ll l = n/2-1, r = n/2+1;
+    while(0 <= l && r <= n-1) {
+        if((s[l] == '1' && s[r] == '2')) {
+            cnt += 2;
+        }else {
+            cout << "No\n";
+            return 0;
+        }
+        l--;r++;
+    }
+    yn(cnt == n);
     return 0;
 }
  //解答コードここまで

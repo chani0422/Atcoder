@@ -8,7 +8,25 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,Q; cin >> n >> Q;
+    vector<ll> A(n);
+    iota(nall(A),1);
+    ll cur = 0;
+    rep(i,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll pos,x;cin >> pos >> x;
+            pos = (cur+pos-1)%n;
+            A[pos] = x;
+        }else if(t == 2) {
+            ll pos; cin >> pos;
+            pos = (cur+pos-1)%n;
+            cout << A[pos] << "\n";
+        }else {
+            ll k; cin >> k;
+            cur = (cur+k)%n;
+        }
+    }
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    map<char,ll> mp;
+    rep(i,0,ssize(s)) {
+        mp[s[i]]++;
+    }
+    for(auto [c,cnt] : mp) {
+        if(cnt%2 != 0) {
+            cout << "No\n";
+            return 0;
+        }
+    }
+    cout << "Yes\n";
     return 0;
 }
  //解答コードここまで

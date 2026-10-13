@@ -8,7 +8,22 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll Q; cin >> Q;
+    deque<ll> que;
+    ll pref = 0;
+    rep(ttt,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll l; cin >> l;
+            que.push_back(pref);
+            pref += l;
+        }else if(t == 2) {
+            que.pop_front();
+        }else {
+            ll k; cin >> k;
+            cout << que[k-1]-que.front() << "\n";
+        }
+    }
     return 0;
 }
  //解答コードここまで

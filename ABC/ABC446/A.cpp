@@ -6,7 +6,11 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    string ans = "Of";
+    s[0] += 32;
+    ans += s;
+    cout << ans << endl;
     return 0;
 }
 //解答コードここまで

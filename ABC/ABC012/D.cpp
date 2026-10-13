@@ -8,7 +8,33 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<vector<ll>> dist(n,vector<ll> (n,inf));
+    rep(i,0,n) dist[i][i] = 0;
+    rep(i,0,m) {
+        ll a,b;cin >> a >> b;
+        a--;b--;
+        ll t; cin >> t;
+        dist[a][b] = t;
+        dist[b][a] = t;
+    }
+    rep(k,0,n) {
+        rep(i,0,n) {
+            rep(j,0,n) {
+                chmin(dist[i][j],dist[i][k]+dist[k][j]);
+            }
+        }
+    }
 
+    ll ans = inf;
+    rep(i,0,n) {
+        ll time = 0;
+        rep(j,0,n) {
+            chmax(time,dist[i][j]);
+        }
+        chmin(ans,time);
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

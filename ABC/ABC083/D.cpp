@@ -8,7 +8,9 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    ll l = 0,r = ssize(s)-1;
+    while(s[l] != )
     return 0;
 }
  //解答コードここまで

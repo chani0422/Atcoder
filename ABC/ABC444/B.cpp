@@ -6,7 +6,18 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,k; cin >> n >> k;
+
+    ll ans = 0;
+    rep(i,0,n+1) {
+        string s = to_string(i);
+        ll sum = 0;
+        rep(j,0,ssize(s)) {
+            sum += s[j]-48;
+        }
+        if(sum == k) ans++;
+    }
+    cout << ans << endl;
     return 0;
 }
 //解答コードここまで

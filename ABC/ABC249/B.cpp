@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    map<ll,ll> mp;
+    bool A = false,a = false;
+    rep(i,0,ssize(s)) {
+        mp[s[i]]++;
+        if(isupper(s[i])) A = true;
+        if(islower(s[i])) a = true;
+    }
+    ll ok = true;
+    for(auto [c,cnt] : mp) {
+        if(cnt != 1) ok = false;
+    }
+    yn(ok && A && a);
     return 0;
 }
  //解答コードここまで

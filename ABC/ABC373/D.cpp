@@ -8,6 +8,40 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >>m;
+    vector<vector<pair<ll,ll>>> G(n);
+    vector<ll> indeg(n,0);
+    rep(i,0,m) {
+        ll u,v,w;
+        cin >> u >> v >> w;
+        u--;v--;
+        indeg[v]++;
+        G[u].pb({v,w});
+        G[v].pb({u,-w});
+    }
+    vector<ll> dist(n,inf);
+
+    rep(i,0,n) {
+        if(dist[i] != inf) continue;
+        queue<ll> que;
+        dist[i] = 0;
+        que.push(i);
+        while(!que.empty()) {
+            ll from = que.front();
+            que.pop();
+            for(auto [to,ncost] : G[from]) {
+                if(dist[to] == inf) {
+                    dist[to] = dist[from] + ncost;
+                    que.emplace(to);
+                }
+            }
+        }
+    }
+
+    rep(i,0,n) {
+        cout << dist[i] << " ";
+    }
+    cout << endl;
 
     return 0;
 }

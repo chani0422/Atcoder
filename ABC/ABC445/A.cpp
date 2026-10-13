@@ -6,7 +6,8 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s; cin >> s;
+    yn(s[0]==s[ssize(s)-1]);
     return 0;
 }
 //解答コードここまで

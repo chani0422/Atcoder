@@ -8,7 +8,22 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    vector<pair<ll,ll>> A(n);
+    rep(i,0,n) {
+        ll a,b; cin >> a >> b;
+        pair<ll,ll> p = {a,b};
+        A[i] = p;
+    }
 
+    vector<ll> prod(n);
+    rep(i,0,k) {
+        rep(i,0,n) {
+            A[i].se++;
+            prod[i] = A[i].fi*A[i].se;
+        }
+        cout << *max_element(nall(prod)) << endl;
+    }
     return 0;
 }
  //解答コードここまで

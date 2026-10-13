@@ -8,7 +8,30 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll h,w,x,y; cin >> h >> w >> x >> y;
+    vector<string> G(h);
+    rep(i,0,h) cin >> G[i];
+    string s; cin >> s;
+    x--;y--;
+    pair<ll,ll> plot = {x,y};
+    ll ans = 0;
+    bool flag = true;
+    vector<vector<bool>> visited(h,vector<bool>(w));
+    rep(i,0,ssize(s)) {
+    auto &[X,Y] = plot;
+    char c = G[X][Y];
+    if(0 <= Y-1 && s[i] == 'L' && G[X][Y-1] != '#') Y--;
+    if(X+1 < h && s[i] == 'D' && G[X+1][Y] != '#') X++;
+    if(Y+1 < w && s[i] == 'R' && G[X][Y+1] != '#') Y++;
+    if(0 <= X-1 && s[i] == 'U' && G[X-1][Y] != '#') X--;
+    
+    if(G[X][Y] == '@' && flag && visited[X][Y] == false) {
+        ans++;
+        visited[X][Y] = true;
+    }
+    if(G[X][Y] == '.') flag = true;
+}
+    cout << plot.fi+1 << " " << plot.se+1 << " " << ans << endl;
     return 0;
 }
  //解答コードここまで

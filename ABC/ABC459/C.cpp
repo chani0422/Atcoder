@@ -3,10 +3,45 @@
 #include __FILE__
 
 //解答コードここから
+ll op(ll a,ll b) {
+    return a+b;
+}
+ll e() {
+    return 0;
+}
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,Q; cin >> n >> Q;
+    vector<ll> cnt(n,0);
+    ll erase = 0;
+    segtree<ll,op,e> seg(Q+1);
+    seg.set(0,n);
+    ll mn = 0;
+    rep(i,0,Q) {
+        ll q; cin >> q;
+        if(q == 1) {
+            ll x; cin >> x;
+            x--;
+            ll old = cnt[x];
+            ll now = old + 1;
+            cnt[x] = now;
+            seg.set(old,seg.get(old)-1);
+            seg.set(now,seg.get(now)+1);
+            while(seg.get(mn) == 0) {
+                mn++;
+            }
+            if(mn >= erase+1) erase++;
+        }else {
+            ll y; cin >> y;
+            ll l = erase+y;
+            ll ans = 0;
+            if(l <= Q) {
+                ans = seg.prod(l,Q+1);
+            }
+            cout << ans << "\n";
+        }
+    }
     return 0;
 }
 //解答コードここまで

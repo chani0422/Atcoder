@@ -8,7 +8,27 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    vector<ll> R(n);
+    rep(i,0,n) cin >> R[i];
+    vector<ll> tmp;
+    auto dfs = [&](auto dfs,ll cur,ll sum) {
+        if(ssize(tmp) == n) {
+            if(sum%k == 0) {
+                for(auto x : tmp) cout << x << " ";
+                cout << "\n";
+            }
+            return;
+        }
 
+            for(ll x = 1; x <= R[cur];x++) {
+                tmp.pb(x);
+                dfs(dfs,cur+1,sum+x);
+                tmp.popb();
+            }
+            return;
+    };
+    dfs(dfs,0,0);
     return 0;
 }
  //解答コードここまで

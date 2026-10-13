@@ -1,0 +1,72 @@
+[
+  {
+    "case": "provided_0001",
+    "valid": true,
+    "slimes": 29,
+    "baseline_T": 353,
+    "T": 192,
+    "E": 0,
+    "S": 192,
+    "max_height": 7,
+    "max_group": 6,
+    "group_moves": 76,
+    "elapsed_ms_including_launch": 1840.45,
+    "solver_log": "slimes=29 baseline_T=353 grouped_T=249\nT=192 E=0 S=192\ntrials=3584 accepted=9 elapsed_ms=1835.78\nsearch_T=222 route_trials=400000 route_accepted=99325 route_improvements=2 detour_moves=2\npool_states=336 pool_candidates_tested=336 pool_evaluations=86016 pool_updates=1184 pool_selected=3 pool_time_up=0\ntarget_trials=1001869 target_accepted=236314 target_improvements=1 target_selected=1\njump_trials=188355 jump_accepted=21504 jump_improvements=1 jump_selected=1 shortcut_selected=2 nonlocal_selected=0 portfolio_selected=0 jump_portfolio_states=41\nroutes_T=220 launchpad_reference_T=204 pool_T=201 targeted_T=192 jumps=19 groups_of_8=0 order=acbdfhieg\nsaved_vs_routes=28 saved_vs_launchpad=12 saved_vs_pool=9"
+  },
+  {
+    "case": "synthetic_sparse",
+    "valid": true,
+    "slimes": 4,
+    "baseline_T": 37,
+    "T": 35,
+    "E": 0,
+    "S": 35,
+    "max_height": 2,
+    "max_group": 1,
+    "group_moves": 0,
+    "elapsed_ms_including_launch": 3.313,
+    "solver_log": "slimes=4 baseline_T=37 grouped_T=37\nT=35 E=0 S=35\ntrials=0 accepted=0 elapsed_ms=0.368606\nsearch_T=37 route_trials=0 route_accepted=0 route_improvements=0 detour_moves=0\npool_states=0 pool_candidates_tested=0 pool_evaluations=0 pool_updates=0 pool_selected=0 pool_time_up=0\ntarget_trials=0 target_accepted=0 target_improvements=0 target_selected=0\njump_trials=0 jump_accepted=0 jump_improvements=0 jump_selected=0 shortcut_selected=2 nonlocal_selected=0 portfolio_selected=0 jump_portfolio_states=0\nroutes_T=37 launchpad_reference_T=37 pool_T=37 targeted_T=35 jumps=2 groups_of_8=0 order=abcd\nsaved_vs_routes=2 saved_vs_launchpad=2 saved_vs_pool=2"
+  },
+  {
+    "case": "synthetic_dense",
+    "valid": true,
+    "slimes": 248,
+    "baseline_T": 3065,
+    "T": 595,
+    "E": 0,
+    "S": 595,
+    "max_height": 8,
+    "max_group": 8,
+    "group_moves": 450,
+    "elapsed_ms_including_launch": 1838.334,
+    "solver_log": "slimes=248 baseline_T=3065 grouped_T=731\nT=595 E=0 S=595\ntrials=512 accepted=4 elapsed_ms=1836.15\nsearch_T=701 route_trials=247573 route_accepted=58848 route_improvements=42 detour_moves=0\npool_states=48 pool_candidates_tested=48 pool_evaluations=24711 pool_updates=2049 pool_selected=1 pool_time_up=1\ntarget_trials=0 target_accepted=0 target_improvements=0 target_selected=0\njump_trials=51986 jump_accepted=7810 jump_improvements=40 jump_selected=1 shortcut_selected=7 nonlocal_selected=0 portfolio_selected=0 jump_portfolio_states=6\nroutes_T=701 launchpad_reference_T=660 pool_T=659 targeted_T=595 jumps=51 groups_of_8=244 order=bcdeighjklaf\nsaved_vs_routes=106 saved_vs_launchpad=65 saved_vs_pool=64"
+  },
+  {
+    "case": "synthetic_comb",
+    "valid": true,
+    "slimes": 132,
+    "baseline_T": 3021,
+    "T": 546,
+    "E": 0,
+    "S": 546,
+    "max_height": 8,
+    "max_group": 8,
+    "group_moves": 474,
+    "elapsed_ms_including_launch": 1840.55,
+    "solver_log": "slimes=132 baseline_T=3021 grouped_T=575\nT=546 E=0 S=546\ntrials=512 accepted=0 elapsed_ms=1836.45\nsearch_T=575 route_trials=400000 route_accepted=79917 route_improvements=0 detour_moves=0\npool_states=48 pool_candidates_tested=48 pool_evaluations=384 pool_updates=8 pool_selected=0 pool_time_up=0\ntarget_trials=530514 target_accepted=105536 target_improvements=0 target_selected=0\njump_trials=924899 jump_accepted=12172 jump_improvements=0 jump_selected=0 shortcut_selected=0 nonlocal_selected=0 portfolio_selected=0 jump_portfolio_states=6\nroutes_T=575 launchpad_reference_T=546 pool_T=546 targeted_T=546 jumps=19 groups_of_8=217 order=cbda\nsaved_vs_routes=29 saved_vs_launchpad=0 saved_vs_pool=0"
+  },
+  {
+    "case": "synthetic_walls",
+    "valid": true,
+    "slimes": 155,
+    "baseline_T": 3285,
+    "T": 909,
+    "E": 0,
+    "S": 909,
+    "max_height": 8,
+    "max_group": 8,
+    "group_moves": 528,
+    "elapsed_ms_including_launch": 1840.59,
+    "solver_log": "slimes=155 baseline_T=3285 grouped_T=1140\nT=909 E=0 S=909\ntrials=6144 accepted=24 elapsed_ms=1837.64\nsearch_T=1102 route_trials=400000 route_accepted=89060 route_improvements=27 detour_moves=3\npool_states=379 pool_candidates_tested=379 pool_evaluations=156785 pool_updates=30938 pool_selected=9 pool_time_up=1\ntarget_trials=0 target_accepted=0 target_improvements=0 target_selected=0\njump_trials=104158 jump_accepted=11633 jump_improvements=26 jump_selected=10 shortcut_selected=0 nonlocal_selected=0 portfolio_selected=0 jump_portfolio_states=48\nroutes_T=1099 launchpad_reference_T=973 pool_T=961 targeted_T=909 jumps=197 groups_of_8=53 order=aidelbkcfhjg\nsaved_vs_routes=190 saved_vs_launchpad=64 saved_vs_pool=52"
+  }
+]

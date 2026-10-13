@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,Q; cin >> n >> Q;
+    vector<ll> pigeon(n+1);
+    rep(i,0,n) pigeon[i+1] = i+1;
+    map<ll,ll> mp;
+    rep(i,0,n) mp[i+1]++;
 
+    ll cnt = 0;
+    rep(ttt,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll p,h; cin >> p >> h;
+            if(mp[pigeon[p]]-1 == 1) cnt--; 
+            mp[pigeon[p]]--;
+            pigeon[p] = h;
+            if(mp[h]+1 == 2) cnt++; 
+            mp[h]++;
+        }else cout << cnt << "\n";
+    }
     return 0;
 }
  //解答コードここまで

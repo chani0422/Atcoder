@@ -8,7 +8,37 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    vector<ll> kaisa1,kaisa2;
+    vector<bool> seen(n+1,false);
+    ll cnt = 0;
+    rep(i,0,n) {
+        if(!seen[A[i]]) {
+            seen[A[i]] = true;
+            cnt++;
+        }
+        kaisa1.pb(cnt);
+    }
+    cnt = 0;
+    seen.assign(n+1,false);
+    rrep(i,n-1,0) {
+        if(!seen[A[i]]) {
+            seen[A[i]] = true;
+            cnt++;
+        }
+        kaisa2.pb(cnt);
+    }
+    reverse(nall(kaisa2));
+    vector<ll> can(n);
+    rep(i,0,n) can[i] = kaisa1[i]+kaisa2[i];
+    ll ans = 0;
 
+    rep(i,0,n-1) {
+        chmax(ans,kaisa1[i]+kaisa2[i+1]);
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

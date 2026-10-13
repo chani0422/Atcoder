@@ -8,7 +8,23 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,Q; cin >> n >> Q;
+    vector<ll> A(n,0);
+    rep(i,0,Q) {
+        ll t; cin >> t;
+        if(t == 1) {
+            ll x; cin >> x;x--;
+            A[x]++;
+        }else if(t == 2) {
+            ll x; cin >> x;x--;
+            A[x] = 2;
+        }else {
+            ll x; cin >> x;x--;
+            if(A[x] == 2) {
+                cout << "Yes\n";
+            }else cout << "No\n";
+        }
+    }
     return 0;
 }
  //解答コードここまで

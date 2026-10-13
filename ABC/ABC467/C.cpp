@@ -12,12 +12,24 @@ int main() {
     rep(i,0,n-1) cin >> B[i];
 
     ll ans = 0;
+    bool which = A[0];
+
+    if(which) {
     rep(i,0,n-1) {
         if(B[i] != (A[i]+A[i+1])%m) {
             ans++;
             A[i+1]++;
         }
     }
+}else {
+    rep(i,0,n-1) {
+        if(B[i] != (A[i]+A[i+1])%m) {
+            ans++;
+            A[i+1]++;
+        }
+    }
+}
+
     cout << ans << endl;
     return 0;
 }

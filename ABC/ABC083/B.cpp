@@ -8,7 +8,17 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,a,b; cin >> n >> a >> b;
+    ll ans = 0;
+    rep(i,1,n+1) {
+        string t = to_string(i);
+        ll sum = 0;
+        for(char c : t) {
+            sum += c-'0';
+        }
+        if(a <= sum && sum <= b) ans += i;
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

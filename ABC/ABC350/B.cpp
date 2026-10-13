@@ -8,7 +8,17 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,Q; cin >> n >> Q;
+    vector<bool> tooth(n,true);
+    rep(i,0,Q) {
+        ll a; cin >> a;
+        tooth[a-1] = !tooth[a-1];
+    }
+    ll ans = 0;
+    rep(i,0,n) {
+        if(tooth[i]) ans++;
+    }
+    cout  << ans << endl;
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,13 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<ll> X(n),Y(n);
+    rep(i,0,n) cin >> X[i] >> Y[i];
 
+    cout << max(((*max_element(nall(X))-*min_element(nall(X)))+1)/2,((*max_element(nall(Y))-*min_element(nall(Y)))+1)/2);
+
+    
     return 0;
 }
  //解答コードここまで

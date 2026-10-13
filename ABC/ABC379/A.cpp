@@ -8,7 +8,10 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    vector<char> A(3);
+    rep(i,0,3) cin >> A[i];
+    cout << A[1] << A[2] << A[0] << " "
+         << A[2] << A[0] << A[1] << endl;
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    sort(nall(A));
+    vector<ll> S = A;
+    S.erase(unique(nall(S)),S.end());
+    ll ans = 0;
+    for(auto x : A) {
+        ll target = x/2;
+        auto it = upper_bound(nall(A),target)-A.begin();
+        ans += it;
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

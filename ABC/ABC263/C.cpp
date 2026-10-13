@@ -8,7 +8,30 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
 
+    vector<vector<ll>> ans;
+    for(ll bit = 0; bit<(1<<m); bit++) {
+        ll cnt = 0;
+        rep(i,0,m) {
+            if(bit & (1<<i)) cnt++;
+        }
+        if(cnt != n) continue;
+        vector<ll> A;
+
+        rep(i,0,m) {
+            if(bit & (1<<i)) A.pb(i+1);
+        }
+        ans.pb(A);
+    }
+
+    sort(nall(ans));
+    for(auto x : ans) {
+        for(auto xx : x) {
+            cout << xx << " ";
+        }
+        cout << endl;
+    }
     return 0;
 }
  //解答コードここまで

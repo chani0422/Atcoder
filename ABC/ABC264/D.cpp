@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    string t = "atcoder";
+    map<ll,ll> mp;
+    rep(i,0,ssize(s)) mp[s[i]] = i;
+    ll ans = 0;
+    rep(i,0,ssize(t)) {
+        ll pos = mp[t[i]];
+        while(s[i] != t[i]) {
+            if(pos > i) {
+                swap(s[pos],s[pos-1]);
+                mp[s[pos]] = pos;
+                mp[s[pos-1]] = pos-1;
+                pos--;
+                ans++;
+            }
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

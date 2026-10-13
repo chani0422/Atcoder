@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+ACL_DIR="/home/chanini/projects/kyopro/ac-library"
+
+# 現在いるコンテストフォルダ名
+# 例: ABC468
+CONTEST="$(basename "$PWD")"
+
+if [[ ! "$CONTEST" =~ ^ABC[0-9]+$ ]]; then
+    echo "エラー: ABCxxxフォルダ内で実行してください"
+    echo "現在地: $PWD"
+    exit 1
+fi
+
+# 引数があればその問題を使う
+# 例: t c → C.cpp
+PROBLEM="${1:-}"
+
+# 引数がなければ最後に更新されたA.cpp～G.cppを選ぶ
+if [[ -z "$PROBLEM" ]]; then
+    SRC="$(ls -t [A-G].cpp 2>/dev/null | head -n 1)"
+
+    if [[ -z "$SRC" ]]; then
+        echo "エラー: A.cpp～G.cppが見つかりません"
+        exit 1
+    fi
+
+    PROBLEM="${SRC%.cpp}"
+else
+    PROBLEM="${PROBLEM%.cpp}"
+    PROBLEM="${PROBLEM^^}"
+    SRC="${PROBLEM}.cpp"
+fi
+
+if [[ ! "$PROBLEM" =~ ^[A-G]$ ]]; then
+    echo "エラー: 問題名はA～Gで指定してください"
+    echo "例: t c"
+    exit 1
+fi
+
+if [[ ! -f "$SRC" ]]; then
+    echo "エラー: $SRC が見つかりません"
+    exit 1
+fi
+
+BUILD_DIR=".build"
+SAMPLE_DIR=".samples/$PROBLEM"
+EXE="$BUILD_DIR/$PROBLEM"
+
+mkdir -p "$BUILD_DIR"
+
+CONTEST_LOWER="${CONTEST,,}"
+PROBLEM_LOWER="${PROBLEM,,}"
+
+URL="https://atcoder.jp/contests/${CONTEST_LOWER}/tasks/${CONTEST_LOWER}_${PROBLEM_LOWER}"
+
+echo
+echo "======================================"
+echo "  $CONTEST $PROBLEM"
+echo "  Source: $SRC"
+echo "======================================"
+echo
+echo "[Compile] $SRC"
+
+if ! /usr/bin/g++ \
+    -std=gnu++23 \
+    -O2 \
+    -Wall \
+    -Wextra \
+    -fdiagnostics-color=always \
+    -I "$ACL_DIR" \
+    "$SRC" \
+    -o "$EXE"
+then
+    echo
+    echo "コンパイルに失敗しました"
+    exit 1
+fi
+
+echo "[Compile] OK"
+
+# サンプルがなければAtCoderから取得
+if ! find "$SAMPLE_DIR" -maxdepth 1 -name "*.in" -print -quit 2>/dev/null | grep -q .; then
+    echo
+    echo "[Download] サンプルを取得します"
+    echo "$URL"
+
+    rm -rf "$SAMPLE_DIR"
+    mkdir -p "$SAMPLE_DIR"
+
+    if ! oj download "$URL" -d "$SAMPLE_DIR"; then
+        echo
+        echo "サンプルの取得に失敗しました"
+        echo "URL: $URL"
+        exit 1
+    fi
+fi
+
+echo
+echo "[Test]"
+echo
+
+oj test \
+    -d "$SAMPLE_DIR" \
+    -c "$EXE"

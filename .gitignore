@@ -12,3 +12,22 @@ a.out
 ac-library/
 main
 .venv
+
+# C++ 実行ファイル
+a.out
+*.exe
+*.o
+*.out
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# VSCode
+.vscode/
+
+# 一時ファイル
+*.log
+core
+core.*

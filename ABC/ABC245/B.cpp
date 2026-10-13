@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    set<ll> st;
+    rep(i,0,n) {ll a;cin >> a;st.insert(a);}
+    ll ans = 0;
+    for(auto x : st) {
+        if(x != ans) {
+            cout << ans << endl;
+            return 0;
+        }
+        ans++;
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

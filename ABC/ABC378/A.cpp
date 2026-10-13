@@ -8,8 +8,23 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
-    return 0;
+    ll a,b,c,d;
+    cin >> a >> b >> c >> d;
+    if(a==b&&c==d&&a==c) {
+        cout << 2 << "\n";
+        return 0;
+    }
+    int num[5];
+    num[a]++;
+    num[b]++;
+    num[c]++;
+    num[d]++;
+    ll ans = 0;
+    rep(i,1,5) {
+        if(num[i] >= 2) ans++;
+    }
+    cout << ans << "\n";
+        return 0;
 }
  //解答コードここまで
 

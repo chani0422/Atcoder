@@ -8,7 +8,49 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<ll> A(m),B(m);
+    rep(i,0,m) cin >> A[i];
+    rep(i,0,m) cin >> B[i];
+    Graph G(n);
+    rep(i,0,m) {
+        ll a = A[i];
+        ll b = B[i];
+        a--;b--;
+        G[a].pb(b);
+        G[b].pb(a);
+    }
+    vector<ll> color(n,-1);
+rep(i,0,n) {
+    if(color[i] != -1) continue;
+    queue<ll> que;
+    que.push(i);
+    color[i] = 0;
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : G[from]) {
+            if(color[to] == -1) {
+                color[to] = 1-color[from];
+                que.push(to);
+            }else if(color[to] == color[from]) {
+                if(to == from) continue;
+                cout << "No\n";
+                return 0;
+            }
+        }
+    }
+}
 
+    bool ok = true;
+    rep(i,0,m) {
+        ll a = A[i]-1;
+        ll b = B[i]-1;
+        if(color[a] == color[b]) ok = false;
+    }
+    
+    yn(ok);
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,15 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> dp;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        auto it = lower_bound(nall(dp),a);
+        if(it == dp.end()) dp.pb(a);
+        else *it = a;
+    }
+    cout << n-dp.size() << endl;
     return 0;
 }
  //解答コードここまで

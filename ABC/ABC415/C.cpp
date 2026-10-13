@@ -8,7 +8,23 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll Q; cin >> Q;
+    while(Q--) {
+        ll n; cin >> n;
+        string s; cin >> s;
+        s = "0"+s;
+        vector<ll> ok(1<<n,0);
+        ok[0] = 1;
+        rep(i,0,1LL<<n) {
+            if(ok[i] == 0) continue;
+            rep(j,0,n) {
+                if(i & (1LL<<j)) continue;
+                ll next = (i|1LL<<j);
+                if(s[next] == '0') ok[next] = 1;
+            }
+        }
+        yn(ok[(1LL<<n)-1]);
+    }
     return 0;
 }
  //解答コードここまで

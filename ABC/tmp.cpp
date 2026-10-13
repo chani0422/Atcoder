@@ -6,7 +6,8 @@
 //累積和問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    cout << 111 << endl;
+    double n = 131.0/3.0;
+    cout << n << "\n";
     return 0;
 }
 //解答コードここまで

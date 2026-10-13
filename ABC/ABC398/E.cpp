@@ -4,10 +4,84 @@
 
 
 //解答コードここから
+
 //E問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    Graph G(n);
+    vector<vector<bool>> edges(n,vector<bool>(n,false));
+    rep(i,0,n-1) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        G[a].pb(b);
+        G[b].pb(a);
+        edges[a][b] = true;
+        edges[b][a] = true;
+    }
+    queue<ll> que;
+    vector<ll> color(n,-1);
+    vector<ll> dist(n,-1);
+    que.push(0);
+    color[0] = 0;
+    dist[0] = 0;
+
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : G[from]) {
+            if(color[to] == -1) {
+                color[to] = 1 - color[from];
+                dist[to] = dist[from] + 1;
+                que.push(to);
+            }
+        }
+    }
+
+    ll cnt0 = 0,cnt1 = 0;
+    rep(i,0,n) {
+        if(color[i] == 0) cnt0++;
+        else cnt1++;
+    }
+
+    ll move = cnt1*cnt0 -(n-1);
+    bool myturn = false;
+
+    if(move%2 == 1) {
+        cout << "First" << endl;
+        myturn = true;
+    }else {
+        cout << "Second" << endl;
+        myturn = false;
+    }
+    bool next = false;
+    while(true){
+        next = false;
+        if(myturn) {
+            rep(i,0,n) {
+                rep(j,0,n) {
+                    if(color[i] != color[j] && !edges[i][j]) {
+                        edges[i][j] = true;
+                        edges[j][i] = true;
+                        next = true;
+                        cout << i+1 << " " << j+1 << endl;
+                        break;
+                    }
+                }
+                if(next) break;
+            }
+        }else {
+            ll i,j; cin >> i >> j;
+            if(i == -1 && j == -1) {
+                return 0;
+            }
+            i--;j--;
+            edges[i][j] = true;
+            edges[j][i] = true;
+        }
+        myturn = !myturn;
+    }
 
     return 0;
 }

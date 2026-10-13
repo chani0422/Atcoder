@@ -1,0 +1,234 @@
+
+#if !__INCLUDE_LEVEL__
+#include __FILE__
+
+//解答コードここから
+//後で解く
+/* From chanini library*/
+// 一点変更 → 区間和 + 区間最小値 + 区間最大値
+
+// S : セグ木が持つ情報
+struct S {
+    ll sum;   // 区間和
+    ll mn;    // 区間最小値
+    ll mx;    // 区間最大値
+    ll size;  // 区間の要素数
+};
+
+// 2区間を結合
+S op(S a, S b) {
+    return {
+        a.sum + b.sum,
+        min(a.mn, b.mn),
+        max(a.mx, b.mx),
+        a.size + b.size
+    };
+}
+
+// S側の単位元
+S e() {
+    return {
+        0,      // sum
+        inf,    // mn
+        -inf,   // mx
+        0       // size
+    };
+}
+
+/*
+    【使い方】
+    【できること】
+    ・一点変更
+    ・一点取得
+    ・区間和
+    ・区間最小値
+    ・区間最大値
+
+
+   // p 番目を x に変更
+    seg.set(p, {x, x, x, 1});
+
+   // p 番目の情報取得
+    S res = seg.get(p);
+    res.sum;
+    res.mn;
+    res.mx;
+    res.size;
+
+   // [l,r) の情報取得
+    S res = seg.prod(l, r);
+    res.sum;   // 区間和
+    res.mn;    // 区間最小値
+    res.mx;    // 区間最大値
+    res.size;  // 区間サイズ
+
+   // 全区間の情報
+    S res = seg.all_prod();
+
+
+    【注意】
+    普通のセグ木なので区間更新はできない。
+    更新は seg.set() による一点変更。
+
+    区間はすべて半開区間 [l,r)。
+*/
+
+//問題
+//二項演算のときにできるだけ少ない回数で演算したい
+//Sに持たせる要素として、RGBの３つの文字は持たせたくて、
+//ぼつ　解を求めるときにそれぞれその時演算に入れていいかどうかで分ける。
+//RGBになりうる並びがあれば事前に計算？
+/*
+    4 5
+  1 2 3
+  R G B
+o 1 2 2 
+x 0 0 0
+
+//Rが連続で来た場合、RLEしたいけど、A_iを管理できない
+//RBGは途中で変更ないやんけ！
+//(R*10^5)*(G*10^5)*(B*10^5) = 10^15（組み合わせは最大？
+//じゃあ、組み合わせごとに計算するのは現実的じゃない）
+//いままで掛けたことのある値で割るんだったらモノイドの条件を満たす？
+//
+*/
+int main() {
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n, Q; cin >> n >> Q;
+    // 一点変更 → 区間和 + 区間最小値 + 区間最大値
+    vector<S> A(n);
+    rep(i,0,n) {
+        ll x; cin >> x;
+        A[i] = {x, x, x, 1};
+    }
+    string s; cin >> s;
+    segtree<S,op,e> seg(A);
+    
+    return 0;
+}
+//解答コードここまで
+
+#else
+
+// === LIB_BEGIN ===
+#include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace std;
+using namespace atcoder;
+
+const long long inf = (1LL<<60);
+
+#define rep(i,a,b) for(ll i=(a); i<(b); i++)
+#define rrep(i,a,b) for(ll i=(a); i>=(b); i--)
+#define pb push_back
+#define popb() pop_back()
+#define fi first
+#define se second
+#define yn(x) do { if(x) cout << "Yes\n"; else cout << "No\n"; } while(0)
+#define nall(a) (a).begin(),(a).end()
+#define rall(a) (a).rbegin(),(a).rend()
+#define MIN(x) *min_element(nall(x))
+#define MAX(x) *max_element(nall(x))
+
+using ll = long long;
+using ld = long double;
+using ull = unsigned long long;
+using lll = __int128_t;
+
+template<class T> using vc   = vector<T>;
+template<class T> using vvc  = vector<vc<T>>;
+template<class T> using vvvc = vector<vvc<T>>;
+
+using Graph= vector<vector<ll>>;
+using Grid = vector<vector<char>>;
+
+
+//====== ここから入出力系 ======
+template<class A, class B>
+ostream& operator<<(ostream& os, const pair<A,B>& p) {
+    return os << "(" << p.first << "," << p.second << ")";
+}
+
+//引数を空白区切りで出力
+template<class T, class... Ts>
+void out(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << ' ' << b), ...);
+    cout << '\n';
+}
+//引数を1行づつ出力
+template<class T, class... Ts>
+void outendl(const T& a, const Ts&... b){
+    cout << a;
+    ((cout << endl << b), ...); 
+    cout << '\n';
+}
+//引数を順に読み込む
+template <class... T>
+void input(T &...a) {
+	(cin >> ... >> a);
+}
+
+// __int128_tでも入出力できるようにする
+// cout 用
+ostream& operator<<(ostream& os, lll x) {
+    if (x == 0) return os << '0';
+    if (x < 0) { os << '-'; x = -x; } // 通常ケース
+
+    string s;
+    while (x > 0) {
+        int d = (int)(x % 10);
+        s.push_back(char('0' + d));
+        x /= 10;
+    }
+    reverse(s.begin(), s.end());
+    return os << s;
+}
+
+// cin 用
+istream& operator>>(istream& is, lll& x) {
+    string s;
+    is >> s;
+    bool neg = false;
+    int i = 0;
+    if (!s.empty() && s[0] == '-') { neg = true; i = 1; }
+
+    lll val = 0;
+    for (; i < (int)s.size(); i++) {
+        val = val * 10 + (s[i] - '0');
+    }
+    x = neg ? -val : val;
+    return is;
+}
+
+//===== ここから便利系 =====
+//ans = min(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmin(T& a, const T& b) {
+    if (b < a) { a = b; return true; }
+    return false;
+}
+//ans = max(ans,x)をやる。ついでに戻り値もtrue,falseで返す。
+template <class T>
+bool chmax(T& a, const T& b) {
+    if (a < b) { a = b; return true; }
+    return false;
+}
+
+//===== ここからデバッグ系 =====
+template<class Array2D>
+void For2(const Array2D& a) {
+    for (const auto& row : a) {
+        for (const auto& v : row) cout << v << " ";
+        cout << "\n";
+    }
+}
+template <class Array1D>
+void For(const Array1D& x) {
+    for (const auto& a : x) cout << a << " ";
+    cout << '\n';
+}
+
+// === LIB_END ===
+
+#endif

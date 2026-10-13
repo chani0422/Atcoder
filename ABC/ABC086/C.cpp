@@ -8,7 +8,26 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    ll curX = 0, curY = 0;
+    ll pre = 0;
+    rep(i,0,n) {
+        ll t,x,y;
+        cin >> t >> x >> y;
+        ll manhattan = abs(x-curX)+abs(y-curY);
+        if(t-pre < manhattan) {
+            cout << "No\n";
+            return 0;
+        }
+        if((t-pre-manhattan)%2 == 1) {
+            cout << "No\n";
+            return 0;
+        }
+        pre = t;
+        curX = x;
+        curY = y;
+    }
+    cout << "Yes\n";
     return 0;
 }
  //解答コードここまで

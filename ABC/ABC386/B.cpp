@@ -7,7 +7,21 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    
+    string s; cin >> s;
+    ll ans = 0;
+    rep(i,0,ssize(s)) {
+        char c = s[i];
+        if(i == ssize(s)) ans++;
+        else {
+            if(i != ssize(s)-1 && s[i+1] == '0') {
+                (s[i] == '0' ? i+=1:i+=0);
+                ans++;
+                continue;
+            }
+            ans++;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
  //解答コードここまで

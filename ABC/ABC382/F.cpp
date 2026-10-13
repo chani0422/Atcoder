@@ -2,18 +2,144 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 
-
 //解答コードここから
+/* From chanini library*/
+// 区間代入 → 区間和 + 区間最小値 + 区間最大値
+
+// S : セグ木が持つ情報
+struct S {
+    ll sum;   // 区間和
+    ll mn;    // 区間最小値
+    ll mx;    // 区間最大値
+    ll size;  // 区間の要素数
+};
+
+// F : 遅延させる更新
+// has=true  → value に代入
+// has=false → 何もしない
+struct F {
+    ll value;
+    bool has;
+};
+
+// 2区間を結合
+S op(S a, S b) {
+    return {
+        a.sum + b.sum,
+        min(a.mn, b.mn),
+        max(a.mx, b.mx),
+        a.size + b.size
+    };
+}
+
+// S側の単位元
+S e() {
+    return {
+        0,      // sum
+        inf,    // mn
+        -inf,   // mx
+        0       // size
+    };
+}
+
+// 更新 f をデータ x に適用
+// 区間全体を f.value にする
+S mapping(F f, S x) {
+    if(x.size == 0) return x;  // 空区間
+    if(!f.has) return x;       // 更新なし
+
+    return {
+        f.value * x.size,  // sum
+        f.value,           // mn
+        f.value,           // mx
+        x.size             // size
+    };
+}
+
+// g のあとに f を適用
+// 新しい代入があれば古い代入を上書き
+F composition(F f, F g) {
+    if(!f.has) return g;
+    return f;
+}
+
+// F側の単位元
+F id() {
+    return {0, false};
+}
+
+/*
+    【使い方】
+    【できること】
+    ・区間代入
+    ・区間和
+    ・区間最小値
+    ・区間最大値
+    ・一点取得
+    ・一点変更
+
+   // [l,r) を x に代入
+    seg.apply(l, r, F{x, true});
+
+   // p を x に代入
+    seg.apply(p, F{x, true});
+
+   // [l,r) の情報取得
+    S res = seg.prod(l, r);
+    res.sum;   // 区間和
+    res.mn;    // 区間最小値
+    res.mx;    // 区間最大値
+    res.size;  // 区間サイズ
+
+   // 全区間の情報
+    S res = seg.all_prod();
+
+   // p 番目の情報
+    S res = seg.get(p);
+
+   // p 番目を x に変更
+    seg.set(p, {x, x, x, 1});
+*/
+
+
 //F問題
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll h,w,n; cin >> h >> w >> n;
+    vector<vector<tuple<ll,ll,ll>>> A(2e5+5);
+    rep(i,0,n) {
+        ll r,c,l; cin >>r >> c >> l;
+        c--;
+        A[r].pb({c,l,i});
+    }
+    // 区間代入 → 区間和 + 区間最小値 + 区間最大値
+    vector<S> B(w+1);
+    rep(i,0,w+1) {
+        ll x = 0;
+        B[i] = {x, x, x, 1};
+    }
+    
+    lazy_segtree<S,op,e,F,mapping,composition,id> seg(B);
+    vector<ll> ans(n);
+    rrep(l,2e5+1,0) {
+        if(A[l].empty()) continue;
+        for(auto [c,range, idx] : A[l]) {
+            ll mx = seg.prod(c,c+range).mx;
+            seg.apply(c,c+range,F{mx+1,true});
+            ans[idx] = h - mx;
+        }
+    }
 
+    rep(i,0,n) {
+        cout << ans[i] << " ";
+    }
+    
     return 0;
 }
- //解答コードここまで
+//解答コードここまで
 
 #else
+
 // === LIB_BEGIN ===
 #include <bits/stdc++.h>
 #include <atcoder/all>
@@ -134,5 +260,5 @@ void For(const Array1D& x) {
 }
 
 // === LIB_END ===
-#endif
 
+#endif
