@@ -9,25 +9,55 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     ll a,n; cin >> a >> n;
-    Graph G(n+1);
+    const ll lim = 1e6;
+    Graph G(lim);
     
-
 
     queue<ll> que;
     que.push(1);
+    vector<ll> mp(lim,0);
     while(!que.empty()) {
         ll from = que.front();
+        if(mp[from] == 1) {
+            que.pop();
+            continue;
+        }
+        mp[from] = 1;
         que.pop();
         string s = to_string(from);
-        rep(i,0,ssize(s)) {
-            if(ssize(s) == 1 ) break;
-            else if(ssize(s) >= 2) {
-                
+        if(ssize(s) >= 2 && s[ssize(s)-1] != '0') {
+            string t = s[ssize(s)-1] + s.substr(0,ssize(s)-1);
+            if(stoll(t) <= lim) {
+                que.push(stoll(t));
+                G[from].pb(stoll(t));
             }
-            string t = s.substr(1,ssize(s)) + s[0];
+        }
+        if(from*a <= lim) {
+            que.push(from*a);
+            G[from].pb(from*a);
         }
     }
-    vector<ll> dist(n+1,-1);
+    vector<ll> dist(lim+1,-1);
+    que.push(1);
+    dist[1] = 0;
+    
+    ll sum = 0;
+    while(!que.empty()){
+        int v = que.front();
+        que.pop();
+        sum++;
+        for(int nv : G[v]){
+            if(dist[nv] != -1) continue; // 既訪問
+    
+            dist[nv] = dist[v] + 1;
+            que.push(nv);
+        }
+    }
+    cout << dist[n] << "\n";
+    // cout << sum << "\n";
+    
+    //From chanini library
+    
     return 0;
 }
  //解答コードここまで
