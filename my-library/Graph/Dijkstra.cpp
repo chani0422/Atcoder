@@ -27,7 +27,7 @@ int main() {
         pq.pop();
         if(d != dist[v]) continue;
 
-        for(auto [to,c] : G[v]) {
+        for(auto [c,to] : G[v]) {
             if(dist[to] > d + c) {
             dist[to] = d + c;
             pq.push({dist[to],to});

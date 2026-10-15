@@ -8,7 +8,41 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    vector<vector<pair<ll,ll>>> G(n);
+    vector<ll> dist(n,inf);
+    rep(i,0,m) {
+        ll u,v,c; cin >> u >> v >> c;
+        u--;v--;
+        G[u].pb({v,c}); //有向グラフ！！
+        G[v].pb({u,c}); //無向グラフ！！
+    }
+    
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> que;
+    ll start_v = 0;
+    que.push({A[0],start_v});
+    dist[start_v] = A[0];
+    
+    while(!que.empty()) {
+        auto [d,v] = que.top();
+        que.pop();
+        if(d != dist[v]) continue;
+    
+        for(auto [to,c] : G[v]) {
+            if(dist[to] > d + c + A[to]) {
+                dist[to] = d + c + A[to];
+                que.push({dist[to],to});
+            }
+        }
+    }
+    
+    rep(i,1,n) {
+        cout << dist[i] << " ";
+    }
+    cout << "\n";
     return 0;
 }
  //解答コードここまで

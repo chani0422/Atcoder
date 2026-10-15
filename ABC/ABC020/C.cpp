@@ -8,7 +8,82 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll h,w,t; cin >> h >> w >> t;
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    //上下左右移動用
+    const int dx[4] = {1, 0, -1, 0};
+    const int dy[4] = {0, 1, 0, -1};
+    // const int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+    // const int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
+    
+    //型を確認して!
+    vector<vector<char>> G(h, vector<char>(w));
+    vector<vector<ll>> dist(h, vector<ll>(w, inf));
+    //{コスト、x座標、y座標}
+    using T = tuple<ll,ll,ll>;
+    priority_queue<T,vector<T>,greater<T>> que;
+    
+    ll start_x = 0;
+    ll start_y = 0;
+    ll gx = 0,gy = 0;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            ll a; cin >> a;
+            if(a == 'S') {
+                start_x = i;
+                start_y = j;
+            }
+            if(a == 'G') {
+                gx = i;
+                gy = j;
+            }
+            G[i][j] = a;
+        }
+    }
+    
+    //単一始点
+    ll start_cost = 0;
+    if(G[start_x][start_y] != -1) {
+        que.push({start_cost,start_x,start_y});
+        dist[start_x][start_y] = start_cost;
+    }else {
+        cout << -1 << "\n";
+        cout << "No\n";
+        return 0;
+    }
+    
+    ll black = 0,white = 0;
+    vector<vector<pair<ll,ll>>> parent(h,vector<pair<ll,ll>>(w,{-1,-1}));
+    while(!que.empty()){
+        auto [c, x, y] = que.top();
+        que.pop();
+        if(dist[x][y] != c) continue;
+        black++;
+        rep(dir,0,4){
+            ll nx = x + dx[dir];
+            ll ny = y + dy[dir];
+            if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+            // if(G[nx][ny] == '#') continue;
+            ll d = G[nx][ny];
+            // 非負コストのみを扱う
+            // infを超える経路は扱わない(最短距離がinf未満になる時に限る)
+            if(d < 0 || c > inf - d) continue;
+            ll nc = c + G[nx][ny];
+            //緩和
+            if(chmin(dist[nx][ny],nc)) {
+                que.push({nc,nx,ny});
+                parent[nx][ny] = {x,y};
+            }
+        }
+    }
+    // pair<ll,ll> p = parent[{}]
+    // while()
 
+    if(t/black == 0) {
+        cout << dist[gx][gy] << "\n";
+    }else {
+        cout << dist[gx][gy] + t/black << "\n";
+    }
     return 0;
 }
  //解答コードここまで
