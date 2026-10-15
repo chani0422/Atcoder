@@ -6,7 +6,77 @@
 //E問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<vector<pair<ll,ll>>> G(n+1);
+
+    rep(i,1,n) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        G[a].pb({b,i});
+        G[b].pb({a,i});
+    }
+    vector<ll> parent(n,-1);
+    vector<ll> order;
     
+    queue<ll> que;
+    parent[0] = 0;
+    que.push(0);
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        order.pb(from);
+        for(auto [to,id] : G[from]) {
+            if(parent[to] != -1) continue;
+            parent[to] = from;
+            que.push(to);
+        }
+    }
+    
+    vector<ll> sz(n,1);
+    rrep(i,n-1,1) {
+        ll v = order[i];
+        sz[parent[v]] += sz[v];
+    }
+
+    ll centroid = -1;
+
+    rep(v,0,n) {
+        //親側の部分木サイズ
+        ll largest = n-sz[v];
+        for(auto [to,id] : G[v]) {
+            if(parent[to] == v) {
+                chmax(largest,sz[to]);
+            }
+        }
+        if(largest <= n/2) {
+            centroid = v;
+            break;
+        }
+    }
+
+    vector<ll> ans(n,0);
+    vector<bool> visited(n,false);
+    ans[centroid] = n*(n-1)/2;
+    visited[centroid] = true;
+    que.push(centroid);
+
+    while(!que.empty()) {
+        ll v = que.front();
+        que.pop();
+        for(auto [to,id] : G[v]) {
+            if(visited[to] != true) {
+                visited[to] = true;
+                ans[to] = ans[v] - id;
+                que.push(to);
+            }
+        }
+    }
+
+    rep(i,0,n) {
+        cout << ans[i] << "\n";
+    }
+
     return 0;
 }
 //解答コードここまで
