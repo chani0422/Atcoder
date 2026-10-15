@@ -25,6 +25,7 @@
 {"Grid BFS":{
     "prefix": "bfsgrid",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<string> G(h);",
         "rep(i,0,h) cin >> G[i];",
         "// rep(i,0,h) {",
@@ -99,6 +100,7 @@
 "Dijkstra Adj": {
     "prefix": "dijkstra_adj",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<vector<pair<ll,ll>>> G(n);",
         "vector<ll> dist(n,inf);",
         "rep(i,0,m) {",
@@ -132,6 +134,7 @@
 "BFS Adj": {
     "prefix": "bfs_adj",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "Graph G(n);",
         "rep(i,0,m){",
         "    int u, v; cin >> u >> v;",
@@ -191,6 +194,7 @@
 "TopologicalSort": {
     "prefix": "TopologicalSort",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//From chanini Library",
         "struct TopologicalResult {",
         "    vector<ll> order; //トポロジカル順に並んだ配列にアクセス",
@@ -248,6 +252,7 @@
 "LexicographicalTopologicalSort": {
     "prefix": "LexicographicalTopologicalSort",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "struct TopologicalResult {",
         "    vector<ll> order; //トポロジカル順に並んだ配列にアクセス",
         "    bool hasCycle; //閉路の有無",
@@ -306,6 +311,7 @@
 "Warshall Floyd": {
     "prefix": "warshall_floyd",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
 		"//From chanini library",
         "// ===== Warshall-Floyd =====",
         "vector<vector<ll>> dist(n, vector<ll>(n, inf));",
@@ -389,6 +395,7 @@
 "DFS Adj": {
     "prefix": "dfs_adj",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "Graph G(n);",
         "vector<bool> visited(n,false);",
         "vector<ll> A(m),B(m);",
@@ -435,6 +442,7 @@
 "DFS Grid": {
     "prefix": "dfs_grid",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
 		"vector<string> grid(h);",
 		"rep(i,0,h) cin >> grid[i];",
         "//上下左右移動用",
@@ -497,6 +505,7 @@
 "Kruskal": {
     "prefix": "kruskal",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//クラスカル法 From chanini library",
         "vector<tuple<ll,ll,ll>> edges;",
         "rep(i,0,m) {",
@@ -529,6 +538,7 @@
 "Rotate": {
     "prefix": "rotate",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//メモリO(1)で90度時計回りに回転",
         "auto rotate90 = [](auto& GRID) {",
         "    ll n = GRID.size();",
@@ -552,6 +562,7 @@
 "1D Prefix Sum": {
     "prefix": "1Dpref",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<ll> A(n),pref(n+1,0);",
         "//1Dpref",
         "rep(i,0,n) {",
@@ -564,6 +575,7 @@
 "1D Prefix Sum 2Cycle": {
     "prefix": "1Dpref++",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<ll> A(n),pref(2*n+1,0);",
         "//1Dpref2周分",
         "rep(i,0,n) cin >> A[i];",
@@ -576,6 +588,7 @@
 "Imos Method": {
     "prefix": "imos",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<ll> A(n),imos(n+1,0);",
         "rep(i,0,n) cin >> A[i];",
         "rep(i,0,Q) {",
@@ -590,6 +603,7 @@
 "Coordinate Compression": {
     "prefix": "compress",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<ll> A(n);",
         "rep(i,0,n) cin >> A[i];",
         "vector<ll> B = A;",
@@ -602,6 +616,7 @@
 "Run Length Encoding": {
     "prefix": "RLE",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "vector<pair<char,ll>> rle;",
         "for(char c : s) {",
         "    if(rle.empty() || rle.back().first != c) {",
@@ -616,6 +631,7 @@
 "Bit Full Search": {
     "prefix": "bit_search",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//bit全探索",
         "rep(bit,0,(1LL<<n)) {",
         "    rep(i,0,n) {",
@@ -630,6 +646,7 @@
 "Permutation Full Search": {
     "prefix": "next_perm",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//順列全探索",
         "vector<ll> P(n);",
         "iota(nall(P),0);",
@@ -642,6 +659,7 @@
 "Two Pointer": {
     "prefix": "shakutori_twopointer",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//尺取法",
         "ll r = 0;",
         "rep(l,0,n) {",
@@ -660,6 +678,7 @@
 "GCD": {
     "prefix": "gcd_saidaikouyakusuu",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//最大公約数",
         "ll g = gcd(a,b);"
     ],
@@ -668,6 +687,7 @@
 "LCM": {
     "prefix": "lcm_saishoukoubaisuu",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//最小公倍数",
         "ll l = lcm(a,b);"
     ],
@@ -676,6 +696,7 @@
 "Divisors": {
     "prefix": "divisor_yakusuurekkyo",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//約数列挙",
         "vector<ll> divisor;",
         "for(ll i=1;i*i<=n;i++) {",
@@ -691,6 +712,7 @@
 "Prime Factorization": {
     "prefix": "factorize_soinsubunkai",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//素因数分解",
         "map<ll,ll> factor;",
         "ll x = n;",
@@ -707,6 +729,7 @@
 "Eratosthenes Sieve": {
     "prefix": "sieve_erasutotenesu",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//エラトステネスの篩",
         "vector<bool> isPrime(n+1,true);",
         "isPrime[0] = isPrime[1] = false;",
@@ -722,6 +745,7 @@
 "01 BFS adj": {
     "prefix": "BFS01adj",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//0-1 BFS",
         "vector<ll> dist(n,inf);",
         "vector<vector<pair<ll,ll>>> adj(n);",
@@ -753,6 +777,7 @@
 "ModPow": {
     "prefix": "modpow",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//繰り返し二乗法 O(log n)",
         "ll modpow(ll a, ll n, ll mod) {",
         "    a %= mod;",
@@ -773,6 +798,7 @@
 "Lazy Add All Definition": {
     "prefix": "lazy_add_all_def",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "/* From chanini library*/",
         "//区間加算 → 区間和 + 区間最小値 + 区間最大値",
         "",
@@ -870,6 +896,7 @@
 "Lazy Add All Main": {
     "prefix": "lazy_add_all",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "//区間加算 → 区間和 + 区間最小値 + 区間最大値",
         "vector<S> A(n);",
         "rep(i,0,n) {",
@@ -908,6 +935,7 @@
 "Lazy Sub All Definition": {
     "prefix": "lazy_sub_all_def",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "/* From chanini library*/",
         "// 区間代入 → 区間和 + 区間最小値 + 区間最大値",
         "",
@@ -1013,6 +1041,7 @@
 "Lazy Sub All Main": {
     "prefix": "lazy_sub_all",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "// 区間代入 → 区間和 + 区間最小値 + 区間最大値",
         "vector<S> A(n);",
         "rep(i,0,n) {",
@@ -1051,6 +1080,7 @@
 "Segment Tree All Definition": {
     "prefix": "seg_all_def",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "/* From chanini library*/",
         "// 一点変更 → 区間和 + 区間最小値 + 区間最大値",
         "",
@@ -1126,6 +1156,7 @@
 "Segment Tree All Main": {
     "prefix": "seg_all",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "// 一点変更 → 区間和 + 区間最小値 + 区間最大値",
         "vector<S> A(n);",
         "rep(i,0,n) {",
@@ -1158,6 +1189,7 @@
 "SCC Graph": {
     "prefix": "scc",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "// 有向グラフ用。頂点番号・成分番号はすべて 0-indexed。",
         "// ACL の Tarjan 法を参考にした、再帰を使わない拡張版。",
         "// 辺追加後、最初の問い合わせで自動 build。計算量・メモリ O(N+M)。",
@@ -1398,6 +1430,7 @@
 "fenwick Tree (BIT)": {
     "prefix": "BIT_fenwick",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "/* From chanini library*/",
         "// Fenwick Tree (BIT)",
         "// できること",
@@ -1462,6 +1495,7 @@
 "ACL segtree": {
     "prefix": "segtree",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "segtree<S, op, e> ${1:seg}(${2:v});"
     ],
     "description": "ACL segtree"
@@ -1469,6 +1503,7 @@
 "ACL lazy_segtree": {
     "prefix": "lazyseg",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "lazy_segtree<S, op, e, F, mapping, composition, id> ${1:seg}(${2:v});"
     ],
     "description": "ACL lazy_segtree"
@@ -1476,6 +1511,7 @@
 "modpow": {
     "prefix": "modpow_kurikaeshijijouhou",
     "body": [
+        "// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt",
         "ll modpow(ll a, ll b, ll mod) {",
         "    ll res = 1;",
         "    while(b > 0) {",
