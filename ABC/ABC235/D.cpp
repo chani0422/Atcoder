@@ -8,7 +8,73 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll a,n; cin >> a >> n;
+    ll cur = n;
+    ll cnt = 0;
+    set<multiset<ll>> st;
+    map<ll,multiset<ll>> mp;
+    map<ll,ll> count;
+    ll id = 0;
+    ll p = 1;
+    mp[1].insert(1);
+    while(p < n) {
+        string s = to_string(p);
+        for(auto x : s) {
+            mp[p].insert(x-'0');
+        }
+        count[p] = id;
+        id++;
+        p*= a;
+    }
+    
 
+    while(cur != 1) {
+        string s = to_string(cur);
+        if(ssize(s) <= 2) {
+            if(cur % a != 0 && s[1] == '0') {
+                cout << -1 << "\n";
+                return 0;
+            }
+            if(ssize(s) == 1 && cur % a != 0) {
+                cout << -1 << "\n";
+                return 0;
+            }
+        }
+        ll tmp_cnt = 0;
+        bool not_divede = true;
+        rep(i,0,ssize(s)) {
+            string t = s.substr(1,ssize(s)) + s[0];
+            if(stoll(t)%a == 0) not_divede = false;
+            multiset<ll> compare;
+            tmp_cnt++;
+            for(auto x : t) {
+                compare.insert(x-'0');
+            }
+            ll target = 0;
+            for(auto x : compare) {
+                target += x;
+                target *= 10;
+            }
+            target/=10;
+            if(mp[stoll(t)] == compare) {
+                cout << cnt+1+count[stoll(t)] << "\n";
+                return 0;
+            }
+            s = t;
+        }
+        if(not_divede) {
+            cout << -1 << "\n";
+            return 0;
+        }
+        if(cur % a == 0) {
+            cur /= a;
+        }else {
+            s = s.substr(1,ssize(s)) + s[0];
+            cur = stoll(s);
+        }
+        cnt++;
+    }
+    cout << -1 << "\n";
     return 0;
 }
  //解答コードここまで

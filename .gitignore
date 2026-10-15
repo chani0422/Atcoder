@@ -31,3 +31,8 @@ __pycache__/
 *.log
 core
 core.*
+
+# 授業関連
+jugyo
+school_kadai
+cloudsyssamplespython

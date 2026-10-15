@@ -11,23 +11,50 @@ int main() {
     Graph G(n);
     rep(i,0,n-1) {
         ll a,b; cin >> a >> b;
+        a--;b--;
         edge.pb({a,b});
         G[a].pb(b);
         G[b].pb(a);
     }
 
     vector<ll> pre(n,-1);
+    vector<ll> sz(n,1);
     ll id = 0;
-    auto dfs = [&](auto dfs, ll p, ll from) {
+    auto dfs = [&](auto dfs, ll p, ll from) ->void{
         pre[from] = id;
         id++;
         for(auto to : G[from]) {
             if(to == p) continue;
             dfs(dfs,from,to);
+            sz[from] += sz[to];
         }
-        return;
     };
     dfs(dfs,-1,0);
+
+
+    vector<ll> imos(n+1,0);
+    rep(i,0,n-1) {
+        auto [a,b] = edge[i];
+        if(pre[a] < pre[b]) swap(a,b);
+        ll l = pre[a];
+        ll r = pre[a] + sz[a];
+        if(sz[a] > n - sz[a]) {
+            imos[l] += i+1;
+            imos[r] -= i+1;
+        }else {
+            imos[0] += i+1;
+            imos[l] -= i+1;
+            imos[r] += i+1;
+        }
+    }
+    rep(k,1,n) {
+        imos[k] += imos[k-1];
+    }
+
+    rep(i,0,n) {
+        cout << imos[pre[i]] << " ";
+    }
+    cout << "\n";
     return 0;
 }
 //解答コードここまで

@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll h,w; cin >> h >> w;
+    vector<vector<char>> grid(h,vector<char>(w));
+    rep(i,0,h)rep(j,0,w) cin >> grid[i][j];
+    pair<ll,ll> left = {inf,inf},right = {-1,-1};
+    //一つ前の提出で本質に気づいた...思ったより実装短くなりそう
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(grid[i][j] == '#') {
+                chmin(left.fi,i);
+                chmin(left.se,j);
+                chmax(right.fi,i);
+                chmax(right.se,j);
+            }
+        }
+    }
+    auto [x1,y1] = left;
+    auto [x2,y2] = right;
+    rep(i,x1,x2+1) {
+        rep(j,y1,y2+1) {
+            if(grid[i][j] == '.') {
+                cout << i+1 << " " << j+1 << "\n";
+                return 0;
+            }
+        }
+    }
     return 0;
 }
  //解答コードここまで

@@ -30,7 +30,7 @@ S mapping(F f,S x) {return {x.sum+x.size*f,x.size};}
 F composition(F f, F g) {return f + g;}
 
 // F側の単位元 +0
-ll id(){return 0;}
+F id(){return 0;}
 
 //問題
 int main() {

@@ -1,16 +1,49 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-int main(void) {
-    double X, time1, MIPS;
-    do {
-        scanf("%lf", &X);
-    } while ((X < 1.0) || (X > 4.0));
+#define N 10 //配列の数
 
-    time1 = (100*2 + 200*1 + 500*1) * (1.0 / X)
-          + (100 * (20.0 / 100.0)) *20;
+void print_a(int a[]){
+    int i;
+    for (i=0;i<N;i++)
+        printf("%d ",a[i]);
+    printf("\n");
+}  
 
-    MIPS = (100 + 200 + 500) / (time1*0.000000001) / 1000000;
+void swap(int a[],int i,int j){
+    int tmp;
+    tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+    print_a(a);
+}
 
-    printf("%f nsec, MIPS=%f\n", time1, MIPS);
-    return 0;
+
+void sort(int a[]){
+    //この関数を編集(レポートにもこの関数のみ掲載し説明)
+    for(int i = 0; i < N-1; i++) {
+        int min_index = i;
+        for(int j = i+1; j < N; j++) {
+            if(a[j] < a[min_index]) {
+                min_index = j;
+            }
+        }
+        swap(a,i,min_index);
+    }
+}
+
+void main(void){
+    int a[N]={0},i,tmp;
+    srand((unsigned int)time(NULL));
+    for (i=0;i<N;i++){
+        a[i]=rand()%100;
+    }
+    printf ("Start:\n");
+    print_a(a);
+
+    sort(a);
+    
+    printf ("Finish:\n");
+    print_a(a);
 }
