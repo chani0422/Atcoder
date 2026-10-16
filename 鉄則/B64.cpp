@@ -8,47 +8,49 @@ int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
     int n,m; cin >> n >> m;
     
-    Graph G(n);
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    vector<vector<pair<ll,ll>>> G(n);
     rep(i,0,m) {
-        int a,b,c; cin >> a >> b >> c;
-        a--;b--;
-        G[a].pb({b,c});
-        G[b].pb({a,c});
+        ll u,v,c; cin >> u >> v >> c;
+        u--;v--;
+        G[u].pb({c,v}); //有向グラフ！！
+        G[v].pb({c,u}); //無向グラフ！！
     }
-
-    vector<ll> dist(n,inf);
-    priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>> pq;
-    vector<ll> parent(n,-1);
     
-    pq.push({0,0});
-    dist[0] = 0;
-    parent[0] = 0;
-
-    while(!pq.empty()) {
-        auto [d,v] = pq.top();
-        pq.pop();
-        if(dist[v] != d) continue;
-        
-        for(auto [nv,c] : G[v]) {
-            if(dist[nv] > dist[v] + c) {
-                dist[nv] = dist[v] + c;
-                parent[nv] = v;
-                pq.push({dist[nv],nv});
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> que;
+    vector<ll> dist(n,inf);
+    vector<ll> parent(n,-2);
+    ll start_v = 0;
+    que.push({0,start_v});
+    dist[start_v] = 0;
+    parent[0] = -1;
+    
+    while(!que.empty()) {
+        auto [d,from] = que.top();
+        que.pop();
+        if(d != dist[from]) continue;
+    
+        for(auto [c,to] : G[from]) {
+            if(dist[to] > d + c) {
+                dist[to] = d + c;
+                que.push({dist[to],to});
+                parent[to] = from;
             }
         }
     }
 
-    vector<ll> path;
-    if(dist[n-1] != inf) {
-        ll cur = n-1;
-        while(cur != 0) {
-            path.pb(cur+1);
-            cur = parent[cur];
-        }
+    vector<ll> ans;
+    ll cur = n-1;
+    ans.pb(cur+1);
+    while(cur != -1) {
+        if(parent[cur] == -1) break;
+        ll v = parent[cur];
+        ans.pb(v+1);
+        cur = parent[cur];
     }
-    path.pb(1);
-    reverse(nall(path));
-    For(path);
+    reverse(nall(ans));
+    For(ans);
+    
     return 0;
 }
 //解答コードここまで

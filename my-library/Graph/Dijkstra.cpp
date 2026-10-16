@@ -13,8 +13,8 @@ int main() {
     rep(i,0,m) {
         ll u,v,c; cin >> u >> v >> c;
         u--;v--;
-        G[u].pb({v,c}); //有向グラフ！！
-        G[v].pb({u,c}); //無向グラフ！！
+        G[u].pb({c,v}); //有向グラフ！！
+        G[v].pb({c,u}); //無向グラフ！！
     }
 
     priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
@@ -23,11 +23,11 @@ int main() {
     dist[start_v] = 0;
 
     while(!pq.empty()) {
-        auto [d,v] = pq.top();
+        auto [d,from] = pq.top();
         pq.pop();
-        if(d != dist[v]) continue;
+        if(d != dist[from]) continue;
 
-        for(auto [c,to] : G[v]) {
+        for(auto [c,to] : G[from]) {
             if(dist[to] > d + c) {
             dist[to] = d + c;
             pq.push({dist[to],to});

@@ -6,40 +6,61 @@
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n,m,s,g,t; input(n,m,s,g,t);
-    s--;g--;t--;
-    vector<vector<pair<ll,ll>>> G(n);
-    vector<ll> dist(n,inf);
-    rep(i,0,m) {
-        ll u,v,c; cin >> u >> v >> c;
-        u--;v--;
-        G[u].pb({v,c}); //有向グラフ！！
-        G[v].pb({u,c}); //無向グラフ！！
+    ll n; cin >> n;
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    Graph G(n);
+    rep(i,0,m){
+        int u, v; cin >> u >> v;
+        --u; --v;
+        G[u].push_back(v);
+        G[v].push_back(u);
     }
     
-    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> que;
-    ll start_v = g;
-    que.push({0,start_v});
-    dist[start_v] = 0;
+    vector<int> dist(n, -1);
+    vector<int> parent(n, -1);
+    queue<int> que;
     
-    while(!que.empty()) {
-        auto [d,v] = que.top();
+    dist[s] = 0;
+    parent[s] = -2;
+    que.push(s);
+    
+    while(!que.empty()){
+        int v = que.front();
         que.pop();
-        if(d != dist[v]) continue;
     
-        for(auto [to,c] : G[v]) {
-            if(dist[to] > d + c) {
-                dist[to] = d + c;
-                que.push({dist[to],to});
-            }
+        for(int nv : G[v]){
+            if(dist[nv] != -1) continue; // 既訪問
+    
+            dist[nv] = dist[v] + 1;
+            parent[nv] = v;
+            que.push(nv);
         }
     }
     
-    if(dist[s] == inf || dist[t] == inf) {
-        cout << -1 << "\n";
-    }else {
-        cout << dist[s] + dist[t] << "\n";
+    // 到達できなかったら -1
+    cout << dist[g] << endl;
+    
+    // ======= 経路復元したいとき =======
+    /*
+    if(dist[g] != -1){
+        vector<int> path;
+        int cur = g;
+        while(cur != s){
+            path.push_back(cur);
+            cur = parent[cur];
+        }
+        path.push_back(s);
+    
+        //1-indexに戻して出力
+        reverse(nall(path));
+        for(int v : path){
+            cout << v+1 << "\n";
+        }
     }
+    */
+    
+    //From chanini library
+    
     return 0;
 }
 //解答コードここまで
