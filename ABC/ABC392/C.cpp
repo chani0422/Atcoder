@@ -8,7 +8,11 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<ll> P(n),Q(n);
+    rep(i,0,n) cin >> P[i];
+    rep(i,0,n) cin >> Q[i];
+    rep(i,0,n) cout << P[Q[i]-1] << " ";
     return 0;
 }
  //解答コードここまで

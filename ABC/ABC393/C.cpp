@@ -8,7 +8,23 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    set<pair<ll,ll>> st;
+    ll ans = 0;
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        pair<ll,ll> s = {a,b},t = {b,a};
+        if(st.contains(s) || st.contains(t)) {
+            ans++;
+            continue;
+        }else if(a == b) {
+            ans++;
+            continue;
+        }
+        st.insert(s);
+        st.insert(t);
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

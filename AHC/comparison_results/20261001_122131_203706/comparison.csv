@@ -1,6 +1,0 @@
-﻿case,targeted_status,targeted_T,targeted_E,targeted_score,targeted_seconds,targeted_detail,targeted_v2_status,targeted_v2_T,targeted_v2_E,targeted_v2_score,targeted_v2_seconds,targeted_v2_detail,saved_steps
-0001,OK,201,0,201,1.782533,,OK,202,0,202,1.893193,,-1
-0002,OK,168,0,168,1.848954,,OK,168,0,168,1.875431,,0
-0003,OK,214,0,214,1.791869,,OK,215,0,215,1.881703,,-1
-0004,OK,379,0,379,1.773274,,OK,379,0,379,1.873458,,0
-0005,OK,760,0,760,1.775907,,OK,757,0,757,1.877724,,3

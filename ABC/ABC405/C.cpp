@@ -3,12 +3,25 @@
 #include __FILE__
 
 
+
 //解答コードここから
 //C問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<ll> A(n),pref(n+1,0);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        A[i] = a;
+        pref[i+1] = pref[i] + a;
+    }
 
+    ll ans = 0;
+    rep(i,0,n-1) {
+        ans += A[i] * (pref[n]-pref[i+1]);
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

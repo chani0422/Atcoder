@@ -6,7 +6,37 @@
 //D問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,Q; cin >> n >> Q;
+    vector<ll> A(n),pref(n+1,0),pref2(n+1,0);
+    vector<ll> index(n+1,0);
+    index[0] = 1;
+    rep(i,0,n) cin >> A[i];
+    rep(i,0,n) {
+        pref[i+1] = pref[i] + A[i];
+        index[i+1] = index[i] + i+1;
+        pref2[i+1] = pref2[i] + pref[i+1];
+    }
     
+    while(Q--) {
+        ll l,r; cin >> l >> r;
+        l--;
+        if(l == 0) {
+            auto it2 = upper_bound(nall(index),r) - index.begin()-1;
+            ll a = r - index[it2] + 1;
+            cout << pref2[it2] + pref[a] << "\n";
+            continue;
+        }
+        auto it1 = upper_bound(nall(index),l) - index.begin()-1;
+        auto it2 = upper_bound(nall(index),r) - index.begin()-1;
+        // cout << it1 << ":" << it2 << "\n";
+        ll L = l-index[it1] + 1;
+        ll R = r-index[it2] + 1;
+        cout << (pref2[it2]+pref[R]) - (pref2[it1]+pref[L]) << "\n";
+    }
+
+    // For(pref);
+    // For(pref2);
+    // For(index);
     return 0;
 }
 //解答コードここまで

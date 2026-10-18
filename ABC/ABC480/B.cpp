@@ -6,7 +6,36 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,m; cin >> n >> m;
+    vector<ll> cnt(n,0);
+    vector<string> S(n);
+    rep(i,0,n) cin >> S[i];
+    rep(i,0,m) {
+        string t; cin >> t;
+        ll ttmp = 0;
+        ll tmp = -1;
+        bool alr = false;
+        rep(j,0,n) {
+            ll count = 0;
+            string ss = S[j];
+            if(ssize(t) != size(ss)) continue;
+            rep(k,0,ssize(ss)) {
+                if(t[k] != ss[k]) count++;
+                if(count == 2) break;
+            }
+            if(count == 0) {
+                cnt[j]++;
+                alr = true;
+                break;
+            }else if(count == 1) {
+                tmp = j;
+                ttmp++;
+            }
+        }
+        if(alr || ttmp != 1) continue;
+        cnt[tmp]++;
+    }
+    For(cnt);
     return 0;
 }
 //解答コードここまで

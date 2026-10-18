@@ -8,7 +8,20 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    map<ll,vector<ll>> mp;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        mp[a].pb(i);
+    }
+    ll ans = inf;
+    for(auto [a,A] : mp) {
+        if(ssize(A) >= 2) {
+            chmin(ans,A[1]-A[0]+1);
+        }
+    }
+    if(ans == inf) cout << -1 << "\n";
+    else cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

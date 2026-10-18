@@ -6,6 +6,7 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,k,t; cin >> n >> k >> t;
     
     return 0;
 }

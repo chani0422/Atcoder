@@ -8,7 +8,21 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    map<ll,pair<ll,ll>,greater<ll>> mp;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        mp[a].fi++;
+        mp[a].se = i+1;
+    }
+    for(auto [a,x] : mp) {
+        auto [cnt,id] = x;
+        if(cnt == 1) {
+            cout << id << "\n";
+            return 0;
+        }
+    }
+    cout << -1 << "\n";
     return 0;
 }
  //解答コードここまで

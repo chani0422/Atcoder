@@ -8,7 +8,15 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    string s; cin >> s;
+    rrep(i,ssize(s)-1,0) {
+        string t = s.substr(i,2);
+        if(t == "WA") {
+            s[i] = 'A';
+            s[i+1] = 'C';
+        }
+    }
+    cout << s << "\n";
     return 0;
 }
  //解答コードここまで

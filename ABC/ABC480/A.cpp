@@ -6,7 +6,13 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    string s,t; cin >> s >> t;
+    bool ok = true;
+    if(s[0] == 'A' && t[1] == 'D') ok = false;
+    if(s[0] == 'D' && t[1] == 'A') ok = false;
+    if(s[1] == 'A' && t[0] == 'D') ok = false;
+    if(s[1] == 'D' && t[0] == 'A') ok = false;
+    yn(ok);
     return 0;
 }
 //解答コードここまで

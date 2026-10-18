@@ -1,2 +1,0 @@
-ahc072_targeted_v2.cpp: sha256=e31efaebf188b6e07fce4471b2dd27184062461a95664f0cb3fa810b2e71cce7
-ahc072_targeted_v4.cpp: sha256=7b1e06165aa8fec07a23ecce48dedad45a4d658bc5bc3789592b433ad1e65491
