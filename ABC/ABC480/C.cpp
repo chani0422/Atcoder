@@ -7,7 +7,26 @@
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
     ll n,k,t; cin >> n >> k >> t;
-    
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    sort(nall(A));
+    ll cur = 0, cnt = 0;
+    rep(i,0,n) {
+        if(A[i] > t) break;
+        ll seaq = (A[i] - cur + k-1);
+        ll a = A[i] - cur;
+        if(a >= 0) {
+            cnt += seaq/k;
+            cur = max(seaq/k*k,A[i] + k);
+        }
+        chmax(cur,A[i] + k);
+    }
+    ll seaq2 = t - cur + k-1;
+    ll a2 = t - cur;
+    if(a2 >= 0) {
+        cnt += seaq2/k;
+    }
+    cout << cnt << "\n";
     return 0;
 }
 //解答コードここまで

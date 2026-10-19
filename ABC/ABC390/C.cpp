@@ -8,7 +8,30 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll h,w; cin >> h >> w;
+    vector<string> S(h);
+    rep(i,0,h) cin >> S[i];
 
+    ll x_lo = inf,x_hi = 0,y_lo = inf,y_hi = 0;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            if(S[i][j] == '#') {
+                chmax(x_hi,i);
+                chmax(y_hi,j);
+                chmin(x_lo,i);
+                chmin(y_lo,j);
+            }
+        }
+    }
+    rep(r,x_lo,x_hi+1) {
+        rep(c,y_lo,y_hi+1) {
+            if(S[r][c] == '.') {
+                yn(0);
+                return 0;
+            }
+        }
+    }
+    yn(1);
     return 0;
 }
  //解答コードここまで

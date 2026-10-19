@@ -6,61 +6,32 @@
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n; cin >> n;
-    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
-    Graph G(n);
-    rep(i,0,m){
-        int u, v; cin >> u >> v;
-        --u; --v;
-        G[u].push_back(v);
-        G[v].push_back(u);
-    }
-    
-    vector<int> dist(n, -1);
-    vector<int> parent(n, -1);
-    queue<int> que;
-    
-    dist[s] = 0;
-    parent[s] = -2;
-    que.push(s);
-    
-    while(!que.empty()){
-        int v = que.front();
-        que.pop();
-    
-        for(int nv : G[v]){
-            if(dist[nv] != -1) continue; // 既訪問
-    
-            dist[nv] = dist[v] + 1;
-            parent[nv] = v;
-            que.push(nv);
+    ll X; cin >> X;
+    ll Q; cin >> Q;
+    priority_queue<ll,vector<ll>> left;
+    priority_queue<ll,vector<ll>,greater<ll>> right;
+    left.push(X);
+    auto add = [&](ll x) ->void {
+        if(left.top() < x) {
+            left.push(x);
+        }else {
+            right.push(x);
         }
-    }
-    
-    // 到達できなかったら -1
-    cout << dist[g] << endl;
-    
-    // ======= 経路復元したいとき =======
-    /*
-    if(dist[g] != -1){
-        vector<int> path;
-        int cur = g;
-        while(cur != s){
-            path.push_back(cur);
-            cur = parent[cur];
+        if(ssize(left) < ssize(right) + 1) {
+            left.push(right.top());
+            right.pop();
+        }else {
+            right.push(left.top());
+            left.pop();
         }
-        path.push_back(s);
-    
-        //1-indexに戻して出力
-        reverse(nall(path));
-        for(int v : path){
-            cout << v+1 << "\n";
-        }
+    };
+
+    while(Q--) {
+        ll a,b; cin >> a >> b;
+        add(a);
+        add(b);
+        cout << left.top() << "\n";
     }
-    */
-    
-    //From chanini library
-    
     return 0;
 }
 //解答コードここまで

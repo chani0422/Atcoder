@@ -12,7 +12,12 @@ int main() {
     vector<ll> P(n),Q(n);
     rep(i,0,n) cin >> P[i];
     rep(i,0,n) cin >> Q[i];
-    rep(i,0,n) cout << P[Q[i]-1] << " ";
+    vector<ll> ans(n);
+    rep(i,0,n) {
+        ans[Q[i]-1] = Q[P[i]-1];
+    }
+    For(ans);
+    cout << "\n";
     return 0;
 }
  //解答コードここまで

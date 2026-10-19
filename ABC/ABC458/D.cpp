@@ -3,10 +3,35 @@
 #include __FILE__
 
 //解答コードここから
-//D問題
+//問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll X; cin >> X;
+    ll Q; cin >> Q;
+    priority_queue<ll,vector<ll>> left;
+    priority_queue<ll,vector<ll>,greater<ll>> right;
+    left.push(X);
+    auto add = [&](ll x) ->void {
+        if(left.top() < x) {
+            left.push(x);
+        }else {
+            right.push(x);
+        }
+        if(ssize(left) < ssize(right) + 1) {
+            left.push(right.top());
+            right.pop();
+        }else {
+            right.push(left.top());
+            left.pop();
+        }
+    };
+
+    while(Q--) {
+        ll a,b; cin >> a >> b;
+        add(a);
+        add(b);
+        cout << left.top() << "\n";
+    }
     return 0;
 }
 //解答コードここまで
@@ -17,7 +42,6 @@ int main() {
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
-using namespace atcoder;
 
 const long long inf = (1LL<<60);
 
