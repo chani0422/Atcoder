@@ -12,7 +12,7 @@ int main() {
     priority_queue<ll,vector<ll>,greater<ll>> right;
     left.push(X);
     auto add = [&](ll x) ->void {
-        if(left.top() < x) {
+        if(left.top() >= x) {
             left.push(x);
         }else {
             right.push(x);

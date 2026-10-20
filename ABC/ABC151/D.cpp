@@ -8,7 +8,50 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll h,w; cin >> h >> w;
+    Grid G(h,vector<char>(w));
+    rep(i,0,h)rep(j,0,w) cin >> G[i][j];
+    
+    ll ans = -inf;
+    rep(i,0,h) {
+        rep(j,0,w) {
+            ll sx = i,sy = j;
+            if(G[sx][sy] == '#') continue;
+            // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+            //上下左右移動用
+            const int dx[4] = {1, 0, -1, 0};
+            const int dy[4] = {0, 1, 0, -1};
+            
+            vector<vector<ll>> dist(h, vector<ll>(w, -1));
+            queue<pair<int,int>> que;
+            
+            dist[sx][sy] = 0;
+            que.push({sx, sy});
+            
+            while(!que.empty()){
+                auto [x, y] = que.front();
+                que.pop();
+            
+                rep(dir,0,4){
+                    int nx = x + dx[dir];
+                    int ny = y + dy[dir];
+            
+                    if(nx < 0 || nx >= h || ny < 0 || ny >= w) continue; // 範囲外
+                    if(G[nx][ny] == '#') continue; // 壁
+                    if(dist[nx][ny] != -1) continue; // 既訪問
+            
+                    dist[nx][ny] = dist[x][y] + 1;
+                    que.push({nx, ny});
+                }
+            }
+            rep(ii,0,h) {
+                rep(jj,0,w) {
+                    chmax(ans,dist[ii][jj]);
+                }
+            }
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

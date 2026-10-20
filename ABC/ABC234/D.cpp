@@ -8,7 +8,24 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    priority_queue<ll,vector<ll>,greater<ll>> que;
+    vector<ll> ANS;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        if(i < k) {
+            que.push(a);
+            if(i == k-1) ANS.pb(que.top());
+        }else {
+            if(que.top() < a) {
+                que.pop();
+                que.push(a);
+            }
+            ANS.pb(que.top());
+        }
+    }
 
+    For(ANS);
     return 0;
 }
  //解答コードここまで

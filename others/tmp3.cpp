@@ -6,32 +6,26 @@
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll X; cin >> X;
-    ll Q; cin >> Q;
-    priority_queue<ll,vector<ll>> left;
-    priority_queue<ll,vector<ll>,greater<ll>> right;
-    left.push(X);
-    auto add = [&](ll x) ->void {
-        if(left.top() < x) {
-            left.push(x);
+    ll n,k; cin >> n >> k;
+    using T = pair<ll,ll>;
+    priority_queue<T,vector<T>> que;
+    vector<ll> ans;
+    rep(i,0,n) {
+        ll a; cin >> a;
+        if(i < k) {
+            que.push({a,i+1});
+            if(i == k-1) {
+                ans.pb(que.top().se);
+            }
         }else {
-            right.push(x);
+            if(que.top().fi > a) {
+                que.pop();
+                que.push({a,i+1});
+            }
+            ans.pb(que.top().se);
         }
-        if(ssize(left) < ssize(right) + 1) {
-            left.push(right.top());
-            right.pop();
-        }else {
-            right.push(left.top());
-            left.pop();
-        }
-    };
-
-    while(Q--) {
-        ll a,b; cin >> a >> b;
-        add(a);
-        add(b);
-        cout << left.top() << "\n";
     }
+    for(auto x : ans) cout << x << "\n";
     return 0;
 }
 //解答コードここまで
