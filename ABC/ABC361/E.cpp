@@ -4,50 +4,52 @@
 
 
 //解答コードここから
+/*
+GPTに「直径は辺の本数ではなく、重みの合計で求めます。」というヒントをもらった。
+木ということは根がある。根から葉に向かってBFSして1番目と2番目に重い経路の重み＋それ以外の辺の重み＊２が答えになるのでは？
+というかそれでしょ
+制約的にすべての親を記録できるか
+じゃあそれを実装します。
+ん？別に親記録しなくてもいいな
+重みが1位と2位だけわかればいいやん
+一回目の提出は11個WA
+んー、方針は合ってるけど、なんかのパターンで通らないっぽい
+流石に嘘解法ではないと思う
+わかった、根を今の実装だと一回だけ通るルートが根を通らないルートから選ばれることがある。
+根から各葉につながる経路かつ、根から出るルートが2種類ないといけない。
+実装はABC終わってからやります
+
+*/
 //E問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     ll n; cin >> n;
-    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
-    //クラスカル法 From chanini library
-    vector<tuple<ll,ll,ll>> edges;
+    Graph G(n);
+    vector<ll> indeg(n,0);
+    map<pair<ll,ll>,ll> edges;
+    ll ans = 0;
     rep(i,0,n-1) {
         ll a,b,c; cin >> a >> b >> c;
         a--;b--;
-        edges.pb({c,a,b});
-    }
-    
-    //辺を重みの小さい順にソート
-    sort(rall(edges)); //最大全域木！
-    
-    dsu uf(n);
-    Graph G(n);
-    //小さい辺から見ていく
-    vector<tuple<ll,ll,ll>> can;
-    vector<ll> indeg(n,0);
-
-    for(auto &[c,a,b] : edges) {
-        //a,bが違うグループだったら閉路にならないからつなげる
-        if(!uf.same(a,b)) {
-            uf.merge(a,b);
-            G[a].pb(b);
-            G[b].pb(a);
-            indeg[a]++;
-            indeg[b]++;
-            can.pb({c,a,b});
-        }
+        indeg[a]++;
+        indeg[b]++;
+        G[a].pb(b);
+        G[b].pb(a);
+        edges[{a,b}] = c;
+        edges[{b,a}] = c;
+        ans += c;
     }
 
     queue<ll> que;
     vector<ll> visited(n,false);
     rep(i,0,n) if(indeg[i] == 1) que.push(i);
-    ll last = 0;
+    ll root = 0;
 
     while(!que.empty()) {
         ll v = que.front();
         que.pop();
-        last = v;
+        root = v;
         for(auto u : G[v]) {
             if(visited[v] == true) continue;
             indeg[u]--;
@@ -56,42 +58,36 @@ int main() {
             }
         }
     }
-    // cout << last << "\n";
+    // cout << root << "\n";
     visited.resize(n,false);
     vector<ll> dist(n,-1);
-    vector<ll> parent(n,-2);
-    auto dfs = [&](auto dfs,ll from,ll cnt, ll dia) ->bool {
+    que.push(root);
+    dist[root] = 0;
+    visited[root] = true;
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
         for(auto to : G[from]) {
             if(dist[to] == -1) {
-                dist[to] = dist[from] + 1;
-                parent
-                if(dfs(dfs,to,cnt+1)) {
-                    parent[to] = from;
-                }
+                dist[to] = dist[from] + edges[{from,to}];
+                que.push(to);
             }
         }
-        chmax(dia,cnt);
-        if(dia == cnt)
-    };
-
-    ll mx = -1;
-    ll id = -1;
-    rep(i,0,n) {
-        if(chmax(mx,dist[i])) id = i;
     }
 
-    ll ans = 0;
-    rep(i,0,ssize(can)) {
-        auto &[c,a,b] = can[i];
-        if(i < (ssize(can)+1)/2) {
-            ans += c;
+    ll mx1 = 0,mx2 = 0;
+    rep(i,0,n) {
+        ll tmp = mx1;
+        if(chmax(mx1,dist[i])) {
+            mx2 = tmp;
         }else {
-            ans += c*2;
+            chmax(mx2,dist[i]);
         }
     }
-    
-    cout << ans << endl;
-    
+
+
+    cout << ans*2 - (mx1 + mx2) << "\n";
     return 0;
 }
  //解答コードここまで
