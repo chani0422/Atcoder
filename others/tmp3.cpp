@@ -6,26 +6,19 @@
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n,k; cin >> n >> k;
-    using T = pair<ll,ll>;
-    priority_queue<T,vector<T>> que;
-    vector<ll> ans;
+    ll n; cin >> n;
+    map<ll,ll> mp;
+    mp[0] = 1;
+    ll sum = 0;
+    ll ans = 0;
     rep(i,0,n) {
         ll a; cin >> a;
-        if(i < k) {
-            que.push({a,i+1});
-            if(i == k-1) {
-                ans.pb(que.top().se);
-            }
-        }else {
-            if(que.top().fi > a) {
-                que.pop();
-                que.push({a,i+1});
-            }
-            ans.pb(que.top().se);
-        }
+        sum += a;
+        ans += mp[sum];
+        mp[sum]++;
     }
-    for(auto x : ans) cout << x << "\n";
+
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

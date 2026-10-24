@@ -8,7 +8,90 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    //クラスカル法 From chanini library
+    vector<tuple<ll,ll,ll>> edges;
+    rep(i,0,n-1) {
+        ll a,b,c; cin >> a >> b >> c;
+        a--;b--;
+        edges.pb({c,a,b});
+    }
+    
+    //辺を重みの小さい順にソート
+    sort(rall(edges)); //最大全域木！
+    
+    dsu uf(n);
+    Graph G(n);
+    //小さい辺から見ていく
+    vector<tuple<ll,ll,ll>> can;
+    vector<ll> indeg(n,0);
 
+    for(auto &[c,a,b] : edges) {
+        //a,bが違うグループだったら閉路にならないからつなげる
+        if(!uf.same(a,b)) {
+            uf.merge(a,b);
+            G[a].pb(b);
+            G[b].pb(a);
+            indeg[a]++;
+            indeg[b]++;
+            can.pb({c,a,b});
+        }
+    }
+
+    queue<ll> que;
+    vector<ll> visited(n,false);
+    rep(i,0,n) if(indeg[i] == 1) que.push(i);
+    ll last = 0;
+
+    while(!que.empty()) {
+        ll v = que.front();
+        que.pop();
+        last = v;
+        for(auto u : G[v]) {
+            if(visited[v] == true) continue;
+            indeg[u]--;
+            if(indeg[u] == 1) {
+                que.push(u);
+            }
+        }
+    }
+    // cout << last << "\n";
+    visited.resize(n,false);
+    vector<ll> dist(n,-1);
+    vector<ll> parent(n,-2);
+    auto dfs = [&](auto dfs,ll from,ll cnt, ll dia) ->bool {
+        for(auto to : G[from]) {
+            if(dist[to] == -1) {
+                dist[to] = dist[from] + 1;
+                parent
+                if(dfs(dfs,to,cnt+1)) {
+                    parent[to] = from;
+                }
+            }
+        }
+        chmax(dia,cnt);
+        if(dia == cnt)
+    };
+
+    ll mx = -1;
+    ll id = -1;
+    rep(i,0,n) {
+        if(chmax(mx,dist[i])) id = i;
+    }
+
+    ll ans = 0;
+    rep(i,0,ssize(can)) {
+        auto &[c,a,b] = can[i];
+        if(i < (ssize(can)+1)/2) {
+            ans += c;
+        }else {
+            ans += c*2;
+        }
+    }
+    
+    cout << ans << endl;
+    
     return 0;
 }
  //解答コードここまで

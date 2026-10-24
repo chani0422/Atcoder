@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    vector<pair<ll,ll>> pos(n);
+    map<ll,set<pair<ll,char>>> mp;
+    rep(i,0,n) cin >> pos[i].fi >> pos[i].se;
+    string s; cin >> s;
+    rep(i,0,n) {
+        auto [x,y] = pos[i];
+        if(s[i] == 'R') {
+            mp[y].insert({x,'R'});
+        }
+        if(s[i] == 'L') {
+            mp[y].insert({x,'L'});
+        }
+    }
+    for(auto [pos,st] : mp) {
+        char pre = '?';
+        for(auto [x,c] : st) {
+            if(pre == 'R' && c == 'L') {
+                yn(1);
+                return 0;
+            }
+            pre = c;
+        }
+    }
+    yn(0);
     return 0;
 }
  //解答コードここまで

@@ -4,10 +4,104 @@
 
 
 //解答コードここから
+// Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+//From chanini Library
+struct TopologicalResult {
+    vector<ll> order; //トポロジカル順に並んだ配列にアクセス
+    bool hasCycle; //閉路の有無
+    bool unique; //一意に決まるかどうか
+};
+
+//通常のトポロジカルソート
+TopologicalResult TopologicalSort(const vector<vector<ll>> &G) {
+    ll n = G.size();
+    vector<ll> indegree(n); //入次数を管理
+
+    for(ll from = 0; from < n; from++) {
+        for(auto to : G[from]) {
+            indegree[to]++;
+        }
+    }
+
+    //何にも依存していない頂点、つまり入次数０の頂点をキューに追加
+    queue<ll> que;
+    rep(i,0,n) {
+        if(indegree[i] == 0) que.push(i);
+    }
+
+    //トポロジカル順となる配列を作成
+    vector<ll> result;
+    bool unique = true;
+
+    while(!que.empty()) {
+        if(que.size() >= 2) unique = false;
+        ll from = que.front();
+        que.pop();
+        result.push_back(from);
+        for(auto to : G[from]) {
+            //次の頂点の入次数をデクリメントすることで入次数０の頂点を作りたい
+            indegree[to]--;
+            //入次数が０になったらそれより前の頂点をすべて処理できたのでキューに追加
+            if(indegree[to] == 0) que.push(to);
+        }
+    }
+
+    bool hasCycle = (result.size() != n);
+
+    //閉路検出
+    //閉路上の頂点及び閉路より後にある頂点は処理されないからresultの配列サイズが小さくなる。
+    if(hasCycle) {
+        unique = false;
+    }
+    return {result, hasCycle, unique};
+}
+
+
 //E問題
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    Graph G(n);
+    Graph forBFS(n);
+    rep(i,0,n) {
+        ll c; cin >> c;
+        rep(j,0,c) {
+            ll a; cin >> a;
+            a--;
+            G[a].pb(i);
+            // forBFS[a].pb(i);
+            forBFS[i].pb(a);
+        }
+    }
+
+    queue<ll> que;
+    vector<ll> visited(n,false);
+    que.push(0);
+    visited[0] = true;
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : forBFS[from]) {
+            if(visited[to] == false) {
+                visited[to] = true;
+                que.push(to);
+            }
+        }
+    }
+
+    TopologicalResult topo = TopologicalSort(G);
+    
+    rep(i,0,ssize(topo.order)) {
+        ll v = topo.order[i];
+        if(visited[v] == false) continue;
+        if(topo.order[i] == 0) continue;
+        cout << topo.order[i]+1 << " ";
+    }
+    cout << "\n";
+    // For(topo.order);
+    // cout << topo.order.size() << "\n";
 
     return 0;
 }

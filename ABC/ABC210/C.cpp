@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n, k; cin >> n >> k;
+    vector<ll> C(n);
+    map<ll,ll> mp;
+    ll ans = 0;
+    ll mx = 1;
+    rep(i,0,n) {
+        ll c; cin >> c;
+        C[i] = c;
+        if(mp[c] == 0) ans++;
+        mp[c]++;
+        if(i < k) {
+            chmax(mx,ans);
+            continue;
+        }else {
+            ll cur = C[i-k];
+            if(mp[cur] >= 1) {
+                mp[cur]--;
+                if(mp[cur] == 0) ans--;
+            }
+        }
+        chmax(mx,ans);
+    }
+    // chmax(mx,ans);
 
+    cout << mx << "\n";
     return 0;
 }
  //解答コードここまで
