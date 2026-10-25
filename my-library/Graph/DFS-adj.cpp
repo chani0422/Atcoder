@@ -3,6 +3,7 @@
 #include __FILE__
 
 //From chanini library
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 //解答コードここから
 //問題
 // vector<bool> visited;

@@ -5,6 +5,7 @@
 //解答コードここから
 
 /* From chanini library*/
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 //区間代入・区間和
 
 // S : セグ木が持つ値 → 区間和・区間サイズ

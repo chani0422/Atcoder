@@ -5,6 +5,7 @@
 //解答コードここから
 
 /* From chanini library*/
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 // Fenwick Tree (BIT)
 // できること
 // ・一点加算     add(p, x)     : A[p] += x

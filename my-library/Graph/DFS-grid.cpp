@@ -15,6 +15,7 @@ using ull = unsigned long long;
 using Graph = vector<vector<ll>>;
 
 //◯問題
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 int h, w;
 vector<string> grid;
 vector<vector<bool>> seen;

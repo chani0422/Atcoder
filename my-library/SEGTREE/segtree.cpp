@@ -5,7 +5,7 @@
 //解答コードここから
 
 /* From chanini library*/
-
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 ll op(ll a,ll b) {return a+b;}
 ll e() {return 0;}
 //問題

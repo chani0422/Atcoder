@@ -3,6 +3,7 @@
 #include __FILE__
 
 //解答コードここから
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
@@ -14,7 +15,7 @@ int main() {
         pref[i+1] = pref[i] + A[i];
     }
     
-    vector<ll> A(n),pref(2*n+1,0);
+    // vector<ll> A(n),pref(2*n+1,0);
     //1Dpref2周分
     rep(i,0,n) cin >> A[i];
     rep(i,0,2*n) {

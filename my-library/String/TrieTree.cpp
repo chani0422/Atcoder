@@ -4,6 +4,7 @@
 #include __FILE__
 
 //解答コードここから
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 template<int char_size,int base>
 struct Trie{
     struct Node {

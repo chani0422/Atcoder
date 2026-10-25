@@ -4,6 +4,7 @@
 
 //解答コードここから
 //From chanini Library
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);

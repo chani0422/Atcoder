@@ -4,7 +4,7 @@
 
 //解答コードここから
 // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt"
-
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 ll Centroid(const vector<vector<ll>>& G) {
     ll n = ssize(G);
     vector<ll> parent(n,-1);

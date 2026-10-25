@@ -2,6 +2,7 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 //From chanini Library
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 struct TopologicalResult {
     vector<ll> order; //トポロジカル順に並んだ配列にアクセス
     bool hasCycle; //閉路の有無

@@ -10,15 +10,39 @@ GPTに「直径は辺の本数ではなく、重みの合計で求めます。�
 というかそれでしょ
 制約的にすべての親を記録できるか
 じゃあそれを実装します。
+
 ん？別に親記録しなくてもいいな
 重みが1位と2位だけわかればいいやん
 一回目の提出は11個WA
 んー、方針は合ってるけど、なんかのパターンで通らないっぽい
 流石に嘘解法ではないと思う
-わかった、根を今の実装だと一回だけ通るルートが根を通らないルートから選ばれることがある。
+
+わかった、今の実装だと根を一回だけ通るルートが根を通らないルートから選ばれることがある。
 根から各葉につながる経路かつ、根から出るルートが2種類ないといけない。
 実装はABC終わってからやります
 
+実装終わったけど、提出したらWA2個...
+流石にオーバーフローの可能性はないでしょう
+そいえば、根は一意に定まるのか？
+一番大きい辺を共有する頂点のどちらかを根にしたほうが良いのか？
+んー、でも結局総和がデカい経路を中心にしたいからなあ
+やっぱり一番最初に考えた最大全域木でどうこうするのがいいのか？
+もう諦めたいけど、ここまで来たら自力で最後まで通したい
+反例探してきます。
+
+一旦ullにして出してみる。
+変わんなかった
+
+Nが2個の時だけ処理を分けたがWA2個から動かん
+え、嘘解法なんですか？もしかして方針から間違えてるのか？
+
+流石にこの問題に時間かけすぎなので諦めます。
+原因は根の選び方が一意ではないに一票
+
+そいえば最長経路を主要道路にしたいんだった。時間かけすぎたせいか本来の目的見失ってたかも
+二回DFSして一番遠い2頂点間の距離＋それ以外の辺×2が答えかー
+木の直径は考えて2回DFSすればいいってのは分かってたけど、重み付きのグラフにおいて最長経路をどうあぶりだすかわからず一旦その考えは捨ててしまったんだよなー
+良い問題でした。ありがとうございます。
 */
 //E問題
 int main() {
@@ -41,53 +65,26 @@ int main() {
         ans += c;
     }
 
-    queue<ll> que;
-    vector<ll> visited(n,false);
-    rep(i,0,n) if(indeg[i] == 1) que.push(i);
-    ll root = 0;
-
-    while(!que.empty()) {
-        ll v = que.front();
-        que.pop();
-        root = v;
-        for(auto u : G[v]) {
-            if(visited[v] == true) continue;
-            indeg[u]--;
-            if(indeg[u] == 1) {
-                que.push(u);
-            }
-        }
-    }
-    // cout << root << "\n";
-    visited.resize(n,false);
     vector<ll> dist(n,-1);
-    que.push(root);
-    dist[root] = 0;
-    visited[root] = true;
-    
-    while(!que.empty()) {
-        ll from = que.front();
-        que.pop();
+    dist[0] = 0;
+
+    auto dfs = [&](auto dfs,ll from)->void {
         for(auto to : G[from]) {
-            if(dist[to] == -1) {
-                dist[to] = dist[from] + edges[{from,to}];
-                que.push(to);
-            }
+            if(dist[to] != -1) continue;
+            dist[to] = dist[from] + edges[{from,to}];
+            dfs(dfs,to);
         }
-    }
+    };
 
-    ll mx1 = 0,mx2 = 0;
-    rep(i,0,n) {
-        ll tmp = mx1;
-        if(chmax(mx1,dist[i])) {
-            mx2 = tmp;
-        }else {
-            chmax(mx2,dist[i]);
-        }
-    }
+    ll first = -1;
+    dfs(dfs,0);
+    first = max_element(nall(dist))-dist.begin();
+    dist.assign(n,-1);
+    dist[first] = 0;
+    dfs(dfs,first);
+    ll dia = *max_element(nall(dist));
 
-
-    cout << ans*2 - (mx1 + mx2) << "\n";
+    cout << ans*2 - dia << "\n";
     return 0;
 }
  //解答コードここまで

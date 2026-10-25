@@ -3,6 +3,7 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
 //From chanini Library
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 //永続セグ木のライブラリ
 struct PersistentSegtree {
     struct Node{

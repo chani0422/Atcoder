@@ -1,5 +1,6 @@
 #if !__INCLUDE_LEVEL__
 #include __FILE__
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 // 有向グラフ用。頂点番号・成分番号はすべて 0-indexed。
 // ACL の Tarjan 法を参考にした、再帰を使わない拡張版。
 // 辺追加後、最初の問い合わせで自動 build。計算量・メモリ O(N+M)。

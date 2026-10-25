@@ -5,6 +5,7 @@
 //解答コードここから
 
 /* From chanini library*/
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 // 区間代入・区間最大値
 
 // S : セグ木が持つ値 → 区間最大値

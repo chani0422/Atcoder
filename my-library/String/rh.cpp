@@ -3,6 +3,7 @@ using namespace std;
 using ll = long long;
 
 //AWC0127 Eの時、ダブルハッシュに進化しました。
+//https://github.com/chani0422/Atcoder/tree/main/my-library
 struct RollingHash {
     static constexpr ll MOD1 = 1000000007;
     static constexpr ll MOD2 = 1000000009;
