@@ -38,6 +38,7 @@ int main() {
         }
     }
 
+    //類題
     //https://atcoder.jp/contests/abc361/submissions/80383665
     vector<ll> dist(n,-1);
     dist[center] = 0;
@@ -74,6 +75,41 @@ int main() {
     if(n%2 == 0) {
         for(auto [col,cnt] : count) {
             ans += cnt*(cnt-1)/2;
+        }
+    }else {
+        queue<pair<ll,ll>> que1;
+        vector<pair<ll,ll>> sz(n,{-1,-1});
+        ll id = 0;
+        for(auto to : G[center]) {
+            que1.emplace(to,id);
+            sz[to] = {0,id};
+            id++;
+        }
+
+        while(!que1.empty()) {
+            auto [from, col] = que1.front();
+            que1.pop();
+            for(auto to : G[from]) {
+                auto [d, col] = sz[to];
+                if(d == -1) {
+                    sz[to] = {d + 1, col};
+                    que1.emplace(to,col);
+                }
+            }
+        }
+
+        map<ll,ll> visited;
+        auto [MAX,col] = *max_element(nall(sz));
+        set<ll> can;
+        rep(i,0,n) {
+            if(leaf[i] == 1 && sz[i].fi == MAX && visited[col] == 0) {
+                can.insert(col);
+                visited[col] = 1;
+            }
+        }
+        map<ll,ll> visited1;
+        for(auto to : G[center]) {
+            if(can.contains)
         }
     }
 
