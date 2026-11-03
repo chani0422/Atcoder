@@ -38,25 +38,26 @@ int main() {
         string s = dist[from].se;
 
         for(auto [to,c] : G[from]){
-            string t = 
-            if(dist[to]. != -1) continue; // 既訪問
+            // string t = 
+            if(dist[to].first != -1) continue; // 既訪問
             if(s == "0") s = c;
             else s += c;
             if(Double[to] == true) {
                 while(ssize(s) != 10 || stoll(s) < mod) {
                     s += c;
                 }
-                dist[to] = stoll(s);
+                dist[to].first = stoll(s);
                 que.push(to);
                 continue;
             }
-            dist[to] = stoll(s)%mod;
+            dist[to].se = s;
+            dist[to].first = stoll(s)%mod;
             que.push(to);
         }
     }
     
     rep(i,1,n) {
-        cout << dist[i]%mod << " ";
+        cout << dist[i].first%mod << " ";
     }
     cout << "\n";
     //From chanini library

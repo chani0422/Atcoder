@@ -8,7 +8,28 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    
+    ll s = 1;
+    ll dist = -1;
+    rep(i,2,n+1) {
+        cout << "? " << 1 << " " << i << endl;
+        ll c; cin >> c;
+        if(chmax(dist,c)) {
+            s = i;
+        }
+    }
+    
+    dist = -1;
+    rep(i,1,n+1) {
+        if(i == s) continue;
+        //コピペの弊害出た
+        cout << "? " << s << " " << i << endl;
+        ll c; cin >> c;
+        chmax(dist,c);
+    }
 
+    cout << "! " << dist << endl;
     return 0;
 }
  //解答コードここまで

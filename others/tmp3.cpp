@@ -3,22 +3,76 @@
 #include __FILE__
 
 //解答コードここから
+/*
+//明日の朝に解く
+//葉刈りしていって木の中心から葉までの頂点数を記録する。
+//K以下になるまで葉を実際に切り落とす。みたいな
+諦めました。
+GPTにヒントもらった。
+GPT「全探索できない？」
+僕「たーしかに。」
+*/
+
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    ll n; cin >> n;
-    map<ll,ll> mp;
-    mp[0] = 1;
-    ll sum = 0;
-    ll ans = 0;
-    rep(i,0,n) {
-        ll a; cin >> a;
-        sum += a;
-        ans += mp[sum];
-        mp[sum]++;
+    ll n,k; cin >> n >> k;
+    Graph G(n);
+    vector<ll> indeg(n);
+    rep(i,0,n-1) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        indeg[a]++;
+        indeg[b]++;
+        G[a].pb(b);
+        G[b].pb(a);
     }
 
-    cout << ans << "\n";
+    vector<vector<ll>> dist(n,vector<ll>(n,-1));
+    rep(center,0,n) {
+        queue<ll> que;
+        que.push(center);
+        dist[center][center] = 0;
+
+        while(!que.empty()) {
+            ll from = que.front();
+            que.pop();
+            for(auto to : G[from]) {
+                if(dist[center][to] == -1) {
+                    dist[center][to] = dist[center][from] + 1;
+                    que.push(to);
+                }
+            }
+        }
+    }
+
+    ll ans = 0;
+    if(k%2 == 0) {
+        rep(center,0,n) {
+            ll sum = 0;
+            rep(i,0,n) {
+                if(dist[center][i] <= k/2) {
+                    sum++;
+                }
+            }
+            chmax(ans,sum);
+        }
+    }else {
+        rep(u,0,n) {
+            for(auto v : G[u]) {
+                if(u > v) continue;
+                ll sum = 0;
+                rep(i,0,n) {
+                    if(min(dist[u][i],dist[v][i]) <= k/2) {
+                        sum++;
+                    }
+                }
+                chmax(ans,sum);
+            }
+        }
+    }
+
+    cout << n - ans << "\n";
     return 0;
 }
 //解答コードここまで

@@ -7,7 +7,17 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
+    ll n; cin >> n;
+    // Source: https://github.com/chani0422/Atcoder/blob/main/my-library/snipet.txt
+    //bit全探索
     
+    rep(bit,0,(1LL<<n)) {
+        rep(i,0,(1LL<<n)) {
+            if(bit & (1LL<<i)) {
+                
+            }
+        }
+    }
     return 0;
 }
  //解答コードここまで
