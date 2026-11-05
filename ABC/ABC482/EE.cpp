@@ -10,6 +10,7 @@ int main() {
     Graph G(n);
     vector<ll> indeg(n,0);
     vector<ll> leaf(n,0);
+    vector<pair<ll,ll>> edges;
     rep(i,0,n-1) {
         ll a,b; cin >> a >> b;
         a--;b--;
@@ -17,12 +18,15 @@ int main() {
         indeg[b]++;
         G[a].pb(b);
         G[b].pb(a);
+        edges.emplace_back(a,b);
+        edges.emplace_back(b,a);
     }
     vector<ll> C(n+1);
     rep(i,0,n) cin >> C[i];
 
     queue<ll> que;
     ll center = -1;
+    ll second_center = -1;
     rep(i,0,n) if(indeg[i] == 1) {
         que.push(i);
         center = i;
@@ -31,6 +35,7 @@ int main() {
     while(!que.empty()) {
         ll from = que.front();
         que.pop();
+        second_center = center;
         center = from;
         for(auto to : G[from]) {
             indeg[to]--;
@@ -38,7 +43,6 @@ int main() {
         }
     }
 
-    //類題
     //https://atcoder.jp/contests/abc361/submissions/80383665
     vector<ll> dist(n,-1);
     dist[center] = 0;
@@ -55,61 +59,124 @@ int main() {
     dfs(dfs,center);
     first = max_element(nall(dist))-dist.begin();
     vector<ll> ndist = dist;
-    // dist.assign(n,-1);
-    // dist[first] = 0;
-    // dfs(dfs,first);
-    ll mx = *max_element(nall(ndist));
+    dist.assign(n,-1);
+    dist[first] = 0;
+    que.push(first);
+    bool around = true;
+    set<pair<ll,ll>> edge_around;
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : G[from]) {
+            if(dist[to] == -1) {
+                dist[to] = dist[from] + 1;
+                que.push(to);
+            }
+        }
+    }
+    ll T = *max_element(nall(dist));
+    for(auto to : G[center]) {
+        if(around) {
+            edge_around.insert({center,to});
+            edge_around.insert({to,center});
+        }
+    }
     // cout << center << " " << T << "\n";
 
     map<ll,ll> count;
     rep(i,0,n) {
-        if(leaf[i] == 1 && ndist[i] == mx) {
+        if(leaf[i] == 1 && ndist[i] == T/2) {
             count[C[i]]++;
         }
     }
 
     
-    //葉である頂点uから見た時、他に直径になりうるvをカウントしたい。
     ll ans = 0;
-    //奇数
-    if(n%2 == 0) {
-        for(auto [col,cnt] : count) {
-            ans += cnt*(cnt-1)/2;
+    //偶数
+    if(T%2 == 0) {
+        //中心を削除したときに残る部分木を構築
+        dsu uf(n);
+        for(auto [u,v] : edges) {
+            if(!edge_around.contains({u,v}) && !uf.same(u,v)) {
+                uf.merge(u,v);
+            }
         }
-    }else {
-        queue<pair<ll,ll>> que1;
-        vector<pair<ll,ll>> sz(n,{-1,-1});
-        ll id = 0;
-        for(auto to : G[center]) {
-            que1.emplace(to,id);
-            sz[to] = {0,id};
-            id++;
+        // T/2で良さそうだが一応
+        ll harf_T = *max_element(nall(ndist));
+        //部分木ごとに同色の候補を数える
+        map<pair<ll,ll>,ll> bubunki_can;
+        ll sum = 0;
+        rep(i,0,n) {
+            if(leaf[i] == 1 && ndist[i] == harf_T) {
+                bubunki_can[{uf.leader(i),C[i]}]++;
+                sum++;
+            }
         }
+        //すべての組み合わせを数える。
+        ll tmp = 0;
+        for(auto [p,cnt] : bubunki_can) {
+            auto [leader,col] = p;
+            tmp += (count[col]-cnt)*cnt;
+        }
+        ans = tmp/2;
+    }else { //奇数
+        //中心の２頂点からそれぞれBFSしてその候補の数の積
+        ll tmp1 = 0,tmp2 = 0;
+        vector<ll> nndist(n,-1);
+        nndist[center] = 0;
+        que.push(center);
 
-        while(!que1.empty()) {
-            auto [from, col] = que1.front();
-            que1.pop();
+        while(!que.empty()) {
+            ll from = que.front();
+            que.pop();
             for(auto to : G[from]) {
-                auto [d, col] = sz[to];
-                if(d == -1) {
-                    sz[to] = {d + 1, col};
-                    que1.emplace(to,col);
+                if(to == second_center) continue;
+                if(nndist[to] == -1) {
+                    nndist[to] = nndist[from] + 1;
+                    que.push(to);
                 }
             }
         }
 
-        map<ll,ll> visited;
-        auto [MAX,col] = *max_element(nall(sz));
-        set<ll> can;
+        map<pair<ll,ll>,ll> bubunki_can0;
+        ll bubunki0 = 0;
+        ll harf_T = *max_element(nall(nndist));
         rep(i,0,n) {
-            if(leaf[i] == 1 && sz[i].fi == MAX && visited[col] == 0) {
-                can.insert(col);
-                visited[col] = 1;
+            if(nndist[i] == harf_T) {
+                bubunki_can0[{0,C[i]}]++;
+                bubunki0++;
             }
         }
-        map<ll,ll> visited1;
-        for(auto to : G[center]) {
-            if(can.contains)
+        
+        
+        nndist.assign(n,-1);
+        que.push(second_center);
+        nndist[second_center] = 0;
+
+        while(!que.empty()) {
+            ll from = que.front();
+            que.pop();
+            for(auto to : G[from]) {
+                if(to == center) continue;
+                if(nndist[to] == -1) {
+                    nndist[to] = nndist[from] + 1;
+                    que.push(to);
+                }
+            }
+        }
+        map<pair<ll,ll>,ll> bubunki_can1;
+        ll bubunki1 = 0;
+        harf_T = *max_element(nall(nndist));
+        rep(i,0,n) {
+            if(nndist[i] == harf_T) {
+                bubunki_can1[{1,C[i]}]++;
+                bubunki1++;
+            }
+        }
+
+        for(auto [p,cnt] : bubunki_can0) {
+            auto [type,col] = p;
+            ans += cnt*bubunki_can1[{1,col}];
         }
     }
 
