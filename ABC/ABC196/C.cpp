@@ -8,7 +8,19 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n; cin >> n;
+    string s = to_string(n);
+    if(ssize(s)%2 == 1) {
+        ll ans = 1;
+        rep(i,0,ssize(s)/2) ans *= 10;
+        cout << ans-1 << "\n";
+        return 0;
+    }
+    string before = s.substr(0,ssize(s)/2);
+    string after = s.substr((ssize(s))/2,ssize(s));
+    ll ans = stoll(before);
+    if(stoll(before) > stoll(after)) ans--;
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで

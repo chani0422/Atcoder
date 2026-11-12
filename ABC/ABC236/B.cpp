@@ -8,7 +8,18 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    
+    ll n; cin >> n;
+    vector<ll> cnt(n+1,0);
+    rep(i,0,4*n-1) {
+        ll a; cin >> a;
+        cnt[a]++;
+    }
+    rep(i,0,n+1) {
+        if(cnt[i] == 3) {
+            cout << i << "\n";
+            return 0;
+        }
+    }
     return 0;
 }
  //解答コードここまで

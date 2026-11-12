@@ -8,7 +8,27 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,x; cin >> n >> x;
+    x--;
+    vector<ll> A(n);
+    rep(i,0,n) {
+        ll a; cin >> a;
+        A[i] = a-1;
+    }
 
+    vector<bool> know(n,false);
+    know[x] = true;
+    ll cur = x;
+    while(true) {
+        if(know[A[cur]] == false) {
+            know[A[cur]] = true;
+        }else {
+            break;
+        }
+        cur = A[cur];
+    }
+
+    cout << count(nall(know),true) << "\n";
     return 0;
 }
  //解答コードここまで

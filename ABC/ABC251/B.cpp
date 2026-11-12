@@ -8,7 +8,22 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,w; cin >> n >> w;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
 
+    vector<bool> ok(w+1);
+    rep(i,0,n) if(A[i] <= w) ok[A[i]] = true;
+    rep(i,0,n)rep(j,i+1,n) {
+        ll a = A[i] + A[j];
+        if(a <= w) ok[a] = true;
+    }
+    rep(i,0,n)rep(j,i+1,n)rep(k,j+1,n) {
+        ll a = A[i] + A[j] + A[k];
+        if(a <= w) ok[a] = true;
+    }
+
+    cout << count(nall(ok),true) << "\n";
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,23 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    string s; cin >> s;
+    vector<ll> cnt(26,0);
+    rep(i,0,ssize(s)) cnt[s[i]-'a']++;
 
+    bool ok = true;
+    rep(i,1,*max_element(nall(cnt))+1) {
+        ll count = 0;
+        rep(j,0,26) {
+            if(cnt[j] == i) count++;
+        }
+        if(count != 0 && count != 2) {
+            ok = false;
+            break;
+        }
+    }
+
+    yn(ok);
     return 0;
 }
  //解答コードここまで

@@ -8,7 +8,28 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    ll t; cin >> t;
+    vector<pair<ll,ll>> A(n);
+    rep(i,0,n-1) {
+        ll a; cin >> a;
+        A[i] = {a,0};
+    }
+    rep(i,0,m) {
+        ll x,y; cin >> x >> y;
+        A[x-1].se = y;
+    }
 
+    rep(i,0,n) {
+        t += A[i].se;
+        t -= A[i].fi;
+        if(t <= 0) {
+            yn(0);
+            return 0;
+        }
+    }
+
+    yn(1);
     return 0;
 }
  //解答コードここまで

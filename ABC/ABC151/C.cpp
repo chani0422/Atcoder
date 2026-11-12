@@ -8,7 +8,21 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    ll n,m; cin >> n >> m;
+    vector<ll> cnt(n+1,0);
+    vector<bool> ok(n+1,true);
+    ll WA = 0;
+    rep(i,0,m) {
+        ll p; cin >> p;
+        string s; cin >> s;
+        if(s == "AC" && ok[p] == true) {
+            ok[p] = false;
+            WA += cnt[p];
+        }else if(ok[p] == true) {
+            cnt[p]++;
+        }
+    }
+    cout << count(nall(ok),false) << " " << WA <<"\n";
     return 0;
 }
  //解答コードここまで

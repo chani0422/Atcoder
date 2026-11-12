@@ -8,7 +8,26 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    vector<ll> cnt(26,100);
 
+    rep(i,0,n) {
+        string s; cin >> s;
+        vector<ll> tmp(26,0);
+        for(char c : s) {
+            tmp[c-'a']++;
+        }
+        rep(j,0,26) chmin(cnt[j],tmp[j]);
+    }
+
+    char cur = 'a';
+    rep(i,0,26) {
+        if(cnt[i] == 100) continue;
+        rep(j,0,cnt[i]) {
+            cout << cur;
+        }
+        cur++;
+    }
     return 0;
 }
  //解答コードここまで
