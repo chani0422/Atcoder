@@ -8,6 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<ll> B(m);
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+    vector<pair<ll,ll>> prefMin(n,{inf,-1});
+    prefMin[0] = {A[0],0};
+    rep(i,1,n) {
+        if(prefMin[i-1].first > A[i]) {
+            prefMin[i] = {A[i],i};
+        }else {
+            prefMin[i] = prefMin[i-1];
+        }
+    }
+    // For(A);
+    // For(prefMin);
+    rep(i,0,m) cin >> B[i];
+    rep(i,0,m) {
+        ll cur = B[i];
+        auto it = lower_bound(nall(prefMin),cur,[&](const pair<ll,ll>& a,ll b) {return a.first > b;});
+        if(it == prefMin.end()) {
+            cout << -1 << "\n";
+            continue;
+        }
+        cout << it - prefMin.begin() + 1 << "\n";
+    }
 
     return 0;
 }

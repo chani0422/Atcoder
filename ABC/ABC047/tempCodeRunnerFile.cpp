@@ -1,0 +1,1 @@
+pair<ll,ll>{sufMax[i],prefMin[i]}

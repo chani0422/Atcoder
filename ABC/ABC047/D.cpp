@@ -8,7 +8,31 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n,t; cin >> n >> t;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
 
+    vector<ll> prefMin(n),sufMax(n);
+    prefMin[0] = A[0];
+    rep(i,1,n) prefMin[i] = min(prefMin[i-1],A[i]);
+    sufMax[n-1] = A[n-1];
+    rrep(i,n-2,0) sufMax[i] = max(sufMax[i+1],A[i]);
+    // For(sufMax);
+    // For(prefMin);
+    ll base = -1;
+    rep(i,0,n) chmax(base, sufMax[i] - prefMin[i]);
+    // cout << base << "\n";
+    
+    pair<ll,ll> cur = {-1,-1};
+    ll ans = 0;
+    rep(i,0,n) {
+        if(cur != make_pair(sufMax[i],prefMin[i]) && sufMax[i] - prefMin[i] == base) {
+            ans++;
+            cur = {sufMax[i],prefMin[i]};
+        }
+    }
+
+    cout << ans << "\n";
     return 0;
 }
  //解答コードここまで
