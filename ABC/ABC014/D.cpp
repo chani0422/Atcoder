@@ -8,7 +8,84 @@
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    ll n; cin >> n;
+    Graph G(n);
+    vector<ll> indeg(n,0);
+    rep(i,0,n-1) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        G[a].pb(b);
+        G[b].pb(a);
+        indeg[a]++;
+        indeg[b]++;
+    }
 
+    queue<ll> que;
+    vector<ll> dist(n,-1);
+    rep(i,0,n) if(indeg[i] == 1) {
+        que.push(i);
+        dist[i] = 0;
+    }
+    
+    ll center1 = -1;
+    ll center2 = -1;
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        center2 = center1;
+        center1 = from;
+        for(auto to : G[from]) {
+            if(dist[to] == -1) {
+                dist[to] = dist[from] + 1;
+                que.push(to);
+            }
+        }
+    }
+
+    que.push(center1);
+    vector<ll> dist2(n,-1);
+    dist2[center1] = 0;
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : G[from]) {
+            if(dist2[to] == -1) {
+                dist2[to] = dist2[from] + 1;
+                que.push(to);
+            }
+        }
+    }
+
+    que.push(center2);
+    vector<ll> dist3(n,-1);
+    dist3[center2] = 0;
+    
+    while(!que.empty()) {
+        ll from = que.front();
+        que.pop();
+        for(auto to : G[from]) {
+            if(dist3[to] == -1) {
+                dist3[to] = dist3[from] + 1;
+                que.push(to);
+            }
+        }
+    }
+
+    vector<ll> 
+    auto dfs = [&](auto dfs, ll from)->void{
+        for(auto to : G[from]) {
+            if()
+        }
+        return;
+    }
+
+    ll Q; cin >> Q;
+    while(Q--) {
+        ll a,b; cin >> a >> b;
+        a--;b--;
+        
+    }
     return 0;
 }
  //解答コードここまで
