@@ -883,6 +883,12 @@ public:
         return static_cast<int>(nodes_.capacity());
     }
 
+    // reserve(count): 将来の要素追加に備えて、内部配列の容量を先に確保する。
+    // size() や要素の順番は変わらない。呼ばなくても従来どおり使える。
+    // 使い方（例：ABC484 E、最大 N+1 個を保持）:
+    //   TreapVector<long long> v;
+    //   v.reserve(N + 1);
+    //   v.insert_sorted(0);
     void reserve(int count) {
         assert(count >= 0);
         nodes_.reserve(count);
@@ -1289,3 +1295,17 @@ template<class T>
 void swap(TreapVector<T>& a, TreapVector<T>& b) noexcept {
     a.swap(b);
 }
+
+// =============================================================================
+// reserve() の使用例（すべてコメントアウト。必要な場所でコピーして利用）
+// =============================================================================
+// int n = 300000;
+// TreapVector<long long> v;
+// v.reserve(n + 1);       // 0 を含む最大 n+1 個分を確保（要素数は0のまま）
+// v.insert_sorted(0);     // 実際の要素追加。size() == 1 になる
+// v.insert_sorted(5);
+// v.insert_sorted(5);     // 重複も保持できる
+// int left  = v.lower_bound_pos(5);
+// int right = v.upper_bound_pos(5);
+// long long cnt = right - left;  // 値5の個数（2）
+// // 注意：reserve() は木の要素を作らず、並び順や検索結果も変えない。
