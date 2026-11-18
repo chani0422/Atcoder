@@ -5,7 +5,60 @@
 //E問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,m; cin >> n >> m;
+    vector<ll> S(n);
+    rep(i,0,n) cin >> S[i];
+    vector<tuple<ll,ll,ll>> M(m);
+    map<ll,vector<pair<ll,ll>>,greater<ll>> mp;
+    ll sum = 0;
+    rep(i,0,m) {
+        ll a,b; cin >> a >> b;
+        // M[i] = {a,b};
+        sum += b;
+        mp[a].emplace_back(i,b);
+    }
 
+    for(auto &[p,v] : mp) {
+        sort(nall(v));
+    }
+    sort(rall(S));
+    ll ans = 0;
+    vector<ll> ANS(m);
+    if(sum > n) {
+        cout << -1 << "\n";
+        return 0;
+    }else {
+        ll cur = 0;
+        for(auto &[p,v] : mp) {
+            rep(i,0,ssize(v)) {
+                ll ans = 0;
+                auto &[pos,r] = v[i];
+                rep(j,0,r) {
+                    ans += S[cur];
+                    cur++;
+                }
+                ANS[pos] = ans;
+            }
+        }
+    }
+
+    For(ANS);
+
+    // sort(rall(M),[&](const pair<ll,ll>& t1, const pair<ll,ll> &t2) {
+    //     auto &[a,b] = t1;
+    //     auto &[c,d] = t2;
+    //     return {a >= c && b >=d};
+    // });
+
+    // sort(rall(S),[](const pair<ll,ll>& p,const pair<ll,ll> q) {
+    //     if(p.fi != q.fi) return p.fi > q.fi;
+    //     else return p.se < q.se;
+    // });
+
+    // rep(i,0,m) {
+    //     auto &[p,r] = M[i];
+
+    // }
     return 0;
 }
 //解答コードここまで

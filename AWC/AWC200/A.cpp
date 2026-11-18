@@ -5,7 +5,21 @@
 //A問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    ll n,k; cin >> n >> k;
+    string ans = "";
+    ll cnt = 0;
+    bool flag = false;
+    rep(i,0,n) {
+        if(cnt == k) {
+            cnt = 0;
+            flag ^= 1;
+        }
+        if(flag) ans += 'B';
+        else ans += 'R';
+        cnt++;
+    }
+
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

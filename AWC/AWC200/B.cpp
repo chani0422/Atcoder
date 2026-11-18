@@ -5,7 +5,23 @@
 //B問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n; cin >> n;
+    ll pre = -1;
 
+    ll a = 0, b = 0, c = 0;
+    rep(i,0,n) {
+        ll x; cin >> x;
+        if(i == 0) {
+            pre = x;
+            continue;
+        }
+        if(pre == x) c++;
+        else if(pre < x) a++;
+        else b++;
+        pre = x;
+    }
+
+    cout << a << " " << b << " " << c << "\n";
     return 0;
 }
 //解答コードここまで

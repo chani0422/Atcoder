@@ -3,9 +3,25 @@
 
 //解答コードここから
 //D問題
+//いい失敗例なのでランダムテストのためにとっておきます。
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll n,k; cin >> n >> k;
+    ull sum = 0;
+    vector<ull> A(n,0);
+    rep(i,0,n) {
+        ull a; cin >> a;
+        A[i] = a;
+        sum += a;
+    }
 
+    ull ans = 0;
+    rep(i,0,n) {
+        ull S = sum - A[i];
+        if(S*k <= A[i]*(n-1)) ans++;
+    }
+
+    cout << ans << "\n";
     return 0;
 }
 //解答コードここまで

@@ -6,7 +6,36 @@
 //問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
-    
+    //dp[i][j] = 部屋iまで攻略した時、体力jだけ使って獲得できる最大枚数
+
+    //DPやってなさすぎてわからん
+    //諦め
+    //解説ACです。
+    //あれ、問題読めてなかった。どちらかちょうど一方の行動を選択するのか
+
+    ll n,m; cin >> n >> m;
+    vector<ll> A(n);
+    rep(i,0,n) cin >> A[i];
+
+    vector<vector<ll>> dp(n,vector<ll>(m+1,-inf));
+    dp[0][m-A[0]] = 0;
+    ll hp = m;
+    rep(i,0,n-1) {
+        ll b,c; cin >> b >> c;
+        rep(j,0,m+1) {
+            if(dp[i][j] == -inf) continue;
+
+            ll hp = min(m,j+b);
+            if(hp >= A[i+1]) {
+                chmax(dp[i+1][hp-A[i+1]],dp[i][j]);
+            }
+            if(j >= A[i+1]) {
+                chmax(dp[i+1][j-A[i+1]],dp[i][j] + c);
+            }
+        }
+    }
+
+        cout << *max_element(nall(dp[n-1])) << "\n";
     return 0;
 }
 //解答コードここまで

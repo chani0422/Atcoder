@@ -5,7 +5,29 @@
 //C問題
 int main() {
     ios::sync_with_stdio(false);cin.tie(nullptr);
+    ll h,w; cin >> h >> w;
+    vector<string> S(h);
+    rep(i,0,h) cin >> S[i];
 
+    pair<ll,ll> cur = {0,0};
+    vector<vector<bool>> visited(h,vector<bool>(w,false));
+    while(1) {
+        auto [r,c] = cur;
+        ll nr = r, nc = c;
+        if(S[r][c] == 'v') {
+            nr++;
+            if(nr < 0 || nr >= h || nc < 0 || nc >= w) break;
+            if(visited[nr][nc] == true) break;
+        }else {
+            nc++;
+            if(nr < 0 || nr >= h || nc < 0 || nc >= w) break;
+            if(visited[nr][nc] == true) break;
+        }
+        cur = {nr,nc};
+        if(r == nr && c == nc) break;
+    }
+
+    cout << cur.fi+1 << " " << cur.se+1 << "\n";
     return 0;
 }
 //解答コードここまで
