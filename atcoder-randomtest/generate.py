@@ -6,7 +6,11 @@ seed = int(sys.argv[1])
 rng = random.Random(seed)
 
 # Sample: N and N integers. Change to fit the problem constraints.
-n = rng.randint(1, 12)
-a = [rng.randint(-20, 20) for _ in range(n)]
+n = rng.randint(0, 4)
+k = rng.randint(0, 4)
+a = [rng.randint(1, 9) for _ in range(n)]
+# b = [rng.randint(-9, 9) for _ in range(n)]
 print(n)
+print(k)
 print(*a)
+# print(*b)
